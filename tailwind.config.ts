@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 export default {
   darkMode: ['class'],
@@ -9,6 +9,15 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Sora', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
+        switzer: ['Switzer', 'sans-serif'],
+      },
+      boxShadow: {
+        'interest-drop': '0px 23px 44px 0px rgba(176, 183, 195, 0.14)',
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',

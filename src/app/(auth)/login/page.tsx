@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
-const paage = () => {
+const page = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   return (
     <div className="flex w-full bg-[#fafafa] pl-[20px] pr-[32px] relative h-full justify-center overflow-y-auto ">
@@ -104,4 +104,4 @@ const paage = () => {
   );
 };
 
-export default paage;
+export default page;
