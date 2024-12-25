@@ -3,6 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { EmptyState } from '@/components/settings/empty-state';
 import { ContactInfo } from '@/components/settings/contact-info';
+import { AboutFilled } from '@/components/settings/about-filled';
 
 function ConfigPage() {
   return (
@@ -61,12 +62,13 @@ function ConfigPage() {
             value="about"
             className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
           >
-            <EmptyState
+            {/* <EmptyState
               title="About Duduzili"
               paragraph=" Write a descriptive content about the platform for users
                       to learn"
               btnText="About Duduzili"
-            />
+            /> */}
+            <AboutFilled />
           </TabsContent>
           <TabsContent
             value="contact"

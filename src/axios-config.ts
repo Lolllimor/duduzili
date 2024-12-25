@@ -26,12 +26,11 @@ API.interceptors.request.use(
       const isExpired =
         dayjs.unix(decodedToken.exp as number).diff(dayjs()) < 1;
       console.log({ isExpired });
-      // config.headers.Authorization = ⁠`Bearer ${token} `
       config.headers.Authorization = `Bearer ${token}`;
     }
-    config.headers["api-key"] = process.env.NEXT_PUBLIC_API_KEY;
-    config.headers["hash-key"] = HASH_KEY;
-    config.headers["idempotency-key"] = requestTs;
+     config.headers['ADMIN-API-KEY'] = process.env.NEXT_PUBLIC_API_KEY;
+     config.headers['ADMIN-HASH-KEY'] = HASH_KEY;
+     config.headers['ADMIN-IDEMPOTENCY-KEY'] = requestTs;
 
     return config;
   },

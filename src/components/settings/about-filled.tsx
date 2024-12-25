@@ -1,13 +1,22 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import { Button } from '../ui/button';
 import { IoMdAdd } from 'react-icons/io';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAbout } from '@/redux/features/settings/aboutSlice';
+import { AppDispatch } from '@/redux/store';
 
 export const AboutFilled = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const data = useSelector((state) => state);
+  console.log(data);
 
+  useEffect(() => {
+    dispatch(fetchAbout());
+  }, []);
   return (
     <div className="flex flex-col p-8 gap-10">
       <div className="flex justify-between items-center">
-        
         <span className="text-2xl font-bold">About Duduzili</span>
 
         <Button className="h-10 w-[160px] rounded-[48px] text-sm font-semibold flex items-center gap-2.5 bg-[#4534B8] text-white">
