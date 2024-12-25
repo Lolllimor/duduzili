@@ -6,12 +6,11 @@ import { ContactInfo } from '@/components/settings/contact-info';
 
 function ConfigPage() {
   return (
-    <div className="flex w-full h-full">
-      <div className="w-[272px] h-full bg-red-600"></div>
-      <div className="flex flex-col px-6 w-full h-full  overflow-auto ">
+    <div className="flex w-full h-full items-start">
+      <div className="flex flex-col  w-full h-full  overflow-auto ">
         <Tabs
-          defaultValue="deactivated"
-          className="w-full  gap-6 flex flex-col h-full my-12"
+          defaultValue="about"
+          className="w-full  gap-6 flex flex-col h-full "
         >
           <TabsList className="w-full text-sm gap-2 flex justify-start rounded-[10px] h-fit border border-[#F2F4F7] bg-[#F9FAFB] ">
             <TabsTrigger
@@ -57,33 +56,45 @@ function ConfigPage() {
               Deleted Accounts
             </TabsTrigger>
           </TabsList>
-          <div className="border border-[#E5E6E8] rounded-[10px] flex h-full  overflow-auto">
-            <TabsContent value="about" className="w-full ">
-              <EmptyState
-                title="About Duduzili"
-                paragraph=" Write a descriptive content about the platform for users
+          {/* <div className="border border-[#E5E6E8] rounded-[10px] flex h-full  overflow-auto"> */}
+          <TabsContent
+            value="about"
+            className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
+          >
+            <EmptyState
+              title="About Duduzili"
+              paragraph=" Write a descriptive content about the platform for users
                       to learn"
-                btnText="About Duduzili"
-              />
-            </TabsContent>
-            <TabsContent value="contact" className="w-full ">
-              <ContactInfo />
-            </TabsContent>
-            <TabsContent value="privacy" className="w-full ">
-              <EmptyState
-                title="Privacy Policy"
-                paragraph=" Write a descriptive content about the privacy policy of the platform for users to abide with"
-                btnText="Privacy Policy"
-              />
-            </TabsContent>
-            <TabsContent value="faq" className="w-full ">
-              <EmptyState
-                title="FAQ"
-                paragraph=" Write a descriptive content about the platform for users to learn"
-                btnText="Add Question"
-              />
-            </TabsContent>
-          </div>
+              btnText="About Duduzili"
+            />
+          </TabsContent>
+          <TabsContent
+            value="contact"
+            className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
+          >
+            <ContactInfo />
+          </TabsContent>
+          <TabsContent
+            value="privacy"
+            className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
+          >
+            <EmptyState
+              title="Privacy Policy"
+              paragraph=" Write a descriptive content about the privacy policy of the platform for users to abide with"
+              btnText="Privacy Policy"
+            />
+          </TabsContent>
+          <TabsContent
+            value="faq"
+            className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
+          >
+            <EmptyState
+              title="FAQ"
+              paragraph=" Write a descriptive content about the platform for users to learn"
+              btnText="Add Question"
+            />
+          </TabsContent>
+          {/* </div> */}
         </Tabs>
       </div>
     </div>

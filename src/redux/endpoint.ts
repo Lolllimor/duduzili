@@ -1,3 +1,4 @@
 export const endpoints = {
-  signin: "administration/admin-sign-in/",
+  signin: 'api/administration/admin-sign-in/',
+  fetchAbout: '/api/administration/fetch-about/',
 };

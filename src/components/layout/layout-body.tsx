@@ -55,7 +55,7 @@ export const DashboardLayout = ({
     },
     {
       name: "Interests",
-      link: "/interest",
+      link: "/interests",
       icon: <Hash size={24} />,
     },
     {
@@ -98,7 +98,7 @@ export const DashboardLayout = ({
     : pathName;
 
   return (
-    <section className="flex items-start w-full">
+    <section className="flex items-start w-full h-screen">
       <div
         className={clsx(
           toggle
@@ -214,9 +214,9 @@ export const DashboardLayout = ({
           </div>
         </div>
       </div>
-      <div className="h-screen flex-1 overflow-auto">
+      <div className="flex flex-col h-full flex-1 overflow-auto">
         <Header component={formattedPathname} />
-        <div className="p-6 bg-[#F5F6FA]">{children}</div>
+        <div className="p-6 bg-[#F5F6FA] flex-1">{children}</div>
       </div>
     </section>
   );

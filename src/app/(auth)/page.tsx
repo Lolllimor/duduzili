@@ -1,22 +1,22 @@
 "use client";
-import { PasswordInput } from "@/components/password-input";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useLoginMutation } from "@/redux/features/auth/authApi";
-import { FaSpinner } from "react-icons/fa";
-import { handleError } from "@/lib/errorHandler";
-import toast from "react-hot-toast";
+import Image from "next/image";
 import CryptoJS from "crypto-js";
-import { LOGIN_API } from "@/axios-config";
-import { useMutation } from "@tanstack/react-query";
-import { endpoints } from "@/redux/endpoint";
 import { Login } from "@/lib/type";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { FaSpinner } from "react-icons/fa";
+import { LOGIN_API } from "@/axios-config";
 import { useRouter } from "next/navigation";
+import { endpoints } from "@/redux/endpoint";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { handleError } from "@/lib/errorHandler";
+import React, { useEffect, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PasswordInput } from "@/components/password-input";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
 
 const page = () => {
   const { push } = useRouter();
@@ -35,7 +35,6 @@ const page = () => {
     },
   });
 
-  const [currentPassword, setCurrentPassword] = useState("");
   const formSchema = z.object({
     username_email: z.string().min(5, {
       message: "Enter your username or email",

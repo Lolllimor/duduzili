@@ -3,9 +3,11 @@ import { Button } from '../ui/button';
 import { IoMdAdd } from 'react-icons/io';
 
 export const AboutFilled = () => {
+
   return (
     <div className="flex flex-col p-8 gap-10">
       <div className="flex justify-between items-center">
+        
         <span className="text-2xl font-bold">About Duduzili</span>
 
         <Button className="h-10 w-[160px] rounded-[48px] text-sm font-semibold flex items-center gap-2.5 bg-[#4534B8] text-white">

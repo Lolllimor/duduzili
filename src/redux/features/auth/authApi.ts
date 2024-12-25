@@ -1,6 +1,6 @@
-import { endpoints } from "@/redux/endpoint";
-import { apiSlice } from "../apiSlice";
-import { userEmail, userToken } from "./authSlice";
+import { endpoints } from '@/redux/endpoint';
+import { apiSlice } from '../apiSlice';
+import { userEmail, userToken } from './authSlice';
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // register: builder.mutation({
@@ -29,22 +29,22 @@ export const authApi = apiSlice.injectEndpoints({
     login: builder.mutation({
       query: (body: { username_email: string; password: string }) => ({
         url: endpoints.signin,
-        method: "POST",
+        method: 'POST',
         body,
-        credentials: "include" as const,
+        credentials: 'include' as const,
       }),
 
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const result = await queryFulfilled;
-          console.log("tokenvaluequery:", result?.data?.token);
+          console.log('tokenvaluequery:', result?.data?.token);
           dispatch(
             userToken({
               token: result?.data?.token,
             })
           );
         } catch (error: any) {
-          console.log("Query-failed", error);
+          console.log('Query-failed', error);
         }
       },
     }),

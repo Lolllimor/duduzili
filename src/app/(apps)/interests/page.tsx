@@ -227,7 +227,7 @@ function InterestPage() {
     },
   ];
   return (
-    <div className="flex p-8 gap-8 flex-wrap overflow-auto">
+    <div className="flex p-8 gap-8 flex-wrap overflow-auto h-full">
       <Button className="border-2 border-dashed border-[#D9D9DB] rounded-xl w-[346px] h-[300px] flex justify-center items-center bg-white hover:bg-white gap-6 flex-col ">
         <div className="w-20 h-20 rounded-full bg-[#ECEBF8] flex items-center justify-center">
           <Image
