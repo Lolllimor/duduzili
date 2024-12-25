@@ -36,7 +36,6 @@ const page = () => {
   });
 
   const [currentPassword, setCurrentPassword] = useState("");
-  // const [signIn, { data, isSuccess, isLoading, error }] = useLoginMutation();
   const formSchema = z.object({
     username_email: z.string().min(5, {
       message: "Enter your username or email",
@@ -55,7 +54,6 @@ const page = () => {
     },
   });
 
-  // useEffect(() => {
   //   if (isSuccess) {
   //     const message = data?.message || "Login successful";
   //     toast.success(<span>{message}</span>, {
@@ -80,8 +78,6 @@ const page = () => {
   // }, [data?.message, isSuccess, error]);
 
   const { errors, isValid } = formState;
-  // const secret_key = process.env.NEXT_PUBLIC_ADMIN_SECRET_KEY as string;
-  // const encrypt_key = process.env.NEXT_PUBLIC_ADMIN_ENCRYPTION_KEY as string;
 
   // const encryptData = (data: DataType, secretKey: string): string => {
   //   const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey);
@@ -94,10 +90,7 @@ const page = () => {
   // };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // const encrypted = encryptData(values, encrypt_key);
-    // console.log("Encrypted:", encrypted);
     mutate(values);
-    // console.log("userlogin:", values);
   };
 
   return (
