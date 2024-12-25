@@ -1,13 +1,13 @@
-'use client';
-import { PasswordInput } from '@/components/password-input';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import Image from 'next/image';
-import React, { useState } from 'react';
+"use client";
+import { PasswordInput } from "@/components/password-input";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import Image from "next/image";
+import React, { useState } from "react";
 
-const paage = () => {
-  const [currentPassword, setCurrentPassword] = useState('');
+const page = () => {
+  const [currentPassword, setCurrentPassword] = useState("");
   return (
     <div className="flex w-full bg-[#fafafa] pl-[20px] pr-[32px] relative h-full justify-center overflow-y-auto ">
       <Image
@@ -94,4 +94,4 @@ const paage = () => {
   );
 };
 
-export default paage;
+export default page;

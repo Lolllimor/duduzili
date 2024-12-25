@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-import React from "react";
-
-const page = () => {
-  return <div>Reset password</div>;
-=======
-'use client';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import Image from 'next/image';
-import React, { useState } from 'react';
+"use client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import Image from "next/image";
+import React, { useState } from "react";
 
 const page = () => {
   return (
@@ -70,7 +64,6 @@ const page = () => {
       </div>
     </div>
   );
->>>>>>> 51f5af4be839e71e972913ef523f6451a5307ff2
 };
 
 export default page;

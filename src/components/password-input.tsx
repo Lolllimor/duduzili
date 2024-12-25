@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import * as React from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 
 const PasswordInput = React.forwardRef<
   HTMLInputElement,
-  React.ComponentProps<'input'>
+  React.ComponentProps<"input">
 >(({ className, placeholder, ...props }, ref) => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const disabled =
-    props.value === '' || props.value === undefined || props.disabled;
+  // const disabled =
+  // props.value === '' || props.value === undefined || props.disabled;
 
   return (
     <div className="relative">
       <Input
         placeholder={placeholder}
-        type={showPassword ? 'text' : 'password'}
+        type={showPassword ? "text" : "password"}
         className={cn(
-          'hide-password-toggle pr-10 h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] font-normal',
+          "hide-password-toggle pr-10 h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] font-normal",
           className
         )}
         ref={ref}
@@ -33,15 +33,15 @@ const PasswordInput = React.forwardRef<
         size="sm"
         className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
         onClick={() => setShowPassword((prev) => !prev)}
-        disabled={disabled}
+        // disabled={disabled}
       >
-        {showPassword && !disabled ? (
+        {showPassword ? (
           <EyeIcon className="h-4 w-4" aria-hidden="true" />
         ) : (
           <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
         )}
         <span className="sr-only">
-          {showPassword ? 'Hide password' : 'Show password'}
+          {showPassword ? "Hide password" : "Show password"}
         </span>
       </Button>
 
@@ -57,6 +57,6 @@ const PasswordInput = React.forwardRef<
     </div>
   );
 });
-PasswordInput.displayName = 'PasswordInput';
+PasswordInput.displayName = "PasswordInput";
 
 export { PasswordInput };
