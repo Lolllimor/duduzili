@@ -1,16 +1,17 @@
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { EmptyState } from '@/components/settings/empty-state';
-import { ContactInfo } from '@/components/settings/contact-info';
-import { AboutFilled } from '@/components/settings/about-filled';
+import { Faq } from '@/components/settings/faq/faq';
+import { About } from '@/components/settings/about/about';
+import { Contact } from '@/components/settings/contact/contact';
+import { Privacy } from '@/components/settings/privacy/privacy';
+import { Deleted } from '@/components/settings/deleted/deleted';
+import { Deactivated } from '@/components/settings/deactivated/deactivated';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 function ConfigPage() {
   return (
-    <div className="flex w-full h-full items-start">
-      <div className="flex flex-col  w-full h-full  overflow-auto ">
+    <div className=" w-full h-full items-start">
         <Tabs
-          defaultValue="about"
+          defaultValue="privacy"
           className="w-full  gap-6 flex flex-col h-full "
         >
           <TabsList className="w-full text-sm gap-2 flex justify-start rounded-[10px] h-fit border border-[#F2F4F7] bg-[#F9FAFB] ">
@@ -60,45 +61,42 @@ function ConfigPage() {
           {/* <div className="border border-[#E5E6E8] rounded-[10px] flex h-full  overflow-auto"> */}
           <TabsContent
             value="about"
-            className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
+            className="w-full border border-[#E5E6E8] rounded-[10px] bg-white h-full overflow-auto "
           >
-            {/* <EmptyState
-              title="About Duduzili"
-              paragraph=" Write a descriptive content about the platform for users
-                      to learn"
-              btnText="About Duduzili"
-            /> */}
-            <AboutFilled />
+            <About />
           </TabsContent>
           <TabsContent
             value="contact"
-            className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
+            className="w-full border border-[#E5E6E8] rounded-[10px] bg-white  h-full overflow-auto "
           >
-            <ContactInfo />
+            <Contact />
           </TabsContent>
           <TabsContent
             value="privacy"
-            className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
+            className="w-full border border-[#E5E6E8] rounded-[10px] bg-white  h-full overflow-auto "
           >
-            <EmptyState
-              title="Privacy Policy"
-              paragraph=" Write a descriptive content about the privacy policy of the platform for users to abide with"
-              btnText="Privacy Policy"
-            />
+            <Privacy />
           </TabsContent>
           <TabsContent
             value="faq"
-            className="w-full border border-[#E5E6E8] rounded-[10px]   h-full overflow-auto "
+            className="w-full border border-[#E5E6E8] rounded-[10px] flex bg-white  h-full overflow-auto "
           >
-            <EmptyState
-              title="FAQ"
-              paragraph=" Write a descriptive content about the platform for users to learn"
-              btnText="Add Question"
-            />
+            <Faq />
+          </TabsContent>
+          <TabsContent
+            value="deactivated"
+            className="w-full border border-[#E5E6E8] rounded-[10px] bg-white  h-full overflow-auto "
+          >
+            <Deactivated />
+          </TabsContent>
+          <TabsContent
+            value="deleted"
+            className="w-full border border-[#E5E6E8] rounded-[10px] bg-white   h-full overflow-auto "
+          >
+            <Deleted />
           </TabsContent>
           {/* </div> */}
         </Tabs>
-      </div>
     </div>
   );
 }

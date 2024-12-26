@@ -1,18 +1,26 @@
+import { combineReducers } from 'redux';
+import { createLogger } from 'redux-logger';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { combineReducers } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
-import { createLogger } from 'redux-logger';
 
 import storage from 'redux-persist/lib/storage';
 // import { apiSlice } from "./features/apiSlice";
 import authSlice from './features/auth/authSlice';
-import  aboutSlice  from './features/settings/aboutSlice';
+import faqSlice from './features/settings/faqSlice';
+import aboutSlice from './features/settings/aboutSlice';
+import contactSlice from './features/settings/contactSlice';
+import privacySlice from './features/settings/privacySlice';
+import deactivatedSlice from './features/settings/deactivatedSlice';
 
 const rootReducer = combineReducers({
   // [apiSlice.reducerPath]: apiSlice.reducer,
+  faq: faqSlice,
   auth: authSlice,
   about: aboutSlice,
+  privacy: privacySlice,
+  contact: contactSlice,
+  deactivated: deactivatedSlice,
 });
 
 const persistConfig = {

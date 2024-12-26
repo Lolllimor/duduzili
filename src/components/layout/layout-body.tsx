@@ -1,5 +1,5 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   House,
   PanelRightOpen,
@@ -16,18 +16,18 @@ import {
   Flag,
   Bell,
   Settings,
-} from "lucide-react";
-import Link from "next/link";
-import { BiUserCheck } from "react-icons/bi";
-import Image from "next/image";
-import clsx from "clsx";
+} from 'lucide-react';
+import Link from 'next/link';
+import { BiUserCheck } from 'react-icons/bi';
+import Image from 'next/image';
+import clsx from 'clsx';
 
-import { CgSupport } from "react-icons/cg";
-import { RiStore2Line } from "react-icons/ri";
-import { HiOutlinePresentationChartLine } from "react-icons/hi";
-import { usePathname } from "next/navigation";
-import { Input } from "../ui/input";
-import Header from "./header";
+import { CgSupport } from 'react-icons/cg';
+import { RiStore2Line } from 'react-icons/ri';
+import { HiOutlinePresentationChartLine } from 'react-icons/hi';
+import { usePathname } from 'next/navigation';
+import { Input } from '../ui/input';
+import Header from './header';
 
 export const DashboardLayout = ({
   children,
@@ -35,75 +35,80 @@ export const DashboardLayout = ({
   children: React.ReactNode;
 }) => {
   const [toggle, setToggle] = useState<boolean>(true);
-  const [show, setShow] = useState({ action: "", icon: "" });
+  const [show, setShow] = useState({ action: '', icon: '' });
   const handleToggle = () => {
     setToggle(!toggle);
   };
   const sideBar = [
-    { name: "home", link: "/dashboard", icon: <House size={24} /> },
+    { name: 'home', link: '/dashboard', icon: <House size={24} /> },
 
     {
-      name: "User",
-      link: "/user",
+      name: 'User',
+      link: '/user',
       icon: <Users size={24} />,
     },
 
     {
-      name: "Community",
-      link: "/community",
+      name: 'Community',
+      link: '/community',
       icon: <Globe size={24} />,
     },
     {
-      name: "Interests",
-      link: "/interests",
+      name: 'Interests',
+      link: '/interests',
       icon: <Hash size={24} />,
     },
     {
-      name: "Feeds",
-      link: "/feeds",
+      name: 'Feeds',
+      link: '/feeds',
       icon: <LayoutGrid size={24} />,
     },
 
     {
-      name: "Reporting list",
-      link: "/reporting-list",
+      name: 'Reporting list',
+      link: '/reporting-list',
       icon: <Flag size={24} />,
     },
 
     {
-      name: "Notification",
-      link: "/notification",
+      name: 'Notification',
+      link: '/notification',
       icon: <Bell size={24} />,
     },
   ];
 
   const location = [
     {
-      name: "Access Management",
-      link: "/management",
+      name: 'Access Management',
+      link: '/management',
       icon: <BiUserCheck size={24} />,
     },
     {
-      name: "Admin",
-      link: "/admin",
+      name: 'Admin',
+      link: '/admin',
       icon: <HiOutlinePresentationChartLine size={24} />,
     },
-    { name: "Support", link: "/support", icon: <CgSupport size={24} /> },
-    { name: "Settings", link: "/settings", icon: <Settings size={24} /> },
+    { name: 'Support', link: '/support', icon: <CgSupport size={24} /> },
+    { name: 'Settings', link: '/settings', icon: <Settings size={24} /> },
   ];
 
   const pathName = usePathname();
-  const formattedPathname = pathName.startsWith("/")
+  const formattedPathname = pathName.startsWith('/')
     ? pathName.slice(1)
     : pathName;
+
+  const name = location.find(
+    (item) => formattedPathname === item.link.slice(1)
+  )?.name;
+  console.log(name);
 
   return (
     <section className="flex items-start w-full h-screen">
       <div
         className={clsx(
           toggle
-            ? "w-[272px] h-screen relative bg-[#4534B8]"
-            : "w-[88px] h-screen relative bg-[#4534B8]"
+            ? 'w-[272px] h-screen relative bg-[#4534B8]'
+            : 'w-[88px] h-screen relative bg-[#4534B8]'
         )}
       >
         <div className="h-[72px] px-4 w-full flex items-center justify-between">
@@ -133,7 +138,7 @@ export const DashboardLayout = ({
 
         <div
           className="flex flex-col overflow-y-auto transact-scroll"
-          style={{ height: "calc(100vh - 72px)" }}
+          style={{ height: 'calc(100vh - 72px)' }}
         >
           {/* Menu */}
           <div className="flex flex-col gap-2 mx-3">
@@ -155,8 +160,8 @@ export const DashboardLayout = ({
                 key={name}
                 className={clsx(
                   pathName.startsWith(link)
-                    ? "text-[#ECEBF8]  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]"
-                    : "text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in"
+                    ? 'text-[#ECEBF8]  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]'
+                    : 'text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in'
                 )}
               >
                 <div className="flex items-center">
@@ -179,8 +184,8 @@ export const DashboardLayout = ({
                   key={name}
                   className={clsx(
                     pathName.startsWith(link)
-                      ? "text-[#ECEBF8]  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]"
-                      : "text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in"
+                      ? 'text-[#ECEBF8]  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]'
+                      : 'text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in'
                   )}
                 >
                   <div className="flex items-center">
@@ -215,7 +220,7 @@ export const DashboardLayout = ({
         </div>
       </div>
       <div className="flex flex-col h-full flex-1 overflow-auto">
-        <Header component={formattedPathname} />
+        <Header component={name} />
         <div className="p-6 bg-[#F5F6FA] flex-1">{children}</div>
       </div>
     </section>

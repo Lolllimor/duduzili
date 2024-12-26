@@ -6,11 +6,11 @@ import { IoMdAdd } from 'react-icons/io';
 export const EmptyState = ({
   title,
   paragraph,
-  btnText,
+  btn,
 }: {
   title: string;
   paragraph: string;
-  btnText?: ReactNode;
+  btn?: ReactNode;
 }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-2 w-full h-full  font-inter">
@@ -29,12 +29,7 @@ export const EmptyState = ({
             {paragraph}
           </p>
         </div>
-        {btnText && (
-          <Button className="h-10 w-[160px] rounded-[48px] text-sm font-semibold flex items-center gap-2.5 bg-[#4534B8] text-white">
-            <IoMdAdd className="size-5" />
-            {btnText}
-          </Button>
-        )}
+        {btn}
       </div>
     </div>
   );

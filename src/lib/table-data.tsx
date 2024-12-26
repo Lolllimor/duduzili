@@ -64,16 +64,19 @@ export function DataTable<TData, TValue>({
       {/* table */}
       {/* bg-[#F9FAFB] */}
       <div className="">
-        <Table className="text-[#565D62] text-sm font-normal">
-          <TableHeader className="">
+        <Table className="text-[#565D62]  text-sm ">
+          <TableHeader className="bg-[#F9FAFB] font-medium text-xs">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="border-b border-transparent"
+                className="border-b border-transparent "
               >
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="bg-red-[#F9FAFB]">
+                    <TableHead
+                      key={header.id}
+                      className="px-6 !bg-[#F9FAFB] border-b  py-3 border-[#E5E6E8] text-[#344054] font-medium"
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -86,9 +89,9 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="">
+          <TableBody className="font-normal">
             {isLoading ? (
-              <TableRow className="bg-white">
+              <TableRow className=" ">
                 <TableCell
                   colSpan={columns.length}
                   className="h-24 text-center"
@@ -100,11 +103,11 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="border-b border-transparent py-[100px]"
+                  data-state={row.getIsSelected() && 'selected'}
+                  className="border-b border-[#E5E6E8] py-[100px] "
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell key={cell.id} className="px-6">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
