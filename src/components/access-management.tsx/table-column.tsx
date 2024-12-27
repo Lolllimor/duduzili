@@ -3,6 +3,9 @@ import dayjs from 'dayjs';
 import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
 import { FetchPermissionGroupResult } from '@/lib/managementTypes';
+import { MoreOptions } from './more-option';
+
+
 
 export const ManagementData = [
   {
@@ -42,7 +45,6 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     cell: (info) => (
       <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
     ),
-
   },
 
   {
@@ -51,7 +53,6 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     cell: (info) => (
       <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
     ),
-
   },
   {
     accessorKey: 'is_active',
@@ -93,6 +94,7 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     accessorKey: 'action',
     header: 'Action',
     cell: ({ row }) => {
+      return <MoreOptions data={row.original} />;
       // return <ActivateBtn username={row.original.username} />;
     },
     enableSorting: false,

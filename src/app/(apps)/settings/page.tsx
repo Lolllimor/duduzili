@@ -1,20 +1,21 @@
-
 import { Faq } from '@/components/settings/faq/faq';
 import { About } from '@/components/settings/about/about';
+import GeneralLayout from '@/components/layout/generalLayout';
+import { Deleted } from '@/components/settings/deleted/deleted';
 import { Contact } from '@/components/settings/contact/contact';
 import { Privacy } from '@/components/settings/privacy/privacy';
-import { Deleted } from '@/components/settings/deleted/deleted';
 import { Deactivated } from '@/components/settings/deactivated/deactivated';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 function ConfigPage() {
   return (
-    <div className=" w-full h-full items-start">
+    <GeneralLayout pageTitle="Settings">
+      <div className=" w-full h-full items-start px-6">
         <Tabs
           defaultValue="privacy"
           className="w-full  gap-6 flex flex-col h-full "
         >
-          <TabsList className="w-full text-sm gap-2 flex justify-start rounded-[10px] h-fit border border-[#F2F4F7] bg-[#F9FAFB] ">
+          <TabsList className="w-full text-sm gap-2 flex justify-start rounded-[10px] h-fit border border-[#F2F4F7] overflow-x-auto bg-[#F9FAFB] ">
             <TabsTrigger
               value="about"
               className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] "
@@ -97,7 +98,8 @@ function ConfigPage() {
           </TabsContent>
           {/* </div> */}
         </Tabs>
-    </div>
+      </div>
+    </GeneralLayout>
   );
 }
 

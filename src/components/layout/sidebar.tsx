@@ -18,7 +18,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { BiUserCheck } from 'react-icons/bi';
 
-
 import { Input } from '../ui/input';
 import { CgSupport } from 'react-icons/cg';
 import { usePathname } from 'next/navigation';
@@ -81,17 +80,16 @@ export const Sidebar = () => {
     },
     { name: 'Support', link: '/support', icon: <CgSupport size={24} /> },
     { name: 'Settings', link: '/settings', icon: <Settings size={24} /> },
-    ];
-    
-    
-      const pathName = usePathname();
+  ];
+
+  const pathName = usePathname();
 
   return (
     <div
       className={clsx(
         toggle
-          ? 'w-[272px] h-screen relative bg-[#4534B8]'
-          : 'w-[88px] h-screen relative bg-[#4534B8]'
+          ? 'w-[272px] h-screen relative bg-[#4534B8] flex-shrink-0'
+          : 'w-[88px] h-screen relative bg-[#4534B8] flex-shrink-0'
       )}
     >
       <div className="h-[72px] px-4 w-full flex items-center justify-between">
@@ -143,7 +141,7 @@ export const Sidebar = () => {
               key={name}
               className={clsx(
                 pathName.startsWith(link)
-                  ? 'text-[#ECEBF8]  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]'
+                  ? 'text-[#ECEBF8] text-nowrap  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]'
                   : 'text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in'
               )}
             >
@@ -167,7 +165,7 @@ export const Sidebar = () => {
                 key={name}
                 className={clsx(
                   pathName.startsWith(link)
-                    ? 'text-[#ECEBF8]  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]'
+                    ? 'text-[#ECEBF8] text-nowrap  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]'
                     : 'text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in'
                 )}
               >

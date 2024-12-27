@@ -12,6 +12,7 @@ import aboutSlice from './features/settings/aboutSlice';
 import contactSlice from './features/settings/contactSlice';
 import privacySlice from './features/settings/privacySlice';
 import deactivatedSlice from './features/settings/deactivatedSlice';
+import managementSlice from "./features/management/managementSlice"
 
 const rootReducer = combineReducers({
   // [apiSlice.reducerPath]: apiSlice.reducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   privacy: privacySlice,
   contact: contactSlice,
   deactivated: deactivatedSlice,
+  management: managementSlice,
 });
 
 const persistConfig = {

@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Sora', 'sans-serif'],
+        sora: ['Sora', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
         switzer: ['Switzer', 'sans-serif'],

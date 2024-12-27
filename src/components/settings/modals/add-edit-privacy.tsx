@@ -81,9 +81,6 @@ export const AddEditPrivacy = () => {
     dispatch(fetchPrivacy());
   }, []);
 
-  // useEffect(() => {
-  //   if (data) setValue('text', data.about);
-  // }, [data]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

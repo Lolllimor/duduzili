@@ -23,4 +23,21 @@ export const endpoints = {
       activate: 'api/administration/activate-users/',
     },
   },
+  management: {
+    permissionGroup: {
+      crud: 'api/administration/fetch-permission-group/',
+      toggle: 'api/administration/toggle-permission-group/',
+    },
+    user: {
+      toggleAccess: 'api/administration/toggle-user-status/',
+      revokeAccess: 'api/administration/revoke-access/',
+      permissionDetails: 'api/administration/user-permission-details/',
+      updateAccess: 'api/administration/update-user-access/',
+    },
+    fetchPermission: 'api/administration/fetch-permissions/',
+    viewMembers: 'api/administration/view-group-members/',
+    fetchPermissionGroupList: 'api/administration/permission-group-list/',
+    addAdminToGroup: 'api/administration/add-admin-to-group/',
+    adminUserList: 'api/administration/admin-user/',
+  },
 };

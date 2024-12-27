@@ -5,12 +5,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import Image from 'next/image';
 import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
 
 import { IoClose } from 'react-icons/io5';
 
-import Image from 'next/image';
 
 export const AddInterestModal = () => {
   const tags = [
@@ -47,9 +47,21 @@ export const AddInterestModal = () => {
   ];
   return (
     <Dialog>
-      <DialogTrigger className="text-[#2A2A2A] flex gap-2 items-center text-xs ">
-        <Image src="/edit.svg" alt="edit" width={16} height={16} />
-        Edit topic
+      <DialogTrigger
+        asChild
+        className="text-[#2A2A2A] flex gap-2 items-center text-xs "
+      >
+        <Button className="border-2 border-dashed border-[#D9D9DB] rounded-xl w-[346px] h-[300px] flex justify-center items-center bg-white hover:bg-white gap-6 flex-col ">
+          <div className="w-20 h-20 rounded-full bg-[#ECEBF8] flex items-center justify-center">
+            <Image
+              src="/hashtag.svg"
+              alt="hashtag-image"
+              width={32}
+              height={32}
+            />
+          </div>
+          <span className="text-[#242428] text-base">Add New Topic</span>
+        </Button>
       </DialogTrigger>
       <DialogContent className="px-6 py-8 gap-5 w-[645px] [&>button]:hidden !rounded-[20px] max-h-[634px] h-full overflow-auto">
         <DialogTitle>
