@@ -1,34 +1,43 @@
-"use client";
-import { z } from "zod";
-import Image from "next/image";
-import CryptoJS from "crypto-js";
-import { Login } from "@/lib/type";
-import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
-import { FaSpinner } from "react-icons/fa";
-import { LOGIN_API } from "@/axios-config";
-import { useRouter } from "next/navigation";
-import { endpoints } from "@/redux/endpoint";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { handleError } from "@/lib/errorHandler";
-import React, { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { PasswordInput } from "@/components/password-input";
-import { useLoginMutation } from "@/redux/features/auth/authApi";
+'use client';
+import { z } from 'zod';
+import Image from 'next/image';
+import CryptoJS from 'crypto-js';
+import { Login } from '@/lib/type';
+import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { FaSpinner } from 'react-icons/fa';
+import { LOGIN_API } from '@/axios-config';
+import { useRouter } from 'next/navigation';
+import { endpoints } from '@/redux/endpoint';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { handleError } from '@/lib/errorHandler';
+import React, { useEffect, useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { PasswordInput } from '@/components/password-input';
+import { useLoginMutation } from '@/redux/features/auth/authApi';
+import { cookieStorage } from '@ibnlanre/portal';
 
 const page = () => {
   const { push } = useRouter();
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: Login) => {
       const response = await LOGIN_API.post(endpoints.signin, data);
+      return response.data;
     },
-    mutationKey: ["signin"],
+    mutationKey: ['signin'],
 
-    onSuccess() {
-      toast.success("Yuppy! You just sign in");
-      push("/dashboard");
+    onSuccess(data) {
+      cookieStorage.setItem(
+        'duduzili-auth',
+        JSON.stringify({
+          access_token: data?.data?.access_token,
+        })
+      );
+      toast.success('Yuppy! You just sign in');
+      push('/dashboard');
+      console.log('Server response:', data);
     },
     onError(error) {
       handleError(error);
@@ -37,19 +46,19 @@ const page = () => {
 
   const formSchema = z.object({
     username_email: z.string().min(5, {
-      message: "Enter your username or email",
+      message: 'Enter your username or email',
     }),
-    password: z.string().min(2, "Enter your password"),
+    password: z.string().min(2, 'Enter your password'),
   });
 
   const { handleSubmit, register, formState, control } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
-    mode: "onChange",
+    mode: 'onChange',
     defaultValues: {
-      username_email: "",
-      password: "",
+      username_email: '',
+      password: '',
     },
   });
 
@@ -152,7 +161,7 @@ const page = () => {
                   Username/Email Address
                 </label>
                 <Input
-                  {...register("username_email")}
+                  {...register('username_email')}
                   placeholder="Username/Email Address"
                   className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] font-normal"
                 />
@@ -170,7 +179,7 @@ const page = () => {
                   Password
                 </label>
                 <PasswordInput
-                  {...register("password")}
+                  {...register('password')}
                   id="current_password"
                   // value={currentPassword}
                   // value={}
@@ -198,7 +207,7 @@ const page = () => {
                 type="submit"
                 className="bg-[#4534B8] border-none rounded-lg h-11 "
               >
-                {isPending ? <FaSpinner className="animate-spin" /> : "Log in"}
+                {isPending ? <FaSpinner className="animate-spin" /> : 'Log in'}
               </Button>
             </form>
           </div>

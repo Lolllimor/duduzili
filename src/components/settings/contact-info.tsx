@@ -1,17 +1,14 @@
-import React from 'react';
-import { Button } from '../ui/button';
-import { IoMdAdd } from 'react-icons/io';
+'use client';
 import Image from 'next/image';
+import { EditContact } from './modals/edit-contact';
+import { ContactInfo as ContactDataType } from '@/lib/settingTypes';
 
-export const ContactInfo = () => {
+export const ContactInfo = ({ data }: { data: ContactDataType }) => {
   return (
     <div className="flex flex-col p-8 gap-8 ">
       <div className="flex justify-between items-center ">
         <span className="text-2xl font-bold">Contact Info</span>
-        <Button className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2.5 bg-[#4534B8] text-white">
-          <IoMdAdd className="size-5" />
-          Edit Info
-        </Button>
+        <EditContact />
       </div>
       <div className=" w-full h-fit p-8 rounded-[20px] shadow gap-5 flex flex-col">
         <div className="flex gap-4 items-center">
@@ -24,7 +21,7 @@ export const ContactInfo = () => {
           <div className="flex flex-col justify-between">
             <span className="text-sm text-[#757575]">Email Address</span>
             <span className="text-[#2A2A2A] text-base font-medium">
-              support@duduzili.com
+              {data.email}
             </span>
           </div>
         </div>
@@ -38,7 +35,7 @@ export const ContactInfo = () => {
           <div className="flex flex-col justify-between">
             <span className="text-sm text-[#757575]">Phone number</span>
             <span className="text-[#2A2A2A] text-base font-medium">
-              +2348106545067
+              {data.phone}
             </span>
           </div>
         </div>
@@ -52,8 +49,7 @@ export const ContactInfo = () => {
           <div className="flex flex-col justify-between">
             <span className="text-sm text-[#757575]">Address</span>
             <span className="text-[#2A2A2A] text-base font-medium">
-              2nd Floor, Ajoke Christiana House, Idi-Ape, Iwo road, Ibadan,
-              Nigeria
+              {data.address}
             </span>
           </div>
         </div>

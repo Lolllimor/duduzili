@@ -1,20 +1,30 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { combineReducers } from "redux";
-import { persistReducer, persistStore } from "redux-persist";
-import { createLogger } from "redux-logger";
+import { combineReducers } from 'redux';
+import { createLogger } from 'redux-logger';
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { persistReducer, persistStore } from 'redux-persist';
 
-import storage from "redux-persist/lib/storage";
+import storage from 'redux-persist/lib/storage';
 // import { apiSlice } from "./features/apiSlice";
-import authSlice from "./features/auth/authSlice";
+import authSlice from './features/auth/authSlice';
+import faqSlice from './features/settings/faqSlice';
+import aboutSlice from './features/settings/aboutSlice';
+import contactSlice from './features/settings/contactSlice';
+import privacySlice from './features/settings/privacySlice';
+import deactivatedSlice from './features/settings/deactivatedSlice';
 
 const rootReducer = combineReducers({
   // [apiSlice.reducerPath]: apiSlice.reducer,
+  faq: faqSlice,
   auth: authSlice,
+  about: aboutSlice,
+  privacy: privacySlice,
+  contact: contactSlice,
+  deactivated: deactivatedSlice,
 });
 
 const persistConfig = {
-  key: "app",
+  key: 'app',
   storage,
 };
 
@@ -30,14 +40,14 @@ export const store = configureStore({
     // .concat(apiSlice.middleware);
 
     // Add logger middleware in development
-    if (process.env.NODE_ENV === "development") {
+    if (process.env.NODE_ENV === 'development') {
       const logger = createLogger();
       middlewares.push(logger); // Use `push` to add the logger
     }
 
     return middlewares; // Return the complete middleware array
   },
-  devTools: process.env.NODE_ENV === "development", // Simplify devTools condition
+  devTools: process.env.NODE_ENV === 'development', // Simplify devTools condition
 });
 
 // Setup listeners for the API slices

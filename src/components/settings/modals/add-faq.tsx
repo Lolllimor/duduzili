@@ -6,16 +6,77 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 
+import { z } from 'zod';
 import Image from 'next/image';
-import { Textarea } from '@/components/ui/textarea';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { API } from '@/axios-config';
+import { IoMdAdd } from 'react-icons/io';
+import { useForm } from 'react-hook-form';
+import { FaSpinner } from 'react-icons/fa';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/redux/store';
+import { endpoints } from '@/redux/endpoint';
 import { Input } from '@/components/ui/input';
+import { FaqRequest } from '@/lib/settingTypes';
+import { Button } from '@/components/ui/button';
+import { handleError } from '@/lib/errorHandler';
+import { Textarea } from '@/components/ui/textarea';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { fetchFaq } from '@/redux/features/settings/faqSlice';
+
+const formSchema = z.object({
+  question: z.string().min(8, { message: 'Minimum of 8 letter' }),
+  answer: z.string().min(8, { message: 'Minimum of 8 letter' }),
+});
 
 export const AddFaq = () => {
+  const dispatch: AppDispatch = useDispatch();
+
+  const [open, setOpen] = useState(false);
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: FaqRequest) => {
+      const response = await API.post(endpoints.setting.faq.create, data);
+      return response.data;
+    },
+
+    mutationKey: ['addFaq'],
+
+    onSuccess(data) {
+      toast.success(' You just created a new faq');
+      reset();
+      setOpen(false);
+      dispatch(fetchFaq());
+    },
+    onError(error) {
+      handleError(error);
+    },
+  });
+
+  const { handleSubmit, register, formState, reset } = useForm<
+    z.infer<typeof formSchema>
+  >({
+    resolver: zodResolver(formSchema),
+    mode: 'onChange',
+    defaultValues: {
+      question: '',
+      answer: '',
+    },
+  });
+
+  const onSubmit = (data: z.infer<typeof formSchema>) => {
+    mutate(data);
+  };
+  const { errors, isValid } = formState;
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="text-[#2A2A2A] flex gap-2 items-center text-xs ">
-        <Image src="/edit.svg" alt="edit" width={16} height={16} />
-        Add New FAQ
+        <div className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2.5 bg-[#4534B8] text-white justify-center">
+          <IoMdAdd className="size-5" />
+          Add Question
+        </div>
       </DialogTrigger>
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto text-inter">
         <DialogTitle className="h-fit">
@@ -32,38 +93,45 @@ export const AddFaq = () => {
             </DialogClose>
           </div>
         </DialogTitle>
-        <div className=" flex flex-col w-full  gap-2 font-poppins">
-          <label
-            htmlFor="phone number"
-            className="text-sm text-[#2A2A2A] font-medium "
-          >
-            Question
-          </label>
-          <Input
-            placeholder="Enter phone number"
-            className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#ABAEB5] font-normal text-[14px]"
-          />
-        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className=" flex flex-col w-full  gap-2 font-poppins">
+            <label
+              htmlFor="phone number"
+              className="text-sm text-[#2A2A2A] font-medium "
+            >
+              Question
+            </label>
+            <Input
+              {...register('question')}
+              placeholder="e.g. How do I register on Duduzili"
+              className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#ABAEB5] font-normal text-[14px]"
+            />
+          </div>
 
-        <div className=" flex flex-col w-full  gap-1.5 font-poppins">
-          <label
-            htmlFor="answer"
-            className="text-base text-[#2A2A2A] font-medium "
-          >
-            Answer
-          </label>
-          <Textarea
-            placeholder="Enter text here..."
-            className="resize-none h-[clamp(80px,5vh,114px)] placeholder:text-[#BDBDBD] text-[14px]"
-          />
-        </div>
+          <div className=" flex flex-col w-full  gap-1.5 font-poppins">
+            <label
+              htmlFor="answer"
+              className="text-base text-[#2A2A2A] font-medium "
+            >
+              Answer
+            </label>
+            <Textarea
+              {...register('answer')}
+              placeholder="Enter text here..."
+              className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-[14px]"
+            />
+            <p className="text-[#81848F] text-sm">
+              Not more than 200 characters
+            </p>
+          </div>
 
-        <div
-          role="button"
-          className="bg-[#4534B8] border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center mt-5 font-inter"
-        >
-          Add FAQ
-        </div>
+          <Button
+            type="submit"
+            className="bg-[#4534B8] border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center mt-5 font-inter"
+          >
+            Add FAQ
+          </Button>
+        </form>
       </DialogContent>
     </Dialog>
   );
