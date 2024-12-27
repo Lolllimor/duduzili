@@ -1,3 +1,7 @@
+import { Dashboard } from "@/components/dashboard/page";
+
+import React from "react";
+
 import {
   paymentHistoryColumns,
   paymentHistoryData,
@@ -11,7 +15,12 @@ const page = () => {
     <GeneralLayout pageTitle="Dashboard" >
 
       <></>
+      <Dashboard />
     </GeneralLayout>
+    // <DataTable
+    //     columns={paymentHistoryColumns}
+    //     data={paymentHistoryData ?? []}
+    //   />
   );
 };
 
