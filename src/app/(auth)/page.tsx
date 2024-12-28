@@ -16,7 +16,6 @@ import React, { useEffect, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { PasswordInput } from '@/components/password-input';
-import { useLoginMutation } from '@/redux/features/auth/authApi';
 import { cookieStorage } from '@ibnlanre/portal';
 
 const page = () => {
