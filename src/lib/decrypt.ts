@@ -1,8 +1,8 @@
 import CryptoJS from "crypto-js";
 export const decrypt = (val: any) => {
-  const crypto_key = process.env.NEXT_PUBLIC_ENCRYPTION_KEY as string;
-  const crypto_iv = process.env.NEXT_PUBLIC_ENCRYPTION_VECTOR as string;
-  const shouldEncrypt = process.env.NEXT_PUBLIC_SHOULD_ENCRYPT;
+  const crypto_key = process.env.NEXT_PUBLIC_ADMIN_ENCRYPTION_KEY as string;
+  const crypto_iv = process.env.NEXT_PUBLIC_ADMIN_ENCRYPTION_VECTOR as string;
+  const shouldEncrypt = process.env.NEXT_PUBLIC_ADMIN_SHOULD_ENCRYPT;
   if (shouldEncrypt !== "true") return val;
 
   var key = CryptoJS.enc.Utf8.parse(crypto_key);

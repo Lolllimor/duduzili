@@ -6,19 +6,16 @@ import { EmptyState } from '../empty-state';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
 import { fetchFaq } from '@/redux/features/settings/faqSlice';
+import { useFetchFaqQuery } from '@/redux/features/apiSlice';
 
 export const Faq = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { data, loading, error } = useSelector((state: RootState) => state.faq);
+ 
 
-  useEffect(() => {
-    dispatch(fetchFaq());
-  }, []);
-
+  const { data } = useFetchFaqQuery();
   return (
-    <div className="h-full">
-      {data?.count ? (
-              <FaqFilled data={ data} />
+    <div className="h-full w-full">
+      {data?.data.count ? (
+              <FaqFilled />
       ) : (
         <EmptyState
           btn={<AddFaq />}

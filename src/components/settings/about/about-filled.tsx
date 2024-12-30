@@ -2,13 +2,16 @@
 
 import DOMPurify from 'dompurify';
 import { AddEditAbout } from '../modals/add-edit-about';
+import { useFetchAboutQuery } from '@/redux/features/apiSlice';
 
-export const AboutFilled = ({ paragraphs }: { paragraphs?: string }) => {
+export const AboutFilled = () => {
+
+  const { data} = useFetchAboutQuery();
 
   const formattedText =
-    paragraphs
-      ?.split('\n\n')
-      .map((paragraph) => `<p>${paragraph.replace(/\n/g, '<br/><br/>')}</p>`)
+    data
+      ?.data.about.split('\n\n')
+      .map((paragraph:string) => `<p>${paragraph.replace(/\n/g, '<br/><br/>')}</p>`)
       .join(' <br/>') || '';
   const sanitizedText = DOMPurify.sanitize(formattedText);
   return (

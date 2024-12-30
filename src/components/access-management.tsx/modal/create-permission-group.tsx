@@ -19,14 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchPermssion } from '@/redux/features/management/managementSlice';
 export const CreatePermissionGroup = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const permissionData = useSelector((state: RootState) => state.management);
-  const data = permissionData;
-  console.log(data);
 
-  useEffect(() => {
-    dispatch(fetchPermssion());
-  }, []);
 
   return (
     <Dialog>

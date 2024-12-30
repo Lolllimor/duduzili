@@ -1,6 +1,6 @@
 import { DataTable } from '@/lib/table-data';
 import { DeactivatedData } from '@/lib/settingTypes';
-import { DeactivatedColumn, DeactivatedTableData } from './table-column';
+import { DeactivatedColumn, DeactivatedTableData } from '../deactivated/table-column';
 
 export const DeactivatedFilled = () => {
   return (

@@ -4,14 +4,14 @@ import Image from 'next/image';
 import { IoMdAdd } from 'react-icons/io';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Textarea } from '@/components/ui/textarea';
-
 
 import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
@@ -22,47 +22,30 @@ import { endpoints } from '@/redux/endpoint';
 import { handleError } from '@/lib/errorHandler';
 import { useMutation } from '@tanstack/react-query';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AppDispatch, RootState } from '@/redux/store';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPrivacy } from '@/redux/features/settings/privacySlice';
+import {
+  useFetchPrivacyQuery,
+  usePostPrivacyMutation,
+} from '@/redux/features/apiSlice';
+import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 const formSchema = z.object({
   text: z.string().min(5, {
     message: 'Enter your privacy',
   }),
 });
+
 export const AddEditPrivacy = () => {
   const [open, setOpen] = useState(false);
-
-  const dispatch: AppDispatch = useDispatch();
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.privacy
-  );
-
-
-  const { mutate, isPending, isSuccess } = useMutation<
-    void,
-    unknown,
-    { text: string }
-  >({
-    mutationFn: async (data: { text: string }) => {
-      const response = await API.post(endpoints.setting.privacy.create, data);
-      return response.data;
+  const { data, isLoading } = useFetchPrivacyQuery();
+  const [
+    postPrivacy,
+    {
+      isSuccess: uploadSuccess,
+      isLoading: uploadingPost,
+      isError,
+      error: uploadError,
     },
-    mutationKey: ['createPrivacy'],
-    onSuccess(data) {
-      toast.success(' You just created a new about');
-      setOpen(false);
-      dispatch(fetchPrivacy());
-    },
-    onError(error) {
-      handleError(error);
-    },
-  });
-
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    mutate({ text: values.text });
-  };
+  ] = usePostPrivacyMutation();
 
   const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
@@ -70,17 +53,20 @@ export const AddEditPrivacy = () => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      text: data?.about ? data.about : '',
+      text: data?.data.about ? data.data.about : '',
     },
   });
-
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await postPrivacy(values).unwrap();
+      toast.success('Successfully updated');
+      setOpen(false);
+    } catch (error) {
+      errorMessageHandler(error as ErrorType);
+    }
+  };
 
   const { errors, isValid } = formState;
-
-  useEffect(() => {
-    dispatch(fetchPrivacy());
-  }, []);
-
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -108,6 +94,7 @@ export const AddEditPrivacy = () => {
             </DialogClose>
           </div>
         </DialogTitle>
+        <DialogDescription></DialogDescription>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col w-full gap-1.5">
             <label
@@ -117,6 +104,7 @@ export const AddEditPrivacy = () => {
               Policy
             </label>
             <Textarea
+              disabled={isLoading}
               {...register('text')}
               placeholder="Start typing..."
               className="text-base resize-none !h-[clamp(200px,50vh,545px)] border flex overflow-auto border-[#E5E6E8] w-[clamp(400px,40vw,740px)]"
@@ -131,7 +119,7 @@ export const AddEditPrivacy = () => {
             type="submit"
             className="bg-[#4534B8] border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center mt-5"
           >
-            {isPending ? <FaSpinner className="animate-spin" /> : 'Save'}
+            {uploadingPost ? <FaSpinner className="animate-spin" /> : 'Save'}
           </Button>
         </form>
       </DialogContent>

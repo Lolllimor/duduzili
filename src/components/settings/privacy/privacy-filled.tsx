@@ -2,12 +2,18 @@
 
 import DOMPurify from 'dompurify';
 import { AddEditPrivacy } from '../modals/add-edit-privacy';
+import { useFetchPrivacyQuery } from '@/redux/features/apiSlice';
 
-export const PrivacyFilled = ({ data }: { data?: string }) => {
+export const PrivacyFilled = () => {
+  const { data } = useFetchPrivacyQuery();
+
   const formattedText =
-    data
+    data?.data.about
       ?.split('\n\n')
-      .map((paragraph) => `<p>${paragraph.replace(/\n/g, '<br /><br/>')}</p>`)
+      .map(
+        (paragraph: string) =>
+          `<p>${paragraph.replace(/\n/g, '<br/><br/>')}</p>`
+      )
       .join(' <br/>') || '';
   const sanitizedText = DOMPurify.sanitize(formattedText);
   return (

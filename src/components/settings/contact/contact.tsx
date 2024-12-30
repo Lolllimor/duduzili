@@ -3,26 +3,17 @@ import React, { useEffect } from 'react';
 import { EmptyState } from '../empty-state';
 import { ContactInfo } from '../contact-info';
 import { EditContact } from '../modals/edit-contact';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/redux/store';
-import { fetchContact } from '@/redux/features/settings/contactSlice';
+import { useFetchContactQuery } from '@/redux/features/apiSlice';
 
 export const Contact = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.contact
-  );
-
-  useEffect(() => {
-    dispatch(fetchContact());
-  }, []);
+  const { data } = useFetchContactQuery();
 
   return (
     <div className="h-full">
       {data &&
-      typeof data.contact_info === 'object' &&
-      Object.keys(data.contact_info).length !== 0 ? (
-        <ContactInfo data={data.contact_info} />
+      typeof data.data.contact_info === 'object' &&
+      Object.keys(data.data.contact_info).length !== 0 ? (
+        <ContactInfo />
       ) : (
         <EmptyState
           btn={<EditContact />}

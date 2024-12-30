@@ -6,6 +6,7 @@ import { Contact } from '@/components/settings/contact/contact';
 import { Privacy } from '@/components/settings/privacy/privacy';
 import { Deactivated } from '@/components/settings/deactivated/deactivated';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { SocialMediaIntegration } from '@/components/settings/social-integration/social-integeration';
 
 function ConfigPage() {
   return (
@@ -83,6 +84,12 @@ function ConfigPage() {
             className="w-full border border-[#E5E6E8] rounded-[10px] flex bg-white  h-full overflow-auto "
           >
             <Faq />
+          </TabsContent>
+          <TabsContent
+            value="integration"
+            className="w-full border border-[#E5E6E8] rounded-[10px] bg-white  h-full overflow-auto "
+          >
+            <SocialMediaIntegration />
           </TabsContent>
           <TabsContent
             value="deactivated"

@@ -6,25 +6,24 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { IoMdAdd } from 'react-icons/io';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
-import { handleError } from '@/lib/errorHandler';
 import { Textarea } from '@/components/ui/textarea';
 
+import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { API } from '@/axios-config';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import { endpoints } from '@/redux/endpoint';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/redux/store';
-import { fetchAbout } from '@/redux/features/settings/aboutSlice';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useFetchAboutQuery,
+  usePostAboutMutation,
+} from '@/redux/features/apiSlice';
+import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 const formSchema = z.object({
   text: z.string().min(5, {
@@ -33,25 +32,16 @@ const formSchema = z.object({
 });
 export const AddEditAbout = () => {
   const [open, setOpen] = useState(false);
-
-  const dispatch: AppDispatch = useDispatch();
-  const { data, loading } = useSelector((state: RootState) => state.about);
-
-  const { mutate, isPending } = useMutation<void, unknown, { text: string }>({
-    mutationFn: async (data: { text: string }) => {
-      const response = await API.post(endpoints.setting.about.create, data);
-      return response.data;
+  const { data, error, isFetching } = useFetchAboutQuery();
+  const [
+    postAbout,
+    {
+      isSuccess: uploadSuccess,
+      isLoading: uploadingPost,
+      isError,
+      error: uploadError,
     },
-    mutationKey: ['createAbout'],
-    onSuccess(data) {
-      toast.success(' Successfully added');
-      setOpen(false);
-      dispatch(fetchAbout());
-    },
-    onError(error) {
-      handleError(error);
-    },
-  });
+  ] = usePostAboutMutation();
 
   const { handleSubmit, register, formState, control } = useForm<
     z.infer<typeof formSchema>
@@ -59,19 +49,22 @@ export const AddEditAbout = () => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      text: data?.about ? data.about : '',
+      text: data ? data.data.about : '',
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    mutate({ text: values.text });
+    await postAbout(values)
+      .unwrap()
+      .then(
+        () =>
+          uploadSuccess &&
+          (toast.success('Successfully updated'), setOpen(false))
+      )
+      .finally(() => isError && errorMessageHandler(uploadError as ErrorType));
   };
 
   const { errors, isValid } = formState;
-
-  useEffect(() => {
-    dispatch(fetchAbout());
-  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -99,6 +92,7 @@ export const AddEditAbout = () => {
             </DialogClose>
           </div>
         </DialogTitle>
+        <DialogDescription></DialogDescription>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className=" flex flex-col w-full  gap-1.5">
             <label
@@ -123,7 +117,7 @@ export const AddEditAbout = () => {
             type="submit"
             className="bg-[#4534B8] border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center mt-5 "
           >
-            {isPending ? <FaSpinner className="animate-spin" /> : 'Save'}
+            {uploadingPost ? <FaSpinner className="animate-spin" /> : 'Save'}
           </Button>
         </form>
       </DialogContent>

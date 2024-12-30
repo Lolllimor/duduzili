@@ -11,51 +11,43 @@ import { Textarea } from '@/components/ui/textarea';
 
 import { z } from 'zod';
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { API } from '@/axios-config';
 import { IoMdAdd } from 'react-icons/io';
 import { useForm } from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
-import { endpoints } from '@/redux/endpoint';
-import { handleError } from '@/lib/errorHandler';
 import { ContactInfo } from '@/lib/settingTypes';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/redux/store';
-import { fetchContact } from '@/redux/features/settings/contactSlice';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useFetchContactQuery,
+  usePostContactMutation,
+} from '@/redux/features/apiSlice';
+import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+
+const phoneRegex = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Enter a valid email address' }),
-  phone: z.string().min(11, { message: 'Enter a valid phone number' }),
+  phone: z.string().regex(phoneRegex, 'Invalid Number!'),
   address: z.string().min(5, {
     message: 'Enter your address',
   }),
 });
 
 export const EditContact = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { data, loading, error } = useSelector(
-    (state: RootState) => state.contact
-  );
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: ContactInfo) => {
-      const response = await API.post(endpoints.setting.contact.create, {
-        contact_info: data,
-      });
-      return response.data;
+  const [open, setOpen] = useState(false);
+  const { data, error, isFetching } = useFetchContactQuery();
+  const [
+    postContact,
+    {
+      isSuccess: uploadSuccess,
+      isLoading: uploadingPost,
+      isError,
+      error: uploadError,
     },
-    mutationKey: ['createContact'],
-    onSuccess(data) {
-      toast.success(' You just created a new contact');
-      dispatch(fetchContact());
-    },
-    onError(error) {
-      handleError(error);
-    },
-  });
+  ] = usePostContactMutation();
 
   const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
@@ -63,31 +55,26 @@ export const EditContact = () => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      email: '',
-      phone: '',
-      address: '',
+      email: data ? data.data.contact_info.email : '',
+      phone: data ? data.data.contact_info.phone : '',
+      address: data ? data.data.contact_info.address : '',
     },
   });
 
   const { errors, isValid } = formState;
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    mutate({ email: data.email, phone: data.phone, address: data.address });
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const response = await postContact({ contact_info: [data] }).unwrap();
+      toast.success('Successfully updated');
+      setOpen(false);
+    } catch (error) {
+      errorMessageHandler(error as ErrorType);
+    }
   };
 
-  useEffect(() => {
-    dispatch(fetchContact());
-  }, []);
-  useEffect(() => {
-    if (data?.contact_info) {
-      setValue('address', data?.contact_info.address);
-      setValue('email', data?.contact_info.email);
-      setValue('phone', String(data?.contact_info.phone));
-    }
-  }, [data]);
-
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
         asChild
         className="text-[#2A2A2A] flex gap-2 items-center cursor-pointer text-xs "
@@ -172,18 +159,16 @@ export const EditContact = () => {
             </div>
           </div>
 
-          <DialogClose aria-label="Submit" className="w-full" asChild>
-            <Button
-              type="submit"
-              className="bg-[#4534B8] mt-10 border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center "
-            >
-              {isPending ? (
-                <FaSpinner className="animate-spin" />
-              ) : (
-                ' Save Info'
-              )}
-            </Button>
-          </DialogClose>
+          <Button
+            type="submit"
+            className="bg-[#4534B8] mt-10 border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center "
+          >
+            {uploadingPost ? (
+              <FaSpinner className="animate-spin" />
+            ) : (
+              ' Save Info'
+            )}
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

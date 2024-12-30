@@ -18,9 +18,16 @@ export const endpoints = {
       fetch: 'api/administration/fetch-faq/',
       delete: 'api/administration/delete-faq/',
     },
+    smi: {
+      fetch: 'api/administration/fetch-smi/',
+      toggle: 'api/administration/toggle-smi/',
+    },
     deactivated: {
       fetch: 'api/administration/deactivated-users/',
       activate: 'api/administration/activate-users/',
+    },
+    deleted: {
+      fetch: 'api/administration/deleted-users/',
     },
   },
   management: {

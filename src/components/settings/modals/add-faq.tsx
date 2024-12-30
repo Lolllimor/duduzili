@@ -25,6 +25,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetchFaq } from '@/redux/features/settings/faqSlice';
+import {
+  useFetchFaqQuery,
+  usePostFaqMutation,
+} from '@/redux/features/apiSlice';
+import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 const formSchema = z.object({
   question: z.string().min(8, { message: 'Minimum of 8 letter' }),
@@ -32,27 +37,8 @@ const formSchema = z.object({
 });
 
 export const AddFaq = () => {
-  const dispatch: AppDispatch = useDispatch();
-
   const [open, setOpen] = useState(false);
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: FaqRequest) => {
-      const response = await API.post(endpoints.setting.faq.create, data);
-      return response.data;
-    },
-
-    mutationKey: ['addFaq'],
-
-    onSuccess(data) {
-      toast.success(' You just created a new faq');
-      reset();
-      setOpen(false);
-      dispatch(fetchFaq());
-    },
-    onError(error) {
-      handleError(error);
-    },
-  });
+  const [postFaq, { isLoading, isError }] = usePostFaqMutation();
 
   const { handleSubmit, register, formState, reset } = useForm<
     z.infer<typeof formSchema>
@@ -65,8 +51,14 @@ export const AddFaq = () => {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    mutate(data);
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const response = await postFaq(data).unwrap();
+      toast.success('Successfully created');
+      setOpen(false);
+    } catch (error) {
+      errorMessageHandler(error as ErrorType);
+    }
   };
   const { errors, isValid } = formState;
 
@@ -106,6 +98,11 @@ export const AddFaq = () => {
               placeholder="e.g. How do I register on Duduzili"
               className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#ABAEB5] font-normal text-[14px]"
             />
+            {errors.question && (
+              <div className="text-red-500 text-sm font-normal pt-1">
+                {errors.question.message}
+              </div>
+            )}
           </div>
 
           <div className=" flex flex-col w-full  gap-1.5 font-poppins">
@@ -120,16 +117,22 @@ export const AddFaq = () => {
               placeholder="Enter text here..."
               className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-[14px]"
             />
-            <p className="text-[#81848F] text-sm">
-              Not more than 200 characters
-            </p>
+            {errors.answer ? (
+              <div className="text-red-500 text-sm font-normal pt-1">
+                {errors.answer.message}
+              </div>
+            ) : (
+              <p className="text-[#81848F] text-sm">
+                Not more than 200 characters
+              </p>
+            )}
           </div>
 
           <Button
             type="submit"
             className="bg-[#4534B8] border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center mt-5 font-inter"
           >
-            Add FAQ
+            {isLoading ? <FaSpinner className="animate-spin" /> : 'Add FAQ'}
           </Button>
         </form>
       </DialogContent>

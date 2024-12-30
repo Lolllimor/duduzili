@@ -16,7 +16,7 @@ export const Dashboard = () => {
           <h3>Overview</h3>
           <div className="flex items-center gap-8 justify-between">
             {overview?.map((list, idx) => (
-              <div
+              <div key={idx}
                 className={`flex flex-col ${
                   idx === 0
                     ? "bg-[#4534B8] text-white gap-7 shadow-custom rounded-[16px] p-6 w-full"

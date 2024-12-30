@@ -4,14 +4,11 @@ import { EmptyState } from '../empty-state';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/redux/store';
 import { fetchDeactivated } from '@/redux/features/settings/deactivatedSlice';
+import { useFetchDeletedQuery } from '@/redux/features/apiSlice';
 
 export const Deleted = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { data } = useSelector((state: RootState) => state.deactivated);
+  const { data } = useFetchDeletedQuery();
 
-  useEffect(() => {
-    dispatch(fetchDeactivated());
-  }, []);
 
   return (
     <div className="h-full">
