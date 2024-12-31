@@ -3,14 +3,14 @@
 import { EmptyState } from '../empty-state';
 import { PrivacyFilled } from './privacy-filled';
 import { AddEditPrivacy } from '../modals/add-edit-privacy';
-import { useFetchPrivacyQuery } from '@/redux/features/apiSlice';
+import { useFetchPrivacyQuery } from '@/redux/features/settingsApi';
 
 export const Privacy = () => {
   const { data } = useFetchPrivacyQuery();
   return (
     <div className="h-full">
       {data && data.data.about !== '' ? (
-      <PrivacyFilled />
+        <PrivacyFilled />
       ) : (
         <EmptyState
           btn={<AddEditPrivacy />}

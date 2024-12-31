@@ -21,7 +21,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   useFetchContactQuery,
   usePostContactMutation,
-} from '@/redux/features/apiSlice';
+} from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 const phoneRegex = new RegExp(

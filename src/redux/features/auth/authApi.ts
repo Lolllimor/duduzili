@@ -1,7 +1,7 @@
 import { endpoints } from '@/redux/endpoint';
-import { apiSlice } from '../apiSlice';
+import { settingsApi } from '../settingsApi';
 import { userEmail, userToken } from './authSlice';
-export const authApi = apiSlice.injectEndpoints({
+export const authApi = settingsApi.injectEndpoints({
   endpoints: (builder) => ({
     // register: builder.mutation({
     //   query: (body: { email: string; password: string; fullName: string }) => ({

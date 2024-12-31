@@ -2,7 +2,7 @@
 import React from 'react';
 import { EmptyState } from '../empty-state';
 import { SocialFilled } from './social-filled';
-import { useFetchSmiQuery } from '@/redux/features/apiSlice';
+import { useFetchSmiQuery } from '@/redux/features/settingsApi';
 
 export const SocialMediaIntegration = () => {
   const { data } = useFetchSmiQuery();

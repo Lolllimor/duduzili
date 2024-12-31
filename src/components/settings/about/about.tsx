@@ -4,21 +4,21 @@ import { EmptyState } from '../empty-state';
 import { AboutFilled } from './about-filled';
 import { AddEditAbout } from '../modals/add-edit-about';
 
-import { useFetchAboutQuery } from '@/redux/features/apiSlice';
+import { useFetchAboutQuery } from '@/redux/features/settingsApi';
 
 export const About = () => {
-  const { data} = useFetchAboutQuery();
+  const { data } = useFetchAboutQuery();
 
   return (
     <div className="h-full">
       {data?.data.about !== '' ? (
-        <AboutFilled/>
+        <AboutFilled />
       ) : (
         <EmptyState
           title="About Duduzili"
           paragraph=" Write a descriptive content about the platform for users
                       to learn"
-          btn={<AddEditAbout/>}
+          btn={<AddEditAbout />}
         />
       )}
     </div>

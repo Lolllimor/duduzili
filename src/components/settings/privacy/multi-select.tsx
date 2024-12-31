@@ -20,21 +20,29 @@ import {
 } from '@/components/ui/popover';
 
 interface MultipleSelectorProps {
-  data: string[] | null;
+  data?: string[] | null;
+  selectedGroups: string[]; 
+  onSelectionChange: (selectedValues: string[]) => void;
 }
 
-export function MultipleSelector({ data }: MultipleSelectorProps) {
+
+export function MultipleSelector({
+  data,
+  selectedGroups,
+  onSelectionChange,
+}: MultipleSelectorProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<string[]>([]);
-
-  const handleSetValue = (val: string) => {
-    if (value.includes(val)) {
-      value.splice(value.indexOf(val), 1);
-      setValue(value.filter((item) => item !== val));
-    } else {
-      setValue((prevValue) => [...prevValue, val]);
-    }
-  };
+  
+    const handleSetValue = (val: string) => {
+      let newValue;
+      if (selectedGroups.includes(val)) {
+        newValue = selectedGroups.filter((item) => item !== val);
+      } else {
+        newValue = [...selectedGroups, val];
+      }
+      onSelectionChange(newValue); // Update the parent state with the selected values
+    };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -45,17 +53,8 @@ export function MultipleSelector({ data }: MultipleSelectorProps) {
           aria-expanded={open}
           className="w-full hover:bg-transparent h-12 text-[15px] justify-between font-normal text-[#BDBDBD] hover:text-[#BDBDBD]"
         >
-          <div className="flex gap-2 justify-start">
-            {value?.length
-              ? value.map((val, i) => (
-                  <div
-                    key={i}
-                    className="px-2 text-base py-1 text-[#2A2A2A] rounded-xl border bg-slate-200 "
-                  >
-                    {data && data.find((fw) => fw === val)}
-                  </div>
-                ))
-              : 'Select group'}
+          <div className="flex gap-2 justify-start text-[#ABAEB5] text-sm font-normal">
+            Select permissions
           </div>
           <ChevronDown className="h-4 w-4 opacity-50" />
         </Button>
@@ -75,12 +74,7 @@ export function MultipleSelector({ data }: MultipleSelectorProps) {
                       handleSetValue(fw);
                     }}
                   >
-                    <Check
-                      className={cn(
-                        'mr-2 h-4 w-4',
-                        value.includes(fw) ? 'opacity-100' : 'opacity-0'
-                      )}
-                    />
+                    
                     {fw}
                   </CommandItem>
                 ))}

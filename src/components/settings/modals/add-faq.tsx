@@ -1,3 +1,4 @@
+'use client';
 import {
   Dialog,
   DialogClose,
@@ -10,25 +11,14 @@ import { z } from 'zod';
 import Image from 'next/image';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { API } from '@/axios-config';
 import { IoMdAdd } from 'react-icons/io';
 import { useForm } from 'react-hook-form';
 import { FaSpinner } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/redux/store';
-import { endpoints } from '@/redux/endpoint';
 import { Input } from '@/components/ui/input';
-import { FaqRequest } from '@/lib/settingTypes';
 import { Button } from '@/components/ui/button';
-import { handleError } from '@/lib/errorHandler';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetchFaq } from '@/redux/features/settings/faqSlice';
-import {
-  useFetchFaqQuery,
-  usePostFaqMutation,
-} from '@/redux/features/apiSlice';
+import { usePostFaqMutation } from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 const formSchema = z.object({
@@ -38,7 +28,7 @@ const formSchema = z.object({
 
 export const AddFaq = () => {
   const [open, setOpen] = useState(false);
-  const [postFaq, { isLoading, isError }] = usePostFaqMutation();
+  const [postFaq, { isLoading }] = usePostFaqMutation();
 
   const { handleSubmit, register, formState, reset } = useForm<
     z.infer<typeof formSchema>

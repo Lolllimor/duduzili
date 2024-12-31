@@ -11,7 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import {
   useDeleteFaqMutation,
   useFetchFaqQuery,
-} from '@/redux/features/apiSlice';
+} from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 export const FaqFilled = () => {

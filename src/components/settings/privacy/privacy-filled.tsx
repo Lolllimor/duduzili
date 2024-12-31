@@ -2,7 +2,7 @@
 
 import DOMPurify from 'dompurify';
 import { AddEditPrivacy } from '../modals/add-edit-privacy';
-import { useFetchPrivacyQuery } from '@/redux/features/apiSlice';
+import { useFetchPrivacyQuery } from '@/redux/features/settingsApi';
 
 export const PrivacyFilled = () => {
   const { data } = useFetchPrivacyQuery();

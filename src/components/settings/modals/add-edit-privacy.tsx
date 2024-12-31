@@ -25,7 +25,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   useFetchPrivacyQuery,
   usePostPrivacyMutation,
-} from '@/redux/features/apiSlice';
+} from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 const formSchema = z.object({

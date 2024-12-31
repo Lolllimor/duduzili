@@ -36,9 +36,9 @@ export const endpoints = {
       toggle: 'api/administration/toggle-permission-group/',
     },
     user: {
-      toggleAccess: 'api/administration/toggle-user-status/',
+      toggleStatus: 'api/administration/toggle-user-status/',
       revokeAccess: 'api/administration/revoke-access/',
-      permissionDetails: 'api/administration/user-permission-details/',
+      permissionDetails: `api/administration/user-permission-details/ `,
       updateAccess: 'api/administration/update-user-access/',
     },
     fetchPermission: 'api/administration/fetch-permissions/',

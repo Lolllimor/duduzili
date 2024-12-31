@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { EditContact } from './modals/edit-contact';
 import { ContactInfo as ContactDataType } from '@/lib/settingTypes';
-import { useFetchContactQuery } from '@/redux/features/apiSlice';
+import { useFetchContactQuery } from '@/redux/features/settingsApi';
 
 export const ContactInfo = () => {
   const { data, error, isFetching } = useFetchContactQuery();

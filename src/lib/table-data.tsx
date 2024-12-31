@@ -75,7 +75,7 @@ export function DataTable<TData, TValue>({
                   return (
                     <TableHead
                       key={header.id}
-                      className="px-6 !bg-[#F9FAFB] border-b  py-3 border-[#E5E6E8] text-[#344054] font-medium"
+                      className="px-6 text-nowrap !bg-[#F9FAFB] border-b  py-3 border-[#E5E6E8] text-[#344054] font-medium"
                     >
                       {header.isPlaceholder
                         ? null
@@ -104,7 +104,7 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  className="border-b border-[#E5E6E8] py-[100px] "
+                  className="border-b border-[#E5E6E8] py-[100px] text-nowrap "
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="px-6">

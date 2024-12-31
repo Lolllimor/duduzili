@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { EmptyState } from '../empty-state';
 import { ContactInfo } from '../contact-info';
 import { EditContact } from '../modals/edit-contact';
-import { useFetchContactQuery } from '@/redux/features/apiSlice';
+import { useFetchContactQuery } from '@/redux/features/settingsApi';
 
 export const Contact = () => {
   const { data } = useFetchContactQuery();
