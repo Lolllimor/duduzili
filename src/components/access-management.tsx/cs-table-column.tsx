@@ -4,23 +4,35 @@ import { decrypt } from '@/lib/decrypt';
 import { MoreOptions } from './more-option';
 import { ColumnDef } from '@tanstack/react-table';
 import { FetchPermissionGroupResult } from '@/lib/managementTypes';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
-
-
-export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
+export const CSColumn: ColumnDef<any>[] = [
   {
-    accessorKey: 'name',
-    header: 'Permission Group',
-    cell: (info) => (
-      <p className="text-sm text-[#344054]">
-        {decrypt(info.getValue() as string)}
-      </p>
-    ),
+    accessorKey: 'username',
+    header: 'Admin Name',
+    cell: ({ row }) => {
+      return (
+        <div className="flex items-center gap-3">
+          <Avatar>
+            <AvatarImage src="/dashboard/profile.svg" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col gap-1">
+            <p className="font-medium font-sora text-sm text-[#101928]">
+              {row.original.username}
+            </p>
+            <p className="font-normal text-sm font-sora text-[#475367]">
+              {row.original.email}
+            </p>
+          </div>
+        </div>
+      );
+    },
   },
 
   {
     accessorKey: 'admin_count',
-    header: 'Number of Admins',
+    header: 'Admin ID',
     cell: (info) => (
       <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
     ),
@@ -44,8 +56,8 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     },
   },
   {
-    accessorKey: 'created',
-    header: 'Date Created',
+    accessorKey: 'admin_date_joined',
+    header: 'Date Assigned',
     cell: ({ row }) => {
       return (
         <div className="flex flex-col">
@@ -63,15 +75,14 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
 
   {
     accessorKey: 'action',
-    header: 'Action',
+    header: '',
     cell: ({ row }) => {
       return (
-       <MoreOptions
-            group_id={row.original.group_id}
-            is_active={row.original.is_active}
-          />
-          
-      ); 
+        <MoreOptions
+          group_id={row.original.group_id}
+          is_active={row.original.is_active}
+        />
+      );
     },
     enableSorting: false,
   },

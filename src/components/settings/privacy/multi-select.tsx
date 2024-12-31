@@ -21,10 +21,9 @@ import {
 
 interface MultipleSelectorProps {
   data?: string[] | null;
-  selectedGroups: string[]; 
+  selectedGroups: string[];
   onSelectionChange: (selectedValues: string[]) => void;
 }
-
 
 export function MultipleSelector({
   data,
@@ -33,16 +32,16 @@ export function MultipleSelector({
 }: MultipleSelectorProps) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState<string[]>([]);
-  
-    const handleSetValue = (val: string) => {
-      let newValue;
-      if (selectedGroups.includes(val)) {
-        newValue = selectedGroups.filter((item) => item !== val);
-      } else {
-        newValue = [...selectedGroups, val];
-      }
-      onSelectionChange(newValue); // Update the parent state with the selected values
-    };
+
+  const handleSetValue = (val: string) => {
+    let newValue;
+    if (selectedGroups.includes(val)) {
+      newValue = selectedGroups.filter((item) => item !== val);
+    } else {
+      newValue = [...selectedGroups, val];
+    }
+    onSelectionChange(newValue); // Update the parent state with the selected values
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -66,15 +65,14 @@ export function MultipleSelector({
           <CommandGroup>
             <CommandList>
               {data &&
-                data.map((fw) => (
-                  <CommandItem
-                    key={fw}
+                data.map((fw, idx) => (
+                  <CommandItem className='cursor-pointer'
+                    key={idx}
                     value={fw}
                     onSelect={() => {
                       handleSetValue(fw);
                     }}
                   >
-                    
                     {fw}
                   </CommandItem>
                 ))}

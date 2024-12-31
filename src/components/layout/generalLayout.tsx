@@ -12,8 +12,7 @@ function GeneralLayout({
   moreOptions?: ReactNode;
 }) {
   return (
-    <section className="flex items-start w-full h-screen">
-      <Sidebar />
+   
       <div className="flex-1">
         <AppHeader pageTitle={pageTitle} moreOptions={moreOptions} />
         <main
@@ -23,7 +22,6 @@ function GeneralLayout({
           {children}
         </main>
       </div>
-    </section>
   );
 }
 

@@ -1,18 +1,10 @@
 'use client';
 
-import axios from 'axios';
-import { encrypt } from '@/lib/encrypt';
-import type { AxiosError } from 'axios';
-import { decrypt } from '@/lib/decrypt';
-import CryptoJS, { SHA256 } from 'crypto-js';
-import { cookieStorage } from '@ibnlanre/portal';
-import { createApi } from '@reduxjs/toolkit/query/react';
-import { API, LOGIN_API } from '@/axios-config';
 import { endpoints } from '../endpoint';
+import { decrypt } from '@/lib/decrypt';
+import { API, LOGIN_API } from '@/axios-config';
+import { createApi } from '@reduxjs/toolkit/query/react';
 
-
-
-const token = cookieStorage.getItem('duduzili-auth');
 const axiosBaseQuery =
   ({ baseUrl } = { baseUrl: '' }) =>
   async ({
@@ -45,11 +37,7 @@ const axiosBaseQuery =
               params,
               headers,
             });
-          if (result.data) {
-            result.data = decrypt(result.data);
-          }
-
-          return { data: result.data };
+      return { data: result.data };
     } catch (axiosError) {
       const err = axiosError as any;
       return {
@@ -76,6 +64,8 @@ export const baseApi = createApi({
     'Deactivated',
     'Deleted',
     'Permission',
+    'Community',
+    'Feeds',
   ],
   endpoints: () => ({}),
 });

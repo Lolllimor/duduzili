@@ -2,12 +2,7 @@ import React from 'react';
 
 import Image from 'next/image';
 import toast from 'react-hot-toast';
-import { API } from '@/axios-config';
-import { useDispatch } from 'react-redux';
 import { AddFaq } from '../modals/add-faq';
-import { endpoints } from '@/redux/endpoint';
-import { handleError } from '@/lib/errorHandler';
-import { useMutation } from '@tanstack/react-query';
 import {
   useDeleteFaqMutation,
   useFetchFaqQuery,

@@ -15,7 +15,6 @@ const persistConfig = {
   key: 'app',
   storage: createPersistStorage(),
   timeout: 1000,
-  blackList:["management"]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -24,7 +23,7 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(
-      settingsApi.middleware
+      baseApi.middleware
     ),
 });
 

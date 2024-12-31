@@ -42,7 +42,6 @@ API.interceptors.request.use(
 
 // ENCRYPT ALL REQUESTS
 API.interceptors.request.use((req) => {
-  // console.log(req.data)
   if (req.data?.withFile) {
     const { data } = req.data;
     req.data = data;

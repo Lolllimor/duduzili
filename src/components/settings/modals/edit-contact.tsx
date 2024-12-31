@@ -23,6 +23,7 @@ import {
   usePostContactMutation,
 } from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+import { encrypt } from '@/lib/encrypt';
 
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
@@ -55,9 +56,9 @@ export const EditContact = () => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      email: data ? data.data.contact_info.email : '',
-      phone: data ? data.data.contact_info.phone : '',
-      address: data ? data.data.contact_info.address : '',
+      email: data ? data.data.contact_info[0].email : '',
+      phone: data ? data.data.contact_info[0].phone : '',
+      address: data ? data.data.contact_info[0].address : '',
     },
   });
 
@@ -66,6 +67,8 @@ export const EditContact = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const response = await postContact({ contact_info: [data] }).unwrap();
+      console.log(data);
+      console.log(encrypt(data));
       toast.success('Successfully updated');
       setOpen(false);
     } catch (error) {
@@ -81,7 +84,7 @@ export const EditContact = () => {
       >
         <div className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2.5 bg-[#4534B8] text-white justify-center">
           <IoMdAdd className="size-5" />
-          {data?.contact_info ? 'Edit' : 'Add '} Info
+          {data?.data.contact_info ? 'Edit' : 'Add '} Info
         </div>
       </DialogTrigger>
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">

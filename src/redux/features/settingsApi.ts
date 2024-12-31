@@ -101,7 +101,6 @@ export const settingsApi = baseApi.injectEndpoints({
       providesTags: ['Deleted'],
     }),
   }),
-  overrideExisting: true,
 });
 
 export const {

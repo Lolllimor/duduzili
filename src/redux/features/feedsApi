@@ -1,0 +1,16 @@
+import { endpoints } from '../endpoint';
+import { baseApi } from './base-api';
+
+export const feedsApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    fetchDashboard: builder.query<any, void>({
+      query: () => ({
+        url: endpoints.feeds.dashboard,
+        method: 'GET',
+      }),
+      providesTags: ['Feeds'],
+    }),
+  }),
+});
+
+export const {useFetchDashboardQuery} = feedsApi;

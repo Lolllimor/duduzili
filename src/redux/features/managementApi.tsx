@@ -1,3 +1,4 @@
+import { endpointServerChangedSubscribe } from 'next/dist/build/swc/generated-native';
 import { endpoints } from '../endpoint';
 import { baseApi } from './base-api';
 
@@ -27,7 +28,7 @@ export const managementApi = baseApi.injectEndpoints({
     }),
     deletePermissionGroup: builder.mutation({
       query: (data) => ({
-        url: endpoints.management.permissionGroup.crud,
+        url: endpoints.management.permissionGroup.cud,
         method: 'DELETE',
         body: data,
       }),
@@ -36,6 +37,14 @@ export const managementApi = baseApi.injectEndpoints({
     updatePermissionGroup: builder.mutation({
       query: (data) => ({
         url: endpoints.management.permissionGroup.crud,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['Permission'],
+    }),
+    togglePermissionGroup: builder.mutation({
+      query: (data) => ({
+        url: endpoints.management.permissionGroup.toggle,
         method: 'PATCH',
         body: data,
       }),
@@ -101,14 +110,23 @@ export const managementApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Permission'],
     }),
+    addAdmin: builder.mutation({
+      query: (data) => ({
+        url: endpoints.management.addAdmin,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Permission'],
+    }),
   }),
 });
 
 export const {
-  useAddAdminToGroupMutation,
   useViewMembersQuery,
+  useAddAdminMutation,
   useFetchPermissionQuery,
   useFetchAdminUserListQuery,
+  useAddAdminToGroupMutation,
   useUpdateUserAccessMutation,
   useToggleUserStatusMutation,
   useRevokeUserAccessMutation,
@@ -116,6 +134,7 @@ export const {
   useFetchPermissionGroupQuery,
   usePostPermissionGroupMutation,
   useFetchPermissionGroupListQuery,
+  useTogglePermissionGroupMutation,
   useUpdatePermissionGroupMutation,
   useDeletePermissionGroupMutation,
 } = managementApi;

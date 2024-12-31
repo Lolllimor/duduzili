@@ -33,6 +33,7 @@ export const endpoints = {
   management: {
     permissionGroup: {
       crud: 'api/administration/fetch-permission-group/',
+      cud: 'api/administration/permission-group/',
       toggle: 'api/administration/toggle-permission-group/',
     },
     user: {
@@ -46,5 +47,20 @@ export const endpoints = {
     fetchPermissionGroupList: 'api/administration/permission-group-list/',
     addAdminToGroup: 'api/administration/add-admin-to-group/',
     adminUserList: 'api/administration/admin-user/',
+    addAdmin: 'api/administration/add-admin/',
+  },
+  community: {
+    fetchList: 'api/administration/community-list/',
+    toggleStatus: 'api/administration/toggle-community-status/',
+    fetchDashboard: 'api/administration/community-details-dashboard/',
+    fetchPost: 'api/administration/community-posts/',
+    fetchAdmin: 'api/administration/community-admin/',
+    fetchMembers: 'api/administration/community-members/',
+  },
+  feeds: {
+    dashboard: 'api/administration/feeds-dashboard/',
+    trendingPost: 'api/administration/trending-posts/',
+    trendingTopics: 'api/administration/trending-topics/',
+    CreateAdminPost: 'api/administration/create-admin-post/',
   },
 };
