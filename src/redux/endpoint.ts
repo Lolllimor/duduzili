@@ -58,9 +58,9 @@ export const endpoints = {
     fetchMembers: 'api/administration/community-members/',
   },
   feeds: {
-    dashboard: 'api/administration/feeds-dashboard/',
-    trendingPost: 'api/administration/trending-posts/',
-    trendingTopics: 'api/administration/trending-topics/',
+    fetchDashboard: 'api/administration/feeds-dashboard/',
+    fetchTrendingPost: 'api/administration/trending-posts/',
+    fetchTrendingTopics: 'api/administration/trending-topics/',
     CreateAdminPost: 'api/administration/create-admin-post/',
   },
 };

@@ -12,7 +12,7 @@ export type ErrorType = {
 export const errorMessageHandler = (obj: ErrorType) => {
   if (obj.response) {
     if (obj.response.status === 401) {
-      // cookieStorage.removeItem(COOKIESTORAGE_FIELDS.auth);
+      cookieStorage.removeItem("duduzili_auth");
       return (location.href = '/');
     }
     if (obj.response.status === 500) {

@@ -3,42 +3,42 @@ import { baseApi } from './base-api';
 
 export const communityApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    fetchList: builder.query<any, void>({
+    fetchCommunityList: builder.query<any, void>({
       query: () => ({
         url: endpoints.community.fetchList,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    fetchDashboard: builder.query<any, void>({
+    fetchCommunityDashboard: builder.query<any, void>({
       query: () => ({
         url: endpoints.community.fetchDashboard,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    fetchPost: builder.query<any, void>({
+    fetchCommunityPost: builder.query<any, void>({
       query: () => ({
         url: endpoints.community.fetchPost,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    fetchAdmin: builder.query<any, void>({
+    fetchCommunityAdmin: builder.query<any, void>({
       query: () => ({
         url: endpoints.community.fetchAdmin,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    fetchMembers: builder.query<any, void>({
+    fetchCommunityMembers: builder.query<any, void>({
       query: () => ({
         url: endpoints.community.fetchAdmin,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    toggleStatus: builder.mutation({
+    toggleCommunityStatus: builder.mutation({
       query: (data) => ({
         url: endpoints.community.toggleStatus,
         method: 'POST',
@@ -50,10 +50,5 @@ export const communityApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useFetchListQuery,
-  useFetchPostQuery,
-  useFetchAdminQuery,
-  useFetchMembersQuery,
-  useToggleStatusMutation,
-  useFetchDashboardQuery,
+
 } = communityApi;

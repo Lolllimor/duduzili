@@ -52,6 +52,7 @@ const page = () => {
         })
       );
     } catch (err) {
+      console.log(err)
       errorMessageHandler(err as ErrorType);
     }
   };

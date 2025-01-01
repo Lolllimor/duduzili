@@ -191,10 +191,13 @@ export const AddAdminAccess = () => {
                     Permission Group
                   </label>
                   <MultipleSelector
-                    data={data?.data.results.reduce((acc: any[], item: { name: any; }) => {
-                      acc.push(decrypt(item.name));
-                      return acc;
-                    }, [])}
+                    data={data?.data.results.reduce(
+                      (acc: any[], item: { name: any }) => {
+                        acc.push(decrypt(item.name));
+                        return acc;
+                      },
+                      []
+                    )}
                     selectedGroups={selectedGroups}
                     onSelectionChange={handleSelectionChange}
                   />

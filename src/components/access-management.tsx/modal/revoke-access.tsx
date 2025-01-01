@@ -43,8 +43,8 @@ export const RevokeAccess = ({
   };
 
   const pathname = usePathname();
-  const segments = pathname.split('/').filter((segment) => segment); 
-  const secondToLast = segments[segments.length - 2]; 
+  const segments = pathname.split('/').filter((segment) => segment);
+  const secondToLast = segments[segments.length - 2];
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

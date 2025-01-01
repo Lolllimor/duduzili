@@ -50,11 +50,7 @@ const formSchema = z.object({
     .array(z.string())
     .min(1, { message: 'Minimum of 1 permission' }),
 });
-export const CreatePermissionGroup = ({
-  id,
-}: {
-  id?:string;
-}) => {
+export const CreatePermissionGroup = ({ id }: { id?: string }) => {
   const [open, setOpen] = useState(false);
   const { data } = useFetchPermissionQuery();
   const { data: PermissionGroupData } = useFetchPermissionGroupQuery();
@@ -73,7 +69,7 @@ export const CreatePermissionGroup = ({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: id ? decrypt(filteredGroup?.name): '',
+      name: id ? decrypt(filteredGroup?.name) : '',
       description: '',
       permission_type: [''],
     },
@@ -137,7 +133,7 @@ export const CreatePermissionGroup = ({
             </DialogClose>
           </div>
         </DialogTitle>
-        <DialogDescription/>
+        <DialogDescription />
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="font-poppins flex flex-col overflow-auto"

@@ -3,9 +3,7 @@ import React, { use } from 'react';
 import toast from 'react-hot-toast';
 import { UpdateProfile } from './modal/update-profile';
 import { DropdownMenuContent, DropdownMenuItem } from '../ui/dropdown-menu';
-import {
-  useToggleUserStatusMutation,
-} from '@/redux/features/managementApi';
+import { useToggleUserStatusMutation } from '@/redux/features/managementApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 import { usePathname } from 'next/navigation';
 import { RevokeAccess } from './modal/revoke-access';

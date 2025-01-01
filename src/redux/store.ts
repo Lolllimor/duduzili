@@ -1,5 +1,4 @@
 import { baseApi } from './features/base-api';
-import { settingsApi } from './features/settingsApi';
 import { createPersistStorage } from '@/lib/storage';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { persistReducer, persistStore } from 'redux-persist';

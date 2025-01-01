@@ -40,11 +40,12 @@ const axiosBaseQuery =
       return { data: result.data };
     } catch (axiosError) {
       const err = axiosError as any;
-      console.log(err);
+
+      console.log(err.response?.data.errors);
       return {
         error: {
           status: err.response?.status,
-          data: err.response?.data || err.message,
+          response: err.response,
         },
       };
     }
@@ -66,7 +67,7 @@ export const baseApi = createApi({
     'Deleted',
     'Permission',
     'Community',
-    'Feeds',
+    'Feed',
   ],
   endpoints: () => ({}),
 });
