@@ -61,7 +61,6 @@ export const AddAdminAccess = () => {
     },
   });
 
-  console.log(data);
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const response = await postPermissionGroup({
@@ -192,7 +191,7 @@ export const AddAdminAccess = () => {
                     Permission Group
                   </label>
                   <MultipleSelector
-                    data={data?.data.results.reduce((acc, item) => {
+                    data={data?.data.results.reduce((acc: any[], item: { name: any; }) => {
                       acc.push(decrypt(item.name));
                       return acc;
                     }, [])}

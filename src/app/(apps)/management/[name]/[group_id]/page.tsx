@@ -1,31 +1,35 @@
 'use client';
 import React, { useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import GeneralLayout from '@/components/layout/generalLayout';
 import { EmptyState } from '@/components/settings/empty-state';
 import { SearchIcon } from 'lucide-react';
 import { DataTable } from '@/lib/table-data';
 import { CSColumn } from '@/components/access-management.tsx/cs-table-column';
 import { useViewMembersQuery } from '@/redux/features/managementApi';
-import { decrypt } from '@/lib/decrypt';
+import { use } from 'react';
+import { normalizeUrlParams } from '@/lib/normalize-url';
 
-function Page() {
+function Page({
+  params,
+}: {
+  params: Promise<{ name: string; group_id: string }>;
+}) {
+  const { name, group_id } = React.use(params);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const id = searchParams.get('id') || '';
-  const { data } = useViewMembersQuery(id)
-  console.log(data)
+  const { data } = useViewMembersQuery(group_id);
 
   useEffect(() => {
-    if (!id) {
+    if (!group_id) {
       router.replace('/management');
     }
-  }, [id, router]);
+  }, [group_id, router]);
 
   return (
-    <GeneralLayout pageTitle={['Access Management', 'Customer Support']}>
-      {data?.data.count ?
-        (
+    <GeneralLayout
+      pageTitle={['Access Management', `${normalizeUrlParams(name)}`]}
+    >
+      {data?.data.count ? (
         <div className="flex flex-col gap-6 px-6">
           <div className="h-[44px] border rounded-lg w-[277px] flex items-center pl-4 gap-2">
             <SearchIcon className="text-[#667085]" />
@@ -36,12 +40,8 @@ function Page() {
           </div>
         </div>
       ) : (
-        <EmptyState
-          title=" Customer Support"
-          paragraph="No admin added yet"
-        />
-        )
-       }
+        <EmptyState title=" Customer Support" paragraph="No admin added yet" />
+      )}
     </GeneralLayout>
   );
 }

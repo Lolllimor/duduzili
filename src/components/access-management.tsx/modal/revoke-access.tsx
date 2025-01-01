@@ -12,30 +12,47 @@ import { Button } from '../../ui/button';
 import { IoClose } from 'react-icons/io5';
 
 import Image from 'next/image';
-import { useDeletePermissionGroupMutation } from '@/redux/features/managementApi';
+import {
+  useDeletePermissionGroupMutation,
+  useRevokeUserAccessMutation,
+} from '@/redux/features/managementApi';
 import toast from 'react-hot-toast';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
-export const DeletePermissionGroup = ({ id }: { id: string }) => {
+export const RevokeAccess = ({
+  id,
+  username,
+}: {
+  id: string;
+  username: string;
+}) => {
   const [open, setOpen] = useState(false);
-  const [deletePermissionGroup] = useDeletePermissionGroupMutation();
+  const [revokeAccess] = useRevokeUserAccessMutation();
   const handleClick = async () => {
     try {
-      const res = await deletePermissionGroup({ group_id: id }).unwrap();
+      const res = await revokeAccess({
+        group_id: id,
+        username: username,
+      }).unwrap();
       toast.success('Successfully deleted');
-      setOpen(false);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
   };
+
+  const pathname = usePathname();
+  const segments = pathname.split('/').filter((segment) => segment); 
+  const secondToLast = segments[segments.length - 2]; 
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="text-[#BA1A1A] focus:text-[#BA1A1A]">
-        Delete Group
+        Revoke Access
       </DialogTrigger>
       <DialogContent className=" py-5 gap-0  w-[450px] [&>button]:hidden rounded-[16px] max-h-[376px] h-full  !px-0 flex flex-col">
-        <DialogTitle />
+        <DialogTitle></DialogTitle>
         <DialogDescription />
         <div className="flex justify-end w-full px-8 z-10 ">
           <DialogClose aria-label="Close" className=" cursor-pointer">
@@ -49,8 +66,9 @@ export const DeletePermissionGroup = ({ id }: { id: string }) => {
               Delete Permission Group
             </span>
             <p className="text-base text-[#5E606A] ">
-              You are about to delete Customer support permission group. All
-              admins will lose access to this group. This is irreversible.
+              You are about to revoke {username} from {secondToLast} permission
+              group. This admin will lose access to this group. This is
+              irreversible.
             </p>
           </div>
         </div>

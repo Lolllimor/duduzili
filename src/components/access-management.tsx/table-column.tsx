@@ -4,8 +4,7 @@ import { decrypt } from '@/lib/decrypt';
 import { MoreOptions } from './more-option';
 import { ColumnDef } from '@tanstack/react-table';
 import { FetchPermissionGroupResult } from '@/lib/managementTypes';
-
-
+import { ManagementMore } from './managemen-more';
 
 export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
   {
@@ -66,12 +65,13 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     header: 'Action',
     cell: ({ row }) => {
       return (
-       <MoreOptions
+        <MoreOptions>
+          <ManagementMore name={row.original.name}
             group_id={row.original.group_id}
             is_active={row.original.is_active}
           />
-          
-      ); 
+        </MoreOptions>
+      );
     },
     enableSorting: false,
   },

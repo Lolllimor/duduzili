@@ -5,6 +5,7 @@ import { MoreOptions } from './more-option';
 import { ColumnDef } from '@tanstack/react-table';
 import { FetchPermissionGroupResult } from '@/lib/managementTypes';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { CSMore } from './cs-more';
 
 export const CSColumn: ColumnDef<any>[] = [
   {
@@ -78,10 +79,12 @@ export const CSColumn: ColumnDef<any>[] = [
     header: '',
     cell: ({ row }) => {
       return (
-        <MoreOptions
-          group_id={row.original.group_id}
-          is_active={row.original.is_active}
-        />
+        <MoreOptions>
+          <CSMore
+            name={row.original.username}
+            is_active={row.original.is_active}
+          />
+        </MoreOptions>
       );
     },
     enableSorting: false,

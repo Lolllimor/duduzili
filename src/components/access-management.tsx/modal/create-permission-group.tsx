@@ -4,6 +4,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
@@ -52,7 +53,7 @@ const formSchema = z.object({
 export const CreatePermissionGroup = ({
   id,
 }: {
-  id?: { group_id: string };
+  id?:string;
 }) => {
   const [open, setOpen] = useState(false);
   const { data } = useFetchPermissionQuery();
@@ -61,8 +62,10 @@ export const CreatePermissionGroup = ({
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const filteredGroup: PermissionGroup | undefined =
     PermissionGroupData?.data?.results.find(
-      (item: PermissionGroup) => item.group_id === id?.group_id
+      (item: PermissionGroup) => item.group_id === id
     );
+
+  console.log(filteredGroup);
 
   const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
@@ -70,7 +73,7 @@ export const CreatePermissionGroup = ({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: '',
+      name: id ? decrypt(filteredGroup?.name): '',
       description: '',
       permission_type: [''],
     },
@@ -103,9 +106,8 @@ export const CreatePermissionGroup = ({
   const { errors, isValid } = formState;
 
   useEffect(() => {
-    setValue('name', decrypt(filteredGroup?.name));
     setSelectedGroups(filteredGroup?.permission_type || []);
-  }, [id]);
+  }, []);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -135,6 +137,7 @@ export const CreatePermissionGroup = ({
             </DialogClose>
           </div>
         </DialogTitle>
+        <DialogDescription/>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="font-poppins flex flex-col overflow-auto"
