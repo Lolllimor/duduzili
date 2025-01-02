@@ -1,3 +1,4 @@
+"use client"
 import { DataTable } from '@/lib/table-data';
 import { DeactivatedData } from '@/lib/settingTypes';
 import { DeactivatedColumn } from './table-column';

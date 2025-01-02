@@ -1,3 +1,4 @@
+"use client"
 import { DataTable } from '@/lib/table-data';
 import { DeletedColumn } from './table-column';
 import { useFetchDeletedQuery } from '@/redux/features/settingsApi';
