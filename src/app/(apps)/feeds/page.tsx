@@ -9,8 +9,10 @@ import { FeedCards } from '@/components/feeds/feed-cards';
 const page = () => {
   return (
     <GenaralLayout pageTitle="Feeds" moreOptions={<CreatePost />}>
-      <></>
+      <div className='px-8'>
+        
       <FeedCards />
+</div>
     </GenaralLayout>
   );
 };

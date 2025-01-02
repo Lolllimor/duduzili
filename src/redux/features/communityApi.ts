@@ -50,5 +50,9 @@ export const communityApi = baseApi.injectEndpoints({
 });
 
 export const {
-
+  useFetchCommunityAdminQuery,
+  useFetchCommunityDashboardQuery,
+  useFetchCommunityListQuery,
+  useFetchCommunityMembersQuery,
+  useFetchCommunityPostQuery,
 } = communityApi;

@@ -1,5 +1,5 @@
-import { endpoints } from '../endpoint';
 import { baseApi } from './base-api';
+import { endpoints } from '../endpoint';
 
 export const feedApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

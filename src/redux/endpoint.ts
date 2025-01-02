@@ -63,4 +63,12 @@ export const endpoints = {
     fetchTrendingTopics: 'api/administration/trending-topics/',
     CreateAdminPost: 'api/administration/create-admin-post/',
   },
+  interests: {
+    fetchInterestList: 'api/administration/interest/',
+    fetchUnassociatedTags: 'api/administration/unassociated-tags/',
+    createInterest: 'api/administration/action-interests/',
+    fetchInterestCategory: 'api/administration/interest-category/',
+    deleteInterest: 'api/administration/action-interests/',
+    editInterest: 'api/administration/action-interests/',
+  },
 };
