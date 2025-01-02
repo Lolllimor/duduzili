@@ -20,11 +20,15 @@ import { BiUserCheck } from 'react-icons/bi';
 
 import { Input } from '../ui/input';
 import { CgSupport } from 'react-icons/cg';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { HiOutlinePresentationChartLine } from 'react-icons/hi';
+import { cookieStorage } from '@ibnlanre/portal';
+import localStorage from 'redux-persist/lib/storage';
 
 export const Sidebar = () => {
   const [toggle, setToggle] = useState<boolean>(true);
+
+  const { push } = useRouter();
   const [show, setShow] = useState({ action: '', icon: '' });
   const handleToggle = () => {
     setToggle(!toggle);
@@ -92,11 +96,11 @@ export const Sidebar = () => {
           : 'w-[88px] h-screen relative bg-[#4534B8] flex-shrink-0'
       )}
     >
-      <div className="h-[72px] px-4 w-full flex items-center justify-between">
+      <div className="h-[72px] pr-4 w-full flex items-center justify-between">
         {toggle && (
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 ">
             <Link href="/">
-              <Image src="/logo.png" alt="Logo" width={272} height={40} />
+              <Image src="/logo-dash.svg" alt="Logo" width={272} height={40} />
             </Link>
           </div>
         )}
@@ -124,9 +128,9 @@ export const Sidebar = () => {
         {/* Menu */}
         <div className="flex flex-col gap-2 mx-3">
           {toggle && (
-            <div className="relative mx-6 rounded-[8px] bg-[#6A5DC6] mb-2">
+            <div className="relative rounded-[8px] bg-[#6A5DC6] mb-2">
               <Input
-                className="!rounded-[]8px !h-12 placeholder:text-white text-white pl-10 border border-[#6A5DC6]"
+                className="!rounded-[8px] !h-[44px] placeholder:text-white text-white pl-10 border border-[#6A5DC6]"
                 placeholder="Search"
               />
               <div className="absolute top-1/2 left-3 transform  -translate-y-1/2 w-[20px] h-[20px]">
@@ -193,7 +197,15 @@ export const Sidebar = () => {
                     </p>
                   </div>
                 </div>
-                <LogOut color="#FFF" />
+                <LogOut
+                  color="#FFF"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    cookieStorage.clear();
+                    localStorage.removeItem('dudzili-auth');
+                    push('/');
+                  }}
+                />
               </div>
             </div>
           )}

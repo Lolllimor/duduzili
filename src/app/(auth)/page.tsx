@@ -69,7 +69,7 @@ const page = () => {
       />
       <div className="py-[47px] flex flex-col pl-[32px] pr-[20px] w-full">
         <div className="flex justify-between items-center">
-          <Image src="/logo.svg" alt="logo" width={180} height={40} />
+          <Image src="/logo-auth.svg" alt="logo" width={180} height={40} />
           <div className="flex items-center gap-1 ">
             <span className="text-sm">Don’t have an account?</span>
             <a href="/" className="text-sm text-[#4534B8] ">
