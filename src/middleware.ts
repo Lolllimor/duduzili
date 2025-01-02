@@ -12,8 +12,6 @@ export default function middleware(req: NextRequest) {
       return NextResponse.redirect(url);
     }
   }
-  console.log('Current Path:', req.nextUrl.pathname);
-  console.log('User Cookie:', req.cookies.get('duduzili-auth')?.value);
   return NextResponse.next();
 }
 

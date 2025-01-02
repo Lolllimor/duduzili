@@ -1,19 +1,17 @@
 'use client';
 import React, { useEffect } from 'react';
 import { EmptyState } from '../empty-state';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/redux/store';
-import { fetchDeactivated } from '@/redux/features/settings/deactivatedSlice';
 import { useFetchDeletedQuery } from '@/redux/features/settingsApi';
+import { DeletedFilled } from './deleted-filled';
 
 export const Deleted = () => {
   const { data } = useFetchDeletedQuery();
-
+  console.log(data);
   return (
     <div className="h-full">
-      {data?.count ? (
-        // <DeactivatedFilled data={data} />
-        <></>
+      {data?.data.count ? (
+        <DeletedFilled />
+     
       ) : (
         <EmptyState title="Deleted Accounts " paragraph=" No deleted account" />
       )}

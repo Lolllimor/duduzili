@@ -2,13 +2,10 @@
 import dayjs from 'dayjs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ColumnDef } from '@tanstack/react-table';
-import { DeactivatedResult } from '@/lib/settingTypes';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { ActivateBtn } from './activatebtn';
 
 
-
-export const DeactivatedColumn: ColumnDef<DeactivatedResult>[] = [
+export const DeletedColumn: ColumnDef<any>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -89,8 +86,8 @@ export const DeactivatedColumn: ColumnDef<DeactivatedResult>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: 'date_of_deactivation',
-    header: 'Date Deactivated',
+    accessorKey: 'date_deleted',
+    header: 'Date Deleted',
     cell: ({ row }) => {
       return (
         <div className="flex flex-col">
@@ -106,12 +103,5 @@ export const DeactivatedColumn: ColumnDef<DeactivatedResult>[] = [
     enableSorting: true,
   },
 
-  {
-    accessorKey: 'action',
-    header: 'Action',
-    cell: ({ row }) => {
-      return <ActivateBtn username={row.original.username} />;
-      },
-    enableSorting: false,
-  },
+
 ];

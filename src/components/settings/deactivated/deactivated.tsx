@@ -5,10 +5,10 @@ import { useFetchDeactivatedQuery } from '@/redux/features/settingsApi';
 
 export const Deactivated = () => {
   const { data } = useFetchDeactivatedQuery();
-  console.log(data);
+  console.log(data.data);
   return (
     <div className="h-full">
-      {data?.count ? (
+      {data?.data.count ? (
         <DeactivatedFilled />
       ) : (
         <EmptyState

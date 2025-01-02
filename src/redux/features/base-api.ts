@@ -68,7 +68,6 @@ export const baseApi = createApi({
     'Permission',
     'Community',
     'Feed',
-    'Interest',
   ],
   endpoints: () => ({}),
 });
