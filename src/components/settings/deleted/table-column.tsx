@@ -35,7 +35,7 @@ export const DeletedColumn: ColumnDef<any>[] = [
       return (
         <div className="flex items-center gap-3">
           <Avatar>
-            <AvatarImage src="/dashboard/profile.svg" />
+            <AvatarImage src={row.original.profile_picture || ''} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
