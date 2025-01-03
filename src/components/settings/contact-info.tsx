@@ -7,12 +7,7 @@ import { decrypt } from '@/lib/decrypt';
 
 export const ContactInfo = () => {
   const { data, error, isFetching } = useFetchContactQuery();
-  console.log(decrypt({
-    email: 'tIao+vDrsMPl1mUdSc4fkZXdUuqYLLNII+huRXK28c4=',
-    phone: 'oWYB+JNtv/QhwTfcjTmMEQ==',
-    address:
-      'LfRx1IehVU5jq30yvm/cqcce80d0l7WC1ZZPPchoQhg4ILMvqLbWsGH+Z+ZfKD5eDoKAtIHY0VwfCzYRe7nLeZzq85jiSbmadfcRcZyb3TQ=',
-  }));
+
   return (
     <div className="flex flex-col p-8 gap-8 ">
       <div className="flex justify-between items-center ">

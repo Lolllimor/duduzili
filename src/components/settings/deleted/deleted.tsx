@@ -6,7 +6,6 @@ import { DeletedFilled } from './deleted-filled';
 
 export const Deleted = () => {
   const { data } = useFetchDeletedQuery();
-  console.log(data);
   return (
     <div className="h-full">
       {data?.data.count ? (

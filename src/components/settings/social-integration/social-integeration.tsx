@@ -7,7 +7,6 @@ import { useFetchSmiQuery } from '@/redux/features/settingsApi';
 export const SocialMediaIntegration = () => {
   const { data } = useFetchSmiQuery();
 
-  console.log(data);
   return (
     <div className="h-full">
       {data && data.count ? (

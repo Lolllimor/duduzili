@@ -5,7 +5,6 @@ import React from 'react';
 
 function page() {
   const { data } = useFetchCommunityListQuery();
-  console.log(data);
   return <div>page</div>;
 }
 

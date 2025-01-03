@@ -24,8 +24,10 @@ type PostItem = {
     video: string[];
     picture: string[];
   };
+
   community_details: {
     community_name: string;
+    community_cover_photo: string;
   };
   is_edited: boolean;
   liked_by: {
@@ -41,7 +43,6 @@ type PostItem = {
 
 const page = () => {
   const { data } = useFetchTrendingPostQuery();
-  console.log(data);
 
   return (
     <GenaralLayout pageTitle="Feeds" moreOptions={<CreatePost />}>

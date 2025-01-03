@@ -266,7 +266,7 @@ function InterestPage() {
             </div>
           </div>
         ))}
-        <InterestCard />
+        {/* <InterestCard /> */}
       </div>
     </GeneralLayout>
   );

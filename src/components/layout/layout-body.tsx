@@ -100,7 +100,6 @@ export const DashboardLayout = ({
   const name = location.find(
     (item) => formattedPathname === item.link.slice(1)
   )?.name;
-  console.log(name);
 
   return (
     <section className="flex items-start w-full h-screen">

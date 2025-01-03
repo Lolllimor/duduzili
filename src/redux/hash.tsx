@@ -12,8 +12,6 @@ const myString = result;
 const encoder = new TextEncoder();
 const encoded = encoder.encode(myString);
 
-console.log("concatenatedvalue", result);
-console.log("encodedvalue", encoded);
 
 // Hashing s
 // async function hashString(input: any) {

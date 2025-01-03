@@ -67,8 +67,7 @@ export const EditContact = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const response = await postContact({ contact_info: [data] }).unwrap();
-      console.log(data);
-      console.log(encrypt(data));
+   
       toast.success('Successfully updated');
       setOpen(false);
     } catch (error) {
