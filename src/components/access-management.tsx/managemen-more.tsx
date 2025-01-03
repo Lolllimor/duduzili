@@ -48,7 +48,7 @@ export const ManagementMore = ({
         onSelect={(e) => e.preventDefault()}
         className="text-[#BA1A1A] focus:text-[#BA1A1A]"
       >
-        <DeletePermissionGroup id={group_id} />
+        <DeletePermissionGroup id={group_id} name={name} />
       </DropdownMenuItem>
     </DropdownMenuContent>
   );

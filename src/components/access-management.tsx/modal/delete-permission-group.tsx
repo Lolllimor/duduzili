@@ -17,7 +17,13 @@ import toast from 'react-hot-toast';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 import { useState } from 'react';
 
-export const DeletePermissionGroup = ({ id }: { id: string }) => {
+export const DeletePermissionGroup = ({
+  id,
+  name,
+}: {
+  id: string;
+  name: string;
+}) => {
   const [open, setOpen] = useState(false);
   const [deletePermissionGroup] = useDeletePermissionGroupMutation();
   const handleClick = async () => {
@@ -49,8 +55,8 @@ export const DeletePermissionGroup = ({ id }: { id: string }) => {
               Delete Permission Group
             </span>
             <p className="text-base text-[#5E606A] ">
-              You are about to delete Customer support permission group. All
-              admins will lose access to this group. This is irreversible.
+              You are about to delete {name} permission group. All admins will
+              lose access to this group. This is irreversible.
             </p>
           </div>
         </div>
