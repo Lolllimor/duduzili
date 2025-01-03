@@ -41,7 +41,7 @@ export interface PostContainerProps {
   poster?: PostOwnerDetails;
   commentId?: string;
   hideMenu?: boolean;
-  communityDetails?: PostResponseCommunityDetails;
+  communityDetails?: any;
   tags?: any[];
   media?: {
     type: 'video' | 'audio' | 'photo';
