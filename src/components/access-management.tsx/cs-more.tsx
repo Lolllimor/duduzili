@@ -34,7 +34,10 @@ export const CSMore = ({
       <DropdownMenuItem>
         <UpdateProfile />
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={handleClick}>
+      <DropdownMenuItem
+        onClick={handleClick}
+        className={`${is_active ? '' : 'text-[#2D874E]'}`}
+      >
         Make {is_active ? 'Inactive' : 'Active'}
       </DropdownMenuItem>
       <DropdownMenuItem onSelect={(e) => e.preventDefault()}>

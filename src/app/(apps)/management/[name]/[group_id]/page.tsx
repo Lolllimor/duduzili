@@ -40,7 +40,10 @@ function Page({
           </div>
         </div>
       ) : (
-        <EmptyState title=" Customer Support" paragraph="No admin added yet" />
+        <EmptyState
+          title={normalizeUrlParams(name)}
+          paragraph="No admin added yet"
+        />
       )}
     </GeneralLayout>
   );

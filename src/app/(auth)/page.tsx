@@ -13,7 +13,7 @@ import { cookieStorage } from '@ibnlanre/portal';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 import { useLoginMutation } from '@/redux/features/settingsApi';
-import { PasswordInput } from '@/components/password-input';
+import { PasswordInput } from '@/components/post/password-input';
 
 const page = () => {
   const [login, { isSuccess, isLoading, isError, error }] = useLoginMutation();
@@ -52,7 +52,7 @@ const page = () => {
         })
       );
     } catch (err) {
-      console.log(err)
+      console.log(err);
       errorMessageHandler(err as ErrorType);
     }
   };

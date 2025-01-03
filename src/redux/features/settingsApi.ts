@@ -1,5 +1,5 @@
-import { endpoints } from "../endpoint";
-import { baseApi } from "./base-api";
+import { endpoints } from '../endpoint';
+import { baseApi } from './base-api';
 
 export const settingsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -11,7 +11,10 @@ export const settingsApi = baseApi.injectEndpoints({
       }),
     }),
     fetchAbout: builder.query<any, void>({
-      query: () => ({ url: endpoints.setting.about.fetch, method: 'GET' }),
+      query: () => ({
+        url: endpoints.setting.about.fetch,
+        method: 'GET'
+      }),
       providesTags: ['About'],
     }),
     postAbout: builder.mutation({

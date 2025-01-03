@@ -9,17 +9,10 @@ const rootReducer = combineReducers({
   [baseApi.reducerPath]: baseApi.reducer,
 });
 
-// Persist configuration
-const persistConfig = {
-  key: 'app',
-  storage: createPersistStorage(),
-  timeout: 1000,
-};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ serializableCheck: false }).concat(
       baseApi.middleware
@@ -28,7 +21,6 @@ export const store = configureStore({
 
 setupListeners(store.dispatch);
 
-export const persistedStore = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

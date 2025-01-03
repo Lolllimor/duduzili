@@ -20,7 +20,6 @@ export const ManagementMore = ({
   name: string;
 }) => {
   const [toggle, { isLoading }] = useTogglePermissionGroupMutation();
-  const urlName = decrypt(name).toLowerCase().replace(/\s+/g, '-');
   const handleClick = async () => {
     try {
       const res = await toggle({ group_id: group_id }).unwrap();
@@ -32,14 +31,17 @@ export const ManagementMore = ({
   return (
     <DropdownMenuContent className="text-sm font-inter rounded-lg w-[128px]">
       <DropdownMenuItem>
-        <Link href={`/management/${normalizeUrl(decrypt(name))}/${group_id}`}>
+        <Link href={`/management/${normalizeUrl(name)}/${group_id}`}>
           View Group
         </Link>
       </DropdownMenuItem>
       <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
         <CreatePermissionGroup id={group_id} />
       </DropdownMenuItem>
-      <DropdownMenuItem onClick={handleClick}>
+      <DropdownMenuItem
+        onClick={handleClick}
+        className={`${is_active ? '' : 'text-[#2D874E]'}`}
+      >
         Make {is_active ? 'Inactive' : 'Active'}
       </DropdownMenuItem>
       <DropdownMenuItem

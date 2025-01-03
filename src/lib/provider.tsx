@@ -8,10 +8,8 @@ import { persistedStore, store } from "@/redux/store";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistedStore}>
         {children}
         <Toaster position="top-right" reverseOrder={false} />
-      </PersistGate>
     </Provider>
   );
 }

@@ -14,9 +14,9 @@ export const CreatePost = () => {
         </Button>
       </DialogTrigger>{' '}
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] shrink [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
-        <DialogTitle className="h-fit">
+        <DialogTitle className="h-fit bg-[#FCFCFD]">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
-            <span className="text-2xl font-bold"> Admin Access</span>
+            <span className="text-2xl font-bold"> Create Post</span>
             <DialogClose aria-label="Close">
               <Image
                 src="/close.svg"

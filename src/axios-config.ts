@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import { handleError } from './lib/errorHandler';
 import { encrypt } from './lib/encrypt';
 import { decrypt } from './lib/decrypt';
-import { isPending } from '@reduxjs/toolkit';
 
 export const API = axios.create({
   baseURL: process.env.NEXT_PUBLIC_ADMIN_BASE_URL,

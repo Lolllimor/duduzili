@@ -11,9 +11,7 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     accessorKey: 'name',
     header: 'Permission Group',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">
-        {decrypt(info.getValue() as string)}
-      </p>
+      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
     ),
   },
 
@@ -66,7 +64,8 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     cell: ({ row }) => {
       return (
         <MoreOptions>
-          <ManagementMore name={row.original.name}
+          <ManagementMore
+            name={row.original.name}
             group_id={row.original.group_id}
             is_active={row.original.is_active}
           />

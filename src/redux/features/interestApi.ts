@@ -1,5 +1,6 @@
-import { baseApi } from './base-api';
-import { endpoints } from '../endpoint';
+import { endpoints } from "../endpoint";
+import { baseApi } from "./base-api";
+
 
 export const interestApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,6 +9,7 @@ export const interestApi = baseApi.injectEndpoints({
         url: endpoints.interests.fetchInterestList,
         method: 'GET',
       }),
+      providesTags: ['Interest'],
     }),
   }),
 });

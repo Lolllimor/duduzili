@@ -20,7 +20,7 @@ export const managementApi = baseApi.injectEndpoints({
     }),
     postPermissionGroup: builder.mutation({
       query: (data) => ({
-        url: endpoints.management.permissionGroup.crud,
+        url: endpoints.management.permissionGroup.cud,
         method: 'POST',
         body: data,
       }),
@@ -36,7 +36,7 @@ export const managementApi = baseApi.injectEndpoints({
     }),
     updatePermissionGroup: builder.mutation({
       query: (data) => ({
-        url: endpoints.management.permissionGroup.crud,
+        url: endpoints.management.permissionGroup.cud,
         method: 'PATCH',
         body: data,
       }),

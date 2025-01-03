@@ -17,7 +17,7 @@ export const feedApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Feed'],
     }),
-    fetchTrendingTopics: builder.query({
+    fetchTrendingTopics: builder.query<any, void>({
       query: () => ({
         url: endpoints.feeds.fetchTrendingTopics,
         method: 'GET',
@@ -36,7 +36,7 @@ export const feedApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useFetchFeedDashboardQuery,// Fixed the typo
+  useFetchFeedDashboardQuery,
   useFetchTrendingPostQuery,
   useFetchTrendingTopicsQuery,
   useCreateAdminPostMutation,

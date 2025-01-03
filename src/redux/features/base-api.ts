@@ -1,7 +1,6 @@
 'use client';
 
 import { endpoints } from '../endpoint';
-import { decrypt } from '@/lib/decrypt';
 import { API, LOGIN_API } from '@/axios-config';
 import { createApi } from '@reduxjs/toolkit/query/react';
 
@@ -52,7 +51,7 @@ const axiosBaseQuery =
   };
 
 export const baseApi = createApi({
-  reducerPath: 'api',
+  reducerPath: 'baseApi',
   baseQuery: axiosBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_ADMIN_BASE_URL || '',
   }),
@@ -68,6 +67,7 @@ export const baseApi = createApi({
     'Permission',
     'Community',
     'Feed',
+    'Interest',
   ],
   endpoints: () => ({}),
 });

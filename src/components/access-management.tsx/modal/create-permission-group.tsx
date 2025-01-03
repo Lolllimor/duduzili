@@ -25,6 +25,7 @@ import {
   useFetchPermissionGroupQuery,
   useFetchPermissionQuery,
   usePostPermissionGroupMutation,
+  useUpdatePermissionGroupMutation,
 } from '@/redux/features/managementApi';
 import { IoMdAdd } from 'react-icons/io';
 import { FaSpinner } from 'react-icons/fa';
@@ -34,7 +35,8 @@ import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 interface PermissionGroup {
   group_id: string;
   name: string;
-  permission_type: string[];
+  description: string;
+  readable_permission: string[];
 }
 
 interface PermissionGroupData {
@@ -55,13 +57,14 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
   const { data } = useFetchPermissionQuery();
   const { data: PermissionGroupData } = useFetchPermissionGroupQuery();
   const [postPermissionGroup, { isLoading }] = usePostPermissionGroupMutation();
+  const [updatePermissionGroup, { isLoading: updating }] =
+    useUpdatePermissionGroupMutation();
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const filteredGroup: PermissionGroup | undefined =
     PermissionGroupData?.data?.results.find(
       (item: PermissionGroup) => item.group_id === id
     );
 
-  console.log(filteredGroup);
 
   const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
@@ -69,18 +72,24 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: id ? decrypt(filteredGroup?.name) : '',
-      description: '',
+      name: filteredGroup?.name || '',
+      description: filteredGroup?.description || '',
       permission_type: [''],
     },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await postPermissionGroup({
-        ...data,
-        permission_type: selectedGroups,
-      }).unwrap();
+      id
+        ? await updatePermissionGroup({
+            ...data,
+            permission_type: selectedGroups,
+            group_id: id,
+          }).unwrap()
+        : await postPermissionGroup({
+            ...data,
+            permission_type: selectedGroups,
+          }).unwrap();
 
       toast.success('Successfully created');
       setOpen(false);
@@ -102,8 +111,8 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
   const { errors, isValid } = formState;
 
   useEffect(() => {
-    setSelectedGroups(filteredGroup?.permission_type || []);
-  }, []);
+    setSelectedGroups(filteredGroup?.readable_permission || []);
+  }, [id]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -143,14 +152,14 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
               <div className=" flex flex-col w-full  gap-2">
                 <label
                   htmlFor="email"
-                  className="text-sm text-[#2A2A2A] font-medium font-inter"
+                  className="text-sm text-[#242428] font-medium font-poppins"
                 >
                   Group Name
                 </label>
                 <Input
                   {...register('name')}
                   placeholder="e.g. Customer support"
-                  className="h-12 border-[#E5E6E8] rounded-md placeholder:text-[#BDBDBD] font-normal text-[15px]"
+                  className="h-12 border-[#E5E6E8] rounded-md placeholder:text-[#BDBDBD] font-normal text-base font-outfit"
                 />
                 {errors.name && (
                   <div className="text-red-500 text-sm font-normal pt-1">
@@ -161,14 +170,14 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
               <div className=" flex flex-col w-full  gap-1.5 font-poppins">
                 <label
                   htmlFor="answer"
-                  className="text-sm text-[#2A2A2A] font-medium font-inter"
+                  className="text-sm text-[#242428] font-medium font-poppins"
                 >
                   Group Description
                 </label>
                 <Textarea
                   {...register('description')}
                   placeholder="Enter text here..."
-                  className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-[15px]"
+                  className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-base font-outfit"
                 />
                 <p className="text-[#81848F] text-sm">
                   Not more than 200 characters
@@ -179,7 +188,7 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
                 <div className=" flex flex-col w-full  gap-2">
                   <label
                     htmlFor="email"
-                    className="text-sm text-[#2A2A2A] font-medium font-inter"
+                    className="text-sm text-[#242428] font-medium font-poppins"
                   >
                     Permission Group
                   </label>
@@ -218,7 +227,7 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
             type="submit"
             className="bg-[#4534B8] mt-10 border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center "
           >
-            {isLoading ? (
+            {isLoading || updating ? (
               <FaSpinner className="animate-spin" />
             ) : (
               `${id ? 'Update' : 'Create'} Permission Group`

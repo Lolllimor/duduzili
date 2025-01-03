@@ -1,11 +1,9 @@
-
 import { useFetchInterstListQuery } from '@/redux/features/interestApi';
-import React from 'react'
+import React from 'react';
 
 export const InterestCard = () => {
-   
-    
-  return (
-    <div>InterestCard</div>
-  )
-}
+  const { data } = useFetchInterstListQuery();
+  console.log(data);
+
+  return <div>InterestCard</div>;
+};

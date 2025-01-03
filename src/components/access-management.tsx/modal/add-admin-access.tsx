@@ -45,8 +45,6 @@ export const AddAdminAccess = () => {
   const { data } = useFetchPermissionGroupQuery();
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-
-  console.log(selectedIds);
   const [postPermissionGroup, { isLoading }] = useAddAdminToGroupMutation();
 
   const { handleSubmit, register, formState } = useForm<

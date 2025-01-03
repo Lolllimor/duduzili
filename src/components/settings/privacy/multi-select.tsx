@@ -31,7 +31,6 @@ export function MultipleSelector({
   onSelectionChange,
 }: MultipleSelectorProps) {
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState<string[]>([]);
 
   const handleSetValue = (val: string) => {
     let newValue;
@@ -58,15 +57,14 @@ export function MultipleSelector({
           <ChevronDown className="h-4 w-4 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="!w-full p-0">
-        <Command className="w-full">
-          {/* <CommandInput placeholder="Search framework..." className='w-full'/>
-          <CommandEmpty>No data</CommandEmpty> */}
+      <PopoverContent className="!w-full p-0" onFocusOutside={(e) => e.preventDefault()}>
+        <Command className="!w-full">
           <CommandGroup>
             <CommandList>
               {data &&
                 data.map((fw, idx) => (
-                  <CommandItem className='cursor-pointer'
+                  <CommandItem
+                    className="cursor-pointer"
                     key={idx}
                     value={fw}
                     onSelect={() => {
