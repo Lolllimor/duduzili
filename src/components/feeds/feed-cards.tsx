@@ -4,12 +4,21 @@ import { normalizeUrlParams } from '@/lib/normalize-url';
 import { useFetchFeedDashboardQuery } from '@/redux/features/feedApi';
 import { capitalize } from 'lodash';
 import Image from 'next/image';
+import { Skeleton } from '../ui/skeleton';
 
 export const FeedCards = () => {
-  const { data } = useFetchFeedDashboardQuery();
+  const { data, isLoading } = useFetchFeedDashboardQuery();
   return (
     <div className="flex items-center gap-6 font-inter flex-wrap">
-      {data &&
+      {isLoading ? (
+        <>
+          <Skeleton className="w-[258px] h-[186px] rounded-xl border border-[#EAECF0]  shadow  " />
+          <Skeleton className="w-[258px] h-[186px] rounded-xl border border-[#EAECF0] shadow" />
+          <Skeleton className="w-[258px] h-[186px] rounded-xl border border-[#EAECF0] shadow" />
+          <Skeleton className="w-[258px] h-[186px] rounded-xl border border-[#EAECF0] shadow" />
+        </>
+      ) : (
+        data &&
         Object.entries(data?.data).map(([key, value]) => (
           <div
             key={key}
@@ -30,7 +39,8 @@ export const FeedCards = () => {
               </span>
             </div>
           </div>
-        ))}
+        ))
+      )}
     </div>
   );
 };

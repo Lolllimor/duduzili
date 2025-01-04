@@ -23,7 +23,6 @@ import { CgSupport } from 'react-icons/cg';
 import { usePathname, useRouter } from 'next/navigation';
 import { HiOutlinePresentationChartLine } from 'react-icons/hi';
 import { cookieStorage } from '@ibnlanre/portal';
-import localStorage from 'redux-persist/lib/storage';
 
 export const Sidebar = () => {
   const [toggle, setToggle] = useState<boolean>(true);

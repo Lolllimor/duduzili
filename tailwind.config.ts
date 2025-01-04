@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 export default {
   darkMode: ['class'],
@@ -76,9 +76,14 @@ export default {
         '0%,70%,100%': { opacity: '1' },
         '20%,50%': { opacity: '0' },
       },
+      pulse: {
+        '0%, 100%': { opacity: '1' },
+        '50%': { opacity: '0.5' },
+      },
     },
     animation: {
       'caret-blink': 'caret-blink 1.25s ease-out infinite',
+      pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
     },
   },
   plugins: [require('tailwindcss-animate')],
