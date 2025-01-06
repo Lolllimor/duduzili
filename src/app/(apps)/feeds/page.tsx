@@ -9,38 +9,9 @@ import PostContainer from '@/components/post/post-container';
 import { useFetchTrendingPostQuery } from '@/redux/features/feedApi';
 import { TreandingTopics } from '@/components/feeds/trending-topics';
 import { Skeleton } from '@/components/ui/skeleton';
+import { PostItem } from '@/lib/type';
 
-type PostItem = {
-  mentions: string[];
-  post_id: string;
-  owner_details: {
-    profile_picture: string;
-    username: string;
-    full_name: string;
-  };
-  content: string;
-  is_liked: boolean;
-  media: {
-    audio: string[];
-    video: string[];
-    picture: string[];
-  };
 
-  community_details: {
-    community_name: string;
-    community_cover_photo: string;
-  };
-  is_edited: boolean;
-  liked_by: {
-    liked_by: string;
-    profile_picture: string[];
-  };
-  the_likes_count: number;
-  created: Date;
-  is_favorite: boolean;
-  is_following: boolean;
-  comments_count: number;
-};
 
 const page = () => {
   const { data, isLoading } = useFetchTrendingPostQuery();
@@ -49,7 +20,7 @@ const page = () => {
     <GenaralLayout pageTitle="Feeds" moreOptions={<CreatePost />}>
       <div className="flex flex-col px-8 gap-8">
         <FeedCards />
-        <div className="flex  flex-col px-6 py-[19px] gap-10 shadow rounded-2xl">
+        <div className="flex  flex-col px-6 py-[19px] gap-10 shadow rounded-2xl h-full">
           <div className="flex flex-col gap-[21px]">
             <span className="text-[#101828] font-inter font-semibold">
               Trending

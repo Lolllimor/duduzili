@@ -9,6 +9,8 @@ import { CSColumn } from '@/components/access-management.tsx/cs-table-column';
 import { useViewMembersQuery } from '@/redux/features/managementApi';
 import { use } from 'react';
 import { normalizeUrlParams } from '@/lib/normalize-url';
+import { AddAdmin } from '@/components/access-management.tsx/modal/add-admin';
+import { EditPermissionGroup } from '@/components/access-management.tsx/modal/edit-permission-group';
 
 function Page({
   params,
@@ -28,6 +30,12 @@ function Page({
   return (
     <GeneralLayout
       pageTitle={['Access Management', `${normalizeUrlParams(name)}`]}
+      moreOptions={
+        <div className="flex gap-2.5 items-center font-inter">
+          <EditPermissionGroup id={group_id} />
+          <AddAdmin id={group_id} />
+        </div>
+      }
     >
       {data?.data.count ? (
         <div className="flex flex-col gap-6 px-6">

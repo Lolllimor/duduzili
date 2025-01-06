@@ -18,6 +18,7 @@ import { MultipleSelector } from '../../settings/privacy/multi-select';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import {
+    useAddAdminMutation,
   useAddAdminToGroupMutation,
   useFetchPermissionGroupQuery,
 } from '@/redux/features/managementApi';
@@ -40,14 +41,10 @@ const formSchema = z.object({
   //   .min(1, { message: 'Minimum of 1 permission' }),
 });
 
-export const AddAdminAccess = () => {
+export const AddAdmin = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
-  const { data } = useFetchPermissionGroupQuery();
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const [postPermissionGroup, { isLoading }] = useAddAdminToGroupMutation();
-
-  console.log(data);
+  const [postAddAdmin, { isLoading }] = useAddAdminMutation();
+  console.log(id);
 
   const { handleSubmit, register, formState } = useForm<
     z.infer<typeof formSchema>
@@ -61,13 +58,11 @@ export const AddAdminAccess = () => {
     },
   });
 
-  console.log(selectedIds);
-
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await postPermissionGroup({
+      const response = await postAddAdmin({
         ...data,
-        group_id: String(selectedIds),
+        permission_group: [id],
       }).unwrap();
       toast.success('Successfully created');
       setOpen(false);
@@ -75,34 +70,15 @@ export const AddAdminAccess = () => {
       errorMessageHandler(error as ErrorType);
     }
   };
-  const handleSelectionChange = (selectedValues: string[]) => {
-    setSelectedIds(
-      data?.data.results
-        .filter((item: { name: string }) => selectedValues.includes(item.name))
-        .map((item: { group_id: string }) => item.group_id)
-    );
-    setSelectedGroups(selectedValues);
-  };
-
-  const handleRemoveGroup = (group: string) => {
-    setSelectedGroups((prevGroups) =>
-      prevGroups.filter((item) => item !== group)
-    );
-    setSelectedIds(
-      data?.data.results
-        .filter((item: { name: string }) => selectedGroups.includes(item.name))
-        .map((item: { group_id: string }) => item.group_id)
-    );
-  };
 
   const { errors, isValid } = formState;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#367EE8] font-inter">
+        <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#4534B8] font-inter">
           <IoMdAdd className="size-5" />
-          Add Admin Access
+          Add Admin 
         </Button>
       </DialogTrigger>
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] shrink [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
@@ -179,47 +155,6 @@ export const AddAdminAccess = () => {
                     {errors.last_name.message}
                   </div>
                 )}
-              </div>
-              <div className="flex flex-col gap-4">
-                <div className=" flex flex-col w-full  gap-2">
-                  <label
-                    htmlFor="email"
-                    className="text-sm text-[#2A2A2A] font-medium font-inter"
-                  >
-                    Permission Group
-                  </label>
-                  <MultipleSelector
-                    data={data?.data.results.reduce(
-                      (acc: any[], item: { name: any }) => {
-                        acc.push(item.name);
-                        return acc;
-                      },
-                      []
-                    )}
-                    selectedGroups={selectedGroups}
-                    onSelectionChange={handleSelectionChange}
-                  />
-
-                  {/* {errors.permission_group && (
-                    <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.permission_group.message}
-                    </div>
-                  )} */}
-                </div>
-                <div className=" flex gap-2.5 items-center flex-wrap">
-                  {selectedGroups.map((item) => (
-                    <div
-                      key={item}
-                      className=" flex border border-[#D0D5DD] h-11 rounded-lg px-4 gap-2 w-fit items-center cursor-pointer"
-                    >
-                      {item}
-                      <IoClose
-                        className="size-5 "
-                        onClick={() => handleRemoveGroup(item)}
-                      />
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>

@@ -1,86 +1,97 @@
-import Image from 'next/image';
-import { IoMdAdd } from 'react-icons/io';
-import { FaSpinner } from 'react-icons/fa';
+'use client';
 
 import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { useState } from 'react';
-import { IoClose } from 'react-icons/io5';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { MultipleSelector } from '../../settings/privacy/multi-select';
 
 import { z } from 'zod';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import {
-  useAddAdminToGroupMutation,
-  useFetchPermissionGroupQuery,
-} from '@/redux/features/managementApi';
-import { decrypt } from '@/lib/decrypt';
 import { useForm } from 'react-hook-form';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { IoAdd, IoClose } from 'react-icons/io5';
+import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { MultipleSelector } from '@/components/settings/privacy/multi-select';
+import {
+  useFetchPermissionGroupListQuery,
+  useFetchPermissionGroupQuery,
+  useFetchPermissionQuery,
+  usePostPermissionGroupMutation,
+  useUpdatePermissionGroupMutation,
+} from '@/redux/features/managementApi';
+import { IoMdAdd } from 'react-icons/io';
+import { FaSpinner } from 'react-icons/fa';
+import { decrypt } from '@/lib/decrypt';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
+interface PermissionGroup {
+  group_id: string;
+  name: string;
+  description: string;
+  readable_permission: string[];
+}
+
+interface PermissionGroupData {
+  data: {
+    results: PermissionGroup[];
+  };
+}
+
 const formSchema = z.object({
-  first_name: z.string().min(1, { message: 'Must be a string' }),
-  last_name: z.string().min(1, { message: 'Must be a string' }),
-  email: z
-    .string({
-      required_error: 'Email is required',
-      invalid_type_error: 'Must be a string',
-    })
-    .email({ message: 'Must be a valid email address' }),
-  // permission_group: z
-  //   .array(z.string())
-  //   .min(1, { message: 'Minimum of 1 permission' }),
+  name: z.string().min(8, { message: 'Minimum of 8 letter' }),
+  description: z.string().min(8, { message: 'Minimum of 8 letter' }),
+  permission_type: z
+    .array(z.string())
+    .min(1, { message: 'Minimum of 1 permission' }),
 });
-
-export const AddAdminAccess = () => {
+export const EditPermissionGroup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
-  const { data } = useFetchPermissionGroupQuery();
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const { data } = useFetchPermissionQuery();
+  const { data: PermissionGroupData } = useFetchPermissionGroupQuery();
+  const [updatePermissionGroup, { isLoading }] =
+    useUpdatePermissionGroupMutation();
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const [postPermissionGroup, { isLoading }] = useAddAdminToGroupMutation();
+  const filteredGroup: PermissionGroup | undefined =
+    PermissionGroupData?.data?.results.find(
+      (item: PermissionGroup) => item.group_id === id
+    );
 
-  console.log(data);
-
-  const { handleSubmit, register, formState } = useForm<
+  const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      first_name: '',
-      last_name: '',
-      email: '',
+      name: filteredGroup?.name || '',
+      description: filteredGroup?.description || '',
+      permission_type: [''],
     },
   });
 
-  console.log(selectedIds);
-
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await postPermissionGroup({
+      await updatePermissionGroup({
         ...data,
-        group_id: String(selectedIds),
+        permission_type: selectedGroups,
+        group_id: id,
       }).unwrap();
+
       toast.success('Successfully created');
       setOpen(false);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
   };
+
   const handleSelectionChange = (selectedValues: string[]) => {
-    setSelectedIds(
-      data?.data.results
-        .filter((item: { name: string }) => selectedValues.includes(item.name))
-        .map((item: { group_id: string }) => item.group_id)
-    );
     setSelectedGroups(selectedValues);
   };
 
@@ -88,27 +99,27 @@ export const AddAdminAccess = () => {
     setSelectedGroups((prevGroups) =>
       prevGroups.filter((item) => item !== group)
     );
-    setSelectedIds(
-      data?.data.results
-        .filter((item: { name: string }) => selectedGroups.includes(item.name))
-        .map((item: { group_id: string }) => item.group_id)
-    );
   };
 
   const { errors, isValid } = formState;
 
+  useEffect(() => {
+    setSelectedGroups(filteredGroup?.readable_permission || []);
+  }, [id]);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#367EE8] font-inter">
+        <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#367EE8]">
           <IoMdAdd className="size-5" />
-          Add Admin Access
+          Edit Permission Group
         </Button>
       </DialogTrigger>
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] shrink [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
-            <span className="text-2xl font-bold"> Admin Access</span>
+            <span className="text-2xl font-bold">
+              {id ? 'Edit' : 'Create New'} Permission Group
+            </span>
             <DialogClose aria-label="Close">
               <Image
                 src="/close.svg"
@@ -120,6 +131,7 @@ export const AddAdminAccess = () => {
             </DialogClose>
           </div>
         </DialogTitle>
+        <DialogDescription />
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="font-poppins flex flex-col overflow-auto"
@@ -129,82 +141,57 @@ export const AddAdminAccess = () => {
               <div className=" flex flex-col w-full  gap-2">
                 <label
                   htmlFor="email"
-                  className="text-sm text-[#2A2A2A] font-medium font-inter"
+                  className="text-sm text-[#242428] font-medium font-poppins"
                 >
-                  Email Address
+                  Group Name
                 </label>
                 <Input
-                  {...register('email')}
-                  placeholder="Enter email address"
-                  className="h-12 border-[#E5E6E8] rounded-md placeholder:text-[#BDBDBD] font-normal text-[15px]"
+                  {...register('name')}
+                  placeholder="e.g. Customer support"
+                  className="h-12 border-[#E5E6E8] rounded-md placeholder:text-[#BDBDBD] font-normal text-base font-outfit"
                 />
-                {errors.email && (
+                {errors.name && (
                   <div className="text-red-500 text-sm font-normal pt-1">
-                    {errors.email.message}
+                    {errors.name.message}
                   </div>
                 )}
               </div>
-              <div className=" flex flex-col w-full  gap-2">
+              <div className=" flex flex-col w-full  gap-1.5 font-poppins">
                 <label
-                  htmlFor="firstName"
-                  className="text-sm text-[#2A2A2A] font-medium font-inter"
+                  htmlFor="answer"
+                  className="text-sm text-[#242428] font-medium font-poppins"
                 >
-                  First Name
+                  Group Description
                 </label>
-                <Input
-                  {...register('first_name')}
-                  placeholder="John"
-                  className="h-12 border-[#E5E6E8] rounded-md placeholder:text-[#BDBDBD] font-normal text-[15px]"
+                <Textarea
+                  {...register('description')}
+                  placeholder="Enter text here..."
+                  className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-base font-outfit"
                 />
-                {errors.first_name && (
-                  <div className="text-red-500 text-sm font-normal pt-1">
-                    {errors.first_name.message}
-                  </div>
-                )}
+                <p className="text-[#81848F] text-sm">
+                  Not more than 200 characters
+                </p>
               </div>
-              <div className=" flex flex-col w-full  gap-2">
-                <label
-                  htmlFor="last_name"
-                  className="text-sm text-[#2A2A2A] font-medium font-inter"
-                >
-                  Last Name
-                </label>
-                <Input
-                  {...register('last_name')}
-                  placeholder="Doe"
-                  className="h-12 border-[#E5E6E8] rounded-md placeholder:text-[#BDBDBD] font-normal text-[15px]"
-                />
-                {errors.last_name && (
-                  <div className="text-red-500 text-sm font-normal pt-1">
-                    {errors.last_name.message}
-                  </div>
-                )}
-              </div>
+
               <div className="flex flex-col gap-4">
                 <div className=" flex flex-col w-full  gap-2">
                   <label
                     htmlFor="email"
-                    className="text-sm text-[#2A2A2A] font-medium font-inter"
+                    className="text-sm text-[#242428] font-medium font-poppins"
                   >
                     Permission Group
                   </label>
                   <MultipleSelector
-                    data={data?.data.results.reduce(
-                      (acc: any[], item: { name: any }) => {
-                        acc.push(item.name);
-                        return acc;
-                      },
-                      []
-                    )}
+                    data={data?.data}
                     selectedGroups={selectedGroups}
                     onSelectionChange={handleSelectionChange}
                   />
 
-                  {/* {errors.permission_group && (
+                  {errors.permission_type && (
                     <div className="text-red-500 text-sm font-normal pt-1">
-                      {errors.permission_group.message}
+                      {errors.permission_type.message}
                     </div>
-                  )} */}
+                  )}
                 </div>
                 <div className=" flex gap-2.5 items-center flex-wrap">
                   {selectedGroups.map((item) => (
@@ -225,13 +212,14 @@ export const AddAdminAccess = () => {
           </div>
 
           <Button
+            disabled={isLoading}
             type="submit"
             className="bg-[#4534B8] mt-10 border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center "
           >
             {isLoading ? (
               <FaSpinner className="animate-spin" />
             ) : (
-              '   Save Admin Access'
+              `Update Permission Group`
             )}
           </Button>
         </form>

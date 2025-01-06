@@ -20,6 +20,7 @@ import LinkPreview from './link-preview';
 import CommunityPostHeader from './community-post-header';
 import PostContentWrapper from './post-content-wrapper';
 import { PostOwnerDetails, PostResponseCommunityDetails } from '@/lib/type';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 export interface PostContainerProps {
   style?: CSSProperties;
@@ -106,7 +107,7 @@ function PostContainer(props?: PostContainerProps) {
       setIsSaved(props.isFavourite);
     }
   }, [props?.isFavourite]);
-    
+
   const queryClient = useQueryClient();
   const saveOrRemoveFromFavourites = (post_id: string) => {};
   return (
@@ -368,6 +369,13 @@ function PostContainer(props?: PostContainerProps) {
           )}
         </section>
         <section className="flex gap-2 items-center">
+          {props?.likesPictures?.map((item, idx) => (
+            <Avatar key={idx}>
+              <AvatarImage src={item} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          ))}
+
           {/* <AvatarGroup>
             {props?.likesPictures?.map((item, idx) => (
               <Avatar

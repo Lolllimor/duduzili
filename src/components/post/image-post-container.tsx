@@ -4,6 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { PostContainerProps } from './post-container';
 import clsx from 'clsx';
+import { Dialog, DialogTrigger } from '../ui/dialog';
 
 const LazyLoadedImage = ({
   url,
@@ -81,6 +82,8 @@ function ImagePostContainer({
 }) {
   //   const { setModalState } = useContext(ModalContext);
   return (
+    // <Dialog>
+    //   <DialogTrigger>
     <div
       className={clsx(
         noHeight ? 'h-full' : 'h-fit',
@@ -113,6 +116,8 @@ function ImagePostContainer({
       /> */}
       <LazyLoadedImage className={className} url={url} noHeight={noHeight} />
     </div>
+    //   </DialogTrigger>
+    // </Dialog>
   );
 }
 

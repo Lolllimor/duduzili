@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button } from '../ui/button';
 import { IoMdAdd } from 'react-icons/io';
 import {
@@ -28,6 +28,11 @@ import EditIcon from '../icons/edit-blue-icon';
 
 export const CreatePost = () => {
   const [value, setValue] = useState('Public');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleClick = () => {
+    fileInputRef.current?.click(); // Trigger the file input click
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -86,7 +91,18 @@ export const CreatePost = () => {
             <div className="border-t border-[#F0F0F1] pt-4 flex items-baseline">
               <div className="px-4 flex justify-between items-center w-full h-full">
                 <div className="gap-4 flex items-center">
-                  <PhoneIcon />
+                  <div id="fileUploader">
+                    <PhoneIcon
+                      onClick={handleClick}
+                      className="cursor-pointer"
+                    />
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      accept="image/*"
+                      className="hidden"
+                    />
+                  </div>
                   <CameraIcon />
                   <MusicSquare />
                   <MicrophoneIcon />

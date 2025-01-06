@@ -7,6 +7,7 @@ import Link from 'next/link';
 import dayjs from 'dayjs';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 import PostMenu from './post-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 dayjs.extend(RelativeTime);
 
@@ -15,7 +16,13 @@ function CommunityPostHeader(props?: PostContainerProps) {
     <header className="flex items-start justify-between">
       <section className="flex gap-3 items-start">
         <div className="relative w-12 h-12 rounded-lg">
-          <img
+          <Avatar className="size-12">
+            <AvatarImage
+              src={props?.communityDetails?.community_cover_photo ?? ''}
+            />
+            <AvatarFallback>CI</AvatarFallback>
+          </Avatar>
+          {/* <img
             alt="profile picture"
             src={
               props?.communityDetails?.community_cover_photo ??
@@ -27,7 +34,7 @@ function CommunityPostHeader(props?: PostContainerProps) {
               borderRadius: '8px',
               objectFit: 'cover',
             }}
-          />
+          /> */}
           <Link
             href={`/${props?.poster?.username}`}
             style={{
@@ -39,6 +46,10 @@ function CommunityPostHeader(props?: PostContainerProps) {
               objectFit: 'cover',
             }}
           >
+            <Avatar className="size-6">
+              <AvatarImage src={props?.poster?.profile_picture} />
+              <AvatarFallback></AvatarFallback>
+            </Avatar>
             {/* <Avatar
               alt="profile picture"
               size={24}

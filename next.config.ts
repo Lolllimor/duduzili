@@ -1,10 +1,12 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  /* config options here */
+  images: {
+    domains: ['res.cloudinary.com'], // Add the hostname here
+  },
 };
 
 export default nextConfig;

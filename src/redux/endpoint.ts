@@ -50,12 +50,12 @@ export const endpoints = {
     addAdmin: 'api/administration/add-admin/',
   },
   community: {
-    fetchList: 'api/administration/community-list/',
-    toggleStatus: 'api/administration/toggle-community-status/',
-    fetchDashboard: 'api/administration/community-details-dashboard/',
-    fetchPost: 'api/administration/community-posts/',
-    fetchAdmin: 'api/administration/community-admin/',
-    fetchMembers: 'api/administration/community-members/',
+    fetchCommunityList: 'api/administration/community-list/',
+    toggleCommunityStatus: 'api/administration/toggle-community-status/',
+    fetchCommunityDashboard: 'api/administration/community-details-dashboard/',
+    fetchCommunityPost: 'api/administration/community-posts/',
+    fetchCommunityAdmin: 'api/administration/community-admin/',
+    fetchCommunityMembers: 'api/administration/community-members/',
   },
   feeds: {
     fetchDashboard: 'api/administration/feeds-dashboard/',

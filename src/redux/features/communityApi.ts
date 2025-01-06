@@ -5,42 +5,42 @@ export const communityApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     fetchCommunityList: builder.query<any, void>({
       query: () => ({
-        url: endpoints.community.fetchList,
+        url: endpoints.community.fetchCommunityList,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    fetchCommunityDashboard: builder.query<any, void>({
-      query: () => ({
-        url: endpoints.community.fetchDashboard,
+    fetchCommunityDashboard: builder.query({
+      query: (id: string) => ({
+        url: `${endpoints.community.fetchCommunityDashboard}?community_id=${id}`,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    fetchCommunityPost: builder.query<any, void>({
-      query: () => ({
-        url: endpoints.community.fetchPost,
+    fetchCommunityPost: builder.query({
+      query: ({ id }) => ({
+        url: `${endpoints.community.fetchCommunityPost}?community_id=${id}`,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    fetchCommunityAdmin: builder.query<any, void>({
-      query: () => ({
-        url: endpoints.community.fetchAdmin,
+    fetchCommunityAdmin: builder.query({
+      query: (id: string) => ({
+        url: `${endpoints.community.fetchCommunityAdmin}?community_id=${id}`,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
-    fetchCommunityMembers: builder.query<any, void>({
-      query: () => ({
-        url: endpoints.community.fetchAdmin,
+    fetchCommunityMembers: builder.query({
+      query: (id: string) => ({
+        url: `${endpoints.community.fetchCommunityMembers}?community_id=${id}`,
         method: 'GET',
       }),
       providesTags: ['Community'],
     }),
     toggleCommunityStatus: builder.mutation({
       query: (data) => ({
-        url: endpoints.community.toggleStatus,
+        url: endpoints.community.toggleCommunityStatus,
         method: 'POST',
         body: data,
       }),
@@ -50,6 +50,7 @@ export const communityApi = baseApi.injectEndpoints({
 });
 
 export const {
+  useToggleCommunityStatusMutation,
   useFetchCommunityAdminQuery,
   useFetchCommunityDashboardQuery,
   useFetchCommunityListQuery,

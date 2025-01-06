@@ -137,7 +137,7 @@ function AudioPlayer({
       ) : null}
 
       <Image
-        src="/no-label.png"
+        src=""
         width={100}
         height={100}
         alt="audio label"
@@ -148,7 +148,7 @@ function AudioPlayer({
     <div
       className={clsx(
         'min-h-[200px] max-sm:min-h-[100px]',
-        ' grid grid-cols-[29%_1fr] bg-[url(/audio-bg.png)] bg-center bg-cover rounded-[14px]',
+        ' grid grid-cols-[29%_1fr] bg-[url(/community/Audio.svg)] h-[263px] w-[607px] bg-center bg-contain rounded-[14px]',
         width,
         containerclassName
       )}
@@ -158,7 +158,7 @@ function AudioPlayer({
       >
         <img
           className="w-full h-full object-cover rounded-l-[14px]"
-          src="/no-label.png"
+          src={undefined}
           alt="audio label"
         />
       </div>
@@ -175,10 +175,10 @@ function AudioPlayer({
               Camila Cabello ft, Young Thug
             </p> */}
         </div>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-[28px]">
           <div id="waveform" className="hidden" ref={waveformRef} />
           <div className="flex max-sm:hidden items-center gap-3">
-            <span className="text-sm max-sm:text-sm w-[50px] leading-[21.24px] text-[#EAF4F4]">
+            <span className="text-[17.7px] max-sm:text-sm w-[50px] leading-[21.24px] text-[#EAF4F4]">
               {formatAudioTime(time.currentTime)}
             </span>
             <Slider
@@ -202,7 +202,7 @@ function AudioPlayer({
               max={time?.totalTime}
               //   label={null}
             />
-            <span className="text-sm max-sm:text-sm leading-[21.24px] text-[#EAF4F4]">
+            <span className="text-[17.7px] max-sm:text-sm leading-[21.24px] text-[#EAF4F4]">
               {formatAudioTime(time.totalTime)}
             </span>
           </div>
@@ -242,7 +242,7 @@ function AudioPlayer({
           </div>
           <div className="flex items-center gap-8 justify-center">
             <SkipBackward
-              className="max-sm:w-5 w-6 h-6 max-sm:h-5 cursor-pointer"
+              className="max-sm:w-5 w-[32px] h-[35px]  max-sm:h-5 cursor-pointer"
               onClick={() => {
                 wavesurfer?.current?.seekTo(
                   (time.currentTime - 15 < 0 ? 0 : time.currentTime - 15) /
@@ -253,14 +253,14 @@ function AudioPlayer({
             <div className="cursor-pointer">
               {!playing ? (
                 <FaPlay
-                  className="max-sm:w-5 w-6 h-6 max-sm:h-5"
+                  className="max-sm:w-5 w-[35.97px] text-[#D9D9D9] h-10 max-sm:h-5"
                   onClick={handlePlayPause}
                   color="white"
                   size={30}
                 />
               ) : (
                 <FaPause
-                  className="max-sm:w-5 w-6 h-6 max-sm:h-5"
+                  className="max-sm:w-5 w-[35.97px] h-10  max-sm:h-5"
                   onClick={handlePlayPause}
                   color="white"
                   size={30}
@@ -268,7 +268,7 @@ function AudioPlayer({
               )}
             </div>
             <SkipForward
-              className="max-sm:w-5 w-6 h-6 max-sm:h-5 cursor-pointer"
+              className="max-sm:w-5 w-[32px] h-[35px] text-[#D9D9D9] max-sm:h-5 cursor-pointer"
               onClick={() => {
                 wavesurfer?.current?.seekTo(
                   (time.currentTime + 15 > time.totalTime
