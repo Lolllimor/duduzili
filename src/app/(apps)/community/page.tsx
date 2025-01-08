@@ -1,16 +1,15 @@
 'use client';
 
-import GeneralLayout from '@/components/layout/generalLayout';
-import { useFetchCommunityListQuery } from '@/redux/features/communityApi';
-import { CommunityTableHeader } from '@/components/community/community-table-header';
-import { Skeleton } from '@/components/ui/skeleton';
-import { EmptyState } from '@/components/settings/empty-state';
 import { DataTable } from '@/lib/table-data';
+import { Skeleton } from '@/components/ui/skeleton';
+import GeneralLayout from '@/components/layout/generalLayout';
+import { EmptyState } from '@/components/settings/empty-state';
+import { useFetchCommunityListQuery } from '@/redux/features/communityApi';
 import { CommunityColumn } from '@/components/community/community-table-column';
+import { CommunityTableHeader } from '@/components/community/community-table-header';
 
 function page() {
   const { data, isLoading } = useFetchCommunityListQuery();
-  console.log(data);
   return (
     <GeneralLayout pageTitle="Communities">
       <div className="px-6 flex flex-col gap-6 pb-6">

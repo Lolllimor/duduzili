@@ -162,7 +162,6 @@ export const CreatePost = ({
     }
   };
 
-  console.log(watch().media);
 
   return (
     <Dialog>
@@ -307,7 +306,6 @@ export const CreatePost = ({
                       accept="image/*"
                       className="hidden"
                       onChange={(event) => {
-                        console.log(event.target.files);
                         if (event.target.files) {
                           setValue('media', [
                             ...watch('media'),

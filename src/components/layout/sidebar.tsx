@@ -190,7 +190,7 @@ export const Sidebar = () => {
                 <div className="flex items-center gap-1">
                   <Image
                     src={
-                      user.userDetail.image
+                      user && user.userDetail.image
                         ? user.userDetail.image
                         : '/user.png'
                     }
@@ -204,7 +204,7 @@ export const Sidebar = () => {
                       Duduzilian
                     </h3>
                     <p className="font-normal text-xs font-sora text-[#C7C2EA]">
-                      {user.userDetail.email}
+                      {user?.userDetail.email}
                     </p>
                   </div>
                 </div>

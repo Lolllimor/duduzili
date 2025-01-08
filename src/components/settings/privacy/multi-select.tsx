@@ -44,7 +44,6 @@ export function MultipleSelector({
     onSelectionChange(newValue); // Update the parent state with the selected values
   };
 
-  console.log(data)
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>

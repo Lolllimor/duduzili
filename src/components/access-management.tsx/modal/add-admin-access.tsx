@@ -47,7 +47,6 @@ export const AddAdminAccess = () => {
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [postPermissionGroup, { isLoading }] = useAddAdminToGroupMutation();
 
-  console.log(data);
 
   const { handleSubmit, register, formState } = useForm<
     z.infer<typeof formSchema>
@@ -60,8 +59,6 @@ export const AddAdminAccess = () => {
       email: '',
     },
   });
-
-  console.log(selectedIds);
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {

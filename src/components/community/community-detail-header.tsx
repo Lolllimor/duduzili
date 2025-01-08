@@ -16,7 +16,6 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
   const { back } = useRouter();
   const { data, isLoading } = useFetchCommunityDashboardQuery(id);
   const [toggle] = useToggleCommunityStatusMutation();
-  console.log(data);
 
   const handleClick = async () => {
     try {

@@ -44,7 +44,6 @@ const formSchema = z.object({
 export const AddAdmin = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const [postAddAdmin, { isLoading }] = useAddAdminMutation();
-  console.log(id);
 
   const { handleSubmit, register, formState } = useForm<
     z.infer<typeof formSchema>
