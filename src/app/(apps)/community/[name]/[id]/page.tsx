@@ -3,6 +3,7 @@ import { CommunityDetailHeader } from '@/components/community/community-detail-h
 import { CommunityPost } from '@/components/community/community-post';
 import GeneralLayout from '@/components/layout/generalLayout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Skeleton } from '@/components/ui/skeleton';
 import { normalizeUrlParams } from '@/lib/normalize-url';
 import {
   useFetchCommunityAdminQuery,
@@ -26,8 +27,9 @@ function Page({ params }: { params: Promise<{ name: string; id: string }> }) {
   const { name, id } = React.use(params);
   const router = useRouter();
 
-  const { data } = useFetchCommunityAdminQuery(id);
-  const { data: members } = useFetchCommunityMembersQuery(id);
+  const { data, isLoading } = useFetchCommunityAdminQuery(id);
+  const { data: members, isLoading: membersLoading } =
+    useFetchCommunityMembersQuery(id);
 
   useEffect(() => {
     if (!id) {
@@ -59,22 +61,36 @@ function Page({ params }: { params: Promise<{ name: string; id: string }> }) {
                 </div>
               </div>
               <div className="gap-4 flex flex-col">
-                {data?.data.map((item: Member, idx: number) => (
-                  <div className="flex gap-3 items-center" key={idx}>
-                    <Avatar className="w-10 h-10 rounded-full">
-                      <AvatarImage src={item.member_profile_picture} />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col font-sora justify-between">
-                      <span className="text-sm text-[#2A2A2A]">
-                        {item.member_full_name}
-                      </span>
-                      <span className="text-[#8F8E93] text-xs">
-                        @{item.member_username}
-                      </span>
+                {isLoading ? (
+                  <div className="flex flex-col gap-3">
+                    <div className="flex gap-3">
+                      <Skeleton className="w-10 h-10 rounded-full" />
+                      <div className="flex gap-1.5 flex-col">
+                        <Skeleton className="h-3 w-20" />
+                        <Skeleton className="h-3 w-12" />
+                      </div>
                     </div>
                   </div>
-                ))}
+                ) : data.data.length ? (
+                  data?.data.map((item: Member, idx: number) => (
+                    <div className="flex gap-3 items-center" key={idx}>
+                      <Avatar className="w-10 h-10 rounded-full">
+                        <AvatarImage src={item.member_profile_picture} />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col font-sora justify-between">
+                        <span className="text-sm text-[#2A2A2A]">
+                          {item.member_full_name}
+                        </span>
+                        <span className="text-[#8F8E93] text-xs">
+                          @{item.member_username}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="w-full">No admin</p>
+                )}
               </div>
             </div>
             <div className="flex flex-col gap-4">
@@ -87,22 +103,43 @@ function Page({ params }: { params: Promise<{ name: string; id: string }> }) {
                 </div>
               </div>
               <div className="gap-4 flex flex-col">
-                {members?.data.results.map((item: Member, idx: number) => (
-                  <div className="flex gap-3 items-center" key={idx}>
-                    <Avatar className="w-10 h-10 rounded-full">
-                      <AvatarImage src={item.member_profile_picture} />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col font-sora justify-between">
-                      <span className="text-sm text-[#2A2A2A]">
-                        {item.member_full_name}
-                      </span>
-                      <span className="text-[#8F8E93] text-xs">
-                        @{item.member_username}
-                      </span>
+                {membersLoading ? (
+                  <div className="flex flex-col gap-4">
+                    <div className="flex gap-3">
+                      <Skeleton className="w-10 h-10 rounded-full" />
+                      <div className="flex gap-1.5 flex-col">
+                        <Skeleton className="h-3 w-20" />
+                        <Skeleton className="h-3 w-12" />
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <Skeleton className="w-10 h-10 rounded-full" />
+                      <div className="flex gap-1.5 flex-col">
+                        <Skeleton className="h-3 w-20" />
+                        <Skeleton className="h-3 w-12" />
+                      </div>
                     </div>
                   </div>
-                ))}
+                ) : members?.data.count ? (
+                  members?.data.results.map((item: Member, idx: number) => (
+                    <div className="flex gap-3 items-center" key={idx}>
+                      <Avatar className="w-10 h-10 rounded-full">
+                        <AvatarImage src={item.member_profile_picture} />
+                        <AvatarFallback>CN</AvatarFallback>
+                      </Avatar>
+                      <div className="flex flex-col font-sora justify-between">
+                        <span className="text-sm text-[#2A2A2A]">
+                          {item.member_full_name}
+                        </span>
+                        <span className="text-[#8F8E93] text-xs">
+                          @{item.member_username}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p>No member</p>
+                )}
               </div>
             </div>
           </div>

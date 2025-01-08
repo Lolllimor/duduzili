@@ -38,6 +38,14 @@ export const communityApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Community'],
     }),
+    fetchCommunityProfile: builder.query({
+      query: (id: string) => ({
+        url: `${endpoints.community.fetchCommunityProfile}?community_id=${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['Community'],
+    }),
+
     toggleCommunityStatus: builder.mutation({
       query: (data) => ({
         url: endpoints.community.toggleCommunityStatus,
@@ -50,10 +58,11 @@ export const communityApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useToggleCommunityStatusMutation,
-  useFetchCommunityAdminQuery,
-  useFetchCommunityDashboardQuery,
   useFetchCommunityListQuery,
-  useFetchCommunityMembersQuery,
   useFetchCommunityPostQuery,
+  useFetchCommunityAdminQuery,
+  useFetchCommunityProfileQuery,
+  useFetchCommunityMembersQuery,
+  useFetchCommunityDashboardQuery,
+  useToggleCommunityStatusMutation,
 } = communityApi;

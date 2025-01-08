@@ -25,14 +25,145 @@ import MusicSquare from '../icons/music-square';
 import MicrophoneIcon from '../icons/microphone-icon';
 import HashtagIcon from '../icons/hashtag-blue-icon';
 import EditIcon from '../icons/edit-blue-icon';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { encrypt } from '@/lib/encrypt';
+import { Textarea } from '../ui/textarea';
+import ChatInput from './chat-input';
+import { MdClose } from 'react-icons/md';
+import AudioPlayer from '../post/audio-player';
+import ViewMedia from './view-media';
+import WebcamCapture from './webcam-capture';
 
-export const CreatePost = () => {
-  const [value, setValue] = useState('Public');
+export interface FormType {
+  tags: string[];
+  mentions: string[];
+  content: string;
+  media: File[];
+}
+
+export type MediaType = 'image' | 'audio' | 'video';
+
+function formatString(inputString: string) {
+  // Step 1: Extract words after # character
+  const ashRegex = /{{#([^}]*)}}/g;
+  const atRegex = /{{@([^}]*)}}/g;
+  let match;
+  const tags = [];
+  while ((match = ashRegex.exec(inputString)) !== null) {
+    tags.push(encrypt(match[1]));
+  }
+
+  let atmatch;
+  const mentions = [];
+  while ((atmatch = atRegex.exec(inputString)) !== null) {
+    mentions.push(encrypt(atmatch[1]));
+  }
+
+  // Step 2: Format the string
+  const formattedString = inputString
+    .replace(/{{#([^}]*)}}/g, (match, word) => `#${word}`)
+    .replace(/{{@([^}]*)}}/g, (match, word) => `@${word}`);
+
+  return { tags, mentions, formattedString };
+}
+
+const formSchema = z.object({
+  content: z.string().nonempty('Please enter post content'),
+});
+
+export const CreatePost = ({
+  community_id,
+  joinChannel,
+  createComment,
+  post_id,
+  createCommentLoading,
+  parent_id,
+  isComment,
+}: {
+  community_id?: string;
+  joinChannel?: () => void;
+  createComment?: (payload: { data: FormData; onSuccess: () => void }) => void;
+  post_id?: string;
+  createCommentLoading?: boolean;
+  parent_id?: string;
+  isComment?: boolean;
+}) => {
+  const [visibility, setVisibility] = useState('Public');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [audio, setAudio] = useState<File | null>(null);
+  const [video, setVideo] = useState<File | null>(null);
+  const [viewOpened, setViewOpened] = useState(false);
+  const [openWebCam, setOpenWebCam] = useState(false);
+  const [preview, setPreview] = useState<{
+    type: MediaType;
+    file: File;
+  } | null>(null);
+
+  const { handleSubmit, register, formState, reset, setValue, watch } =
+    useForm<FormType>({
+      resolver: zodResolver(formSchema),
+      mode: 'onChange',
+      defaultValues: {
+        content: '',
+        tags: [],
+        media: [],
+        mentions: [],
+      },
+    });
 
   const handleClick = () => {
     fileInputRef.current?.click(); // Trigger the file input click
   };
+
+  const handleSendMessage = (values: FormType) => {
+    const { tags, mentions, formattedString } = formatString(values.content);
+    const formData = new FormData();
+
+    Object.entries(values)?.forEach(([k, v]) => {
+      if (typeof v === 'string') formData.append(k, encrypt(formattedString));
+      else if (k === 'tags' && tags.length) {
+        formData.append(k, JSON.stringify(tags));
+      } else if (k === 'mentions' && mentions.length) {
+        formData.append(k, JSON.stringify(mentions));
+      } else if (k === 'media') {
+        values.media.forEach((el) => {
+          formData.append(k, el);
+        });
+      }
+    });
+    if (audio) {
+      formData.append('media', audio);
+    }
+    if (video) {
+      formData.append('media', video);
+    }
+    if (community_id) {
+      formData.append('community_id', encrypt(community_id));
+    }
+    if (post_id) {
+      formData.append('post_id', encrypt(post_id));
+    }
+    if (parent_id) {
+      formData.append('parent_id', encrypt(parent_id));
+    }
+    if (createComment) {
+      createComment({
+        data: formData,
+        onSuccess() {
+          reset();
+          setAudio(null);
+          setVideo(null);
+        },
+      });
+    } else {
+      // mutate(formData);
+    }
+  };
+
+  console.log(watch().media);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -56,7 +187,7 @@ export const CreatePost = () => {
             </DialogClose>
           </div>
         </DialogTitle>
-        <div className=" flex flex-col py-8  gap-5">
+        <form className=" flex flex-col py-8  gap-5">
           <div className="flex justify-between items-center">
             <div className="flex gap-2 ">
               <div className="w-11 h-11 rounded-full border border-[#F0F0F1]"></div>
@@ -67,7 +198,10 @@ export const CreatePost = () => {
                 <span className="text-[#494850] text-sm ">@duduzili</span>
               </div>
             </div>
-            <Select defaultValue={value} onValueChange={(val) => setValue(val)}>
+            <Select
+              defaultValue={visibility}
+              onValueChange={(val) => setVisibility(val)}
+            >
               <SelectTrigger className="w-[130px] bg-[#F5F5F5] h-[39px] border-[0.5px] border-[#D9D9DB] shadow-none">
                 <SelectValue placeholder="Select a fruit" />
               </SelectTrigger>
@@ -83,27 +217,111 @@ export const CreatePost = () => {
             </Select>
           </div>
           <div className="border border-[#D9D9DB] rounded-[16px] h-fit  py-2 pt-[23px]">
-            <div className="h-[122px] px-4">
-              <span className="text-[#8F8E93] text-base">
-                What’s on your mind ?
-              </span>
+            <div className="flex flex-col gap-3">
+              <ChatInput
+                value={watch().content}
+                setValue={(value) => {
+                  setValue('content', value);
+                }}
+              />
+              <div className="flex flex-wrap gap-4">
+                {watch('media')?.map((el, idx) => (
+                  <div
+                    className="w-[80px] h-[80px] max-sm:w-[60px] max-sm:h-[60px] relative cursor-pointer group rounded-lg shadow-lg border bg-gray-300"
+                    key={idx}
+                  >
+                    <div
+                      onClick={() => {
+                        setPreview({
+                          type: 'image',
+                          file: el,
+                        });
+                        setViewOpened(true);
+                      }}
+                      className="group-hover:block duration-300 absolute rounded-lg inset-0 hidden bg-black opacity-20"
+                    />
+                    <span
+                      onClick={() => {
+                        const filtered = watch('media').filter(
+                          (item) => item.name !== el.name
+                        );
+                        setValue('media', filtered);
+                      }}
+                      className="bg-[#00000086] absolute rounded-full top-1  right-1 cursor-pointer z-10"
+                    >
+                      <MdClose color="white" />
+                    </span>
+                    <Image
+                      src={URL.createObjectURL(el)}
+                      width={100}
+                      height={100}
+                      alt={el.name}
+                      className="w-full h-full rounded-lg object-cover"
+                    />
+                  </div>
+                ))}
+                {video ? (
+                  <div className="w-[80px] h-[80px] relative cursor-pointer group rounded-lg shadow-lg border bg-gray-300">
+                    <div className="group-hover:block duration-300 absolute rounded-lg inset-0 hidden bg-black opacity-20" />
+                    <span
+                      onClick={() => {
+                        setVideo(null);
+                      }}
+                      className="bg-[#00000086] absolute rounded-full top-1  right-1 cursor-pointer z-10"
+                    >
+                      <MdClose color="white" />
+                    </span>
+                    <video
+                      onClick={() => {
+                        setPreview({
+                          type: 'video',
+                          file: video,
+                        });
+                        setViewOpened(true);
+                      }}
+                      src={URL.createObjectURL(video)}
+                      controls={false}
+                      className="w-full h-full rounded-lg"
+                    />
+                  </div>
+                ) : null}
+                {audio ? (
+                  <AudioPlayer
+                    name={audio?.name}
+                    removeAudio={() => setAudio(null)}
+                    url={URL.createObjectURL(audio)}
+                    type="mini"
+                  />
+                ) : null}
+              </div>
             </div>
             <div className="border-t border-[#F0F0F1] pt-4 flex items-baseline">
               <div className="px-4 flex justify-between items-center w-full h-full">
                 <div className="gap-4 flex items-center">
-                  <div id="fileUploader">
-                    <PhoneIcon
-                      onClick={handleClick}
-                      className="cursor-pointer"
-                    />
+                  <label htmlFor="image-input">
+                    <PhoneIcon className="cursor-pointer" />
                     <input
+                      multiple
+                      id="image-input"
                       type="file"
-                      ref={fileInputRef}
                       accept="image/*"
                       className="hidden"
+                      onChange={(event) => {
+                        console.log(event.target.files);
+                        if (event.target.files) {
+                          setValue('media', [
+                            ...watch('media'),
+                            ...Array.from(event.target.files),
+                          ]);
+                        }
+                      }}
                     />
-                  </div>
-                  <CameraIcon />
+                  </label>
+                  <CameraIcon
+                    onClick={() => {
+                      setOpenWebCam(true);
+                    }}
+                  />
                   <MusicSquare />
                   <MicrophoneIcon />
                   <HashtagIcon />
@@ -115,7 +333,23 @@ export const CreatePost = () => {
               </div>
             </div>
           </div>
-        </div>
+        </form>
+        <ViewMedia
+          open={viewOpened}
+          setOpened={setViewOpened}
+          file={preview?.file}
+          type={preview?.type}
+        />
+        {openWebCam && (
+          <WebcamCapture
+            opened={openWebCam}
+            close={() => {
+              setOpenWebCam(false);
+            }}
+            setValue={setValue}
+            media={watch('media')}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

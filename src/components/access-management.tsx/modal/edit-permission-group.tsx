@@ -182,6 +182,7 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
                     Permission Group
                   </label>
                   <MultipleSelector
+                    placeholder="Select permission"
                     data={data?.data}
                     selectedGroups={selectedGroups}
                     onSelectionChange={handleSelectionChange}

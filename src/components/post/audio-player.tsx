@@ -137,7 +137,7 @@ function AudioPlayer({
       ) : null}
 
       <Image
-        src=""
+        src="/audio-label.jpg"
         width={100}
         height={100}
         alt="audio label"
@@ -158,14 +158,14 @@ function AudioPlayer({
       >
         <img
           className="w-full h-full object-cover rounded-l-[14px]"
-          src={undefined}
+          src="/audio-label.jpg"
           alt="audio label"
         />
       </div>
       <div
         className={clsx(
           'pr-5 py-7 justify-between',
-          'flex flex-col cpl-8',
+          'flex flex-col pl-8',
           controlsclassName
         )}
       >

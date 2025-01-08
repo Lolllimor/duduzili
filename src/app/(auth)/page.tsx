@@ -8,7 +8,6 @@ import { FaSpinner } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-// import { handleError } from '@/lib/errorHandler';
 import { cookieStorage } from '@ibnlanre/portal';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
@@ -44,6 +43,10 @@ const page = () => {
     try {
       const response = await login(values).unwrap();
       toast.success('Successfully logged in');
+      cookieStorage.setItem(
+        'user-detail',
+        JSON.stringify({ userDetail: response.data })
+      );
       push('dashboard');
       cookieStorage.setItem(
         'duduzili-auth',

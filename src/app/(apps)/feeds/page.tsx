@@ -1,21 +1,17 @@
 'use client';
-import { SearchIcon } from 'lucide-react';
-import { DataTable } from '@/lib/table-data';
-import { CreatePost } from '@/components/feeds/create-post';
-import GenaralLayout from '@/components/layout/generalLayout';
-import { EmptyState } from '@/components/settings/empty-state';
-import { FeedCards } from '@/components/feeds/feed-cards';
-import PostContainer from '@/components/post/post-container';
-import { useFetchTrendingPostQuery } from '@/redux/features/feedApi';
-import { TreandingTopics } from '@/components/feeds/trending-topics';
-import { Skeleton } from '@/components/ui/skeleton';
 import { PostItem } from '@/lib/type';
+import { Skeleton } from '@/components/ui/skeleton';
+import { FeedCards } from '@/components/feeds/feed-cards';
+import { CreatePost } from '@/components/feeds/create-post';
+import PostContainer from '@/components/post/post-container';
+import GenaralLayout from '@/components/layout/generalLayout';
+import { TreandingTopics } from '@/components/feeds/trending-topics';
+import { useFetchTrendingPostQuery } from '@/redux/features/feedApi';
 
 
 
 const page = () => {
   const { data, isLoading } = useFetchTrendingPostQuery();
-
   return (
     <GenaralLayout pageTitle="Feeds" moreOptions={<CreatePost />}>
       <div className="flex flex-col px-8 gap-8">

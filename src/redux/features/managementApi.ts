@@ -1,6 +1,5 @@
-import { endpointServerChangedSubscribe } from 'next/dist/build/swc/generated-native';
-import { endpoints } from '../endpoint';
 import { baseApi } from './base-api';
+import { endpoints } from '../endpoint';
 
 export const managementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({

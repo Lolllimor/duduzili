@@ -5,8 +5,41 @@ import { IoClose } from 'react-icons/io5';
 import { Drawer } from 'vaul';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import PeopleIcon from '../icons/people-icon';
+import { useFetchAboutQuery } from '@/redux/features/settingsApi';
+import { useFetchCommunityProfileQuery } from '@/redux/features/communityApi';
+import dayjs from 'dayjs';
 
 export const ProfileDrawer = ({ id }: { id: string }) => {
+  const { data } = useFetchCommunityProfileQuery(id);
+
+  // {
+  //     "success": "",
+  //     "status_code": "",
+  //     "data": {
+  //         "name": "Frontend Devs",
+  //         "description": "A short description about Frontend Developers all over the world",
+  //         "members_count": 6,
+  //         "posts_count": 9,
+  //         "members_photo_preview": [
+  //             null,
+  //             null,
+  //             "https://res.cloudinary.com/duduomo/image/upload/v1729526974/samnj3imoomkonbvc8si.png",
+  //             null,
+  //             "https://res.cloudinary.com/duduomo/image/upload/v1736173924/tyaexmryxlam3du8ttwg.jpg"
+  //         ],
+  //         "admin_photo_preview": [
+  //             "https://res.cloudinary.com/duduomo/image/upload/v1729526974/samnj3imoomkonbvc8si.png"
+  //         ],
+  //         "admin_count": 1,
+  //         "privacy": "Public",
+  //         "created": "2024-10-28T11:05:09.022905+01:00",
+  //         "group_rules": "Just do good",
+  //         "posts_today": 0,
+  //         "posts_last_month": 1
+  //     },
+  //     "message": ""
+  // }
+
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger className="cursor-pointer">
@@ -21,7 +54,7 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
       <Drawer.Overlay className="fixed inset-0 bg-black/40 z-[999]" />
 
       <Drawer.Content
-        className="fixed top-0 right-0 h-full w-[40%] z-[999] outline-none max-w-[579px]"
+        className="fixed top-0 right-0 h-full w-[40%] z-[999] outline-none max-w-[540px]"
         asChild
       >
         <div className="flex flex-col h-full bg-white pt-5 pr-5 rounded-l-[16px]">
@@ -40,7 +73,7 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                 </Avatar>
 
                 <span className="text-[#2A2A2A] text-2xl font-sora font-semibold">
-                  Justice League
+                  {data?.data.name}
                 </span>
               </div>
               <div className="flex gap-10">
@@ -50,7 +83,7 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                       Posts
                     </span>
                     <span className="text-[#2A2A2A] text-base font-semibold font-sora">
-                      1k
+                      {data?.data.posts_count}
                     </span>
                   </div>
                   <div className="bg-[#D9D9DB] h-[38px] w-[1px]"></div>
@@ -62,12 +95,22 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                     </span>
                     <div className="flex gap-2 items-center">
                       <span className="text-[#2A2A2A] text-base font-semibold font-sora">
-                        3
+                        {data?.data.admin_count}
                       </span>
                       <div className="flex items-center relative">
-                        <div className="flex h-5 w-5 rounded-full border-2 border-black z-10  ml-[-5px] bg-white  "></div>
-                        <div className="flex h-5 w-5 rounded-full border-2 border-black z-20  ml-[-5px] bg-white"></div>
-                        <div className="flex h-5 w-5 rounded-full border-2 border-black z-30  ml-[-5px] bg-white"></div>
+                        {data?.data.admin_photo_preview.map(
+                          (item: string) =>
+                            item !== null && (
+                              <Image
+                                key={item}
+                                alt="admin-image"
+                                src={item}
+                                width={20}
+                                height={20}
+                                className="border-2 border-white max-w-5 max-h-5  ml-[-5px] rounded-full"
+                              />
+                            )
+                        )}
                       </div>
                     </div>
                   </div>
@@ -80,12 +123,22 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                     </span>
                     <div className="flex gap-2 items-center">
                       <span className="text-[#2A2A2A] text-base font-semibold font-sora">
-                        6k
+                        {data?.data.members_count}
                       </span>
                       <div className="flex items-center relative">
-                        <div className="flex h-5 w-5 rounded-full border-2 border-black z-10  ml-[-5px] bg-white  "></div>
-                        <div className="flex h-5 w-5 rounded-full border-2 border-black z-20  ml-[-5px]  bg-white"></div>
-                        <div className="flex h-5 w-5 rounded-full border-2 border-black z-30  ml-[-5px] bg-white"></div>
+                        {data?.data.members_photo_preview.map(
+                          (item: string) =>
+                            item !== null && (
+                              <Image
+                                key={item}
+                                alt="admin-image"
+                                src={item}
+                                width={20}
+                                height={20}
+                                className="border-2 border-white max-w-5 max-h-5  ml-[-5px] rounded-full"
+                              />
+                            )
+                        )}
                       </div>
                     </div>
                   </div>
@@ -98,9 +151,7 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                   Description
                 </span>
                 <span className="text-[#8F8E93] text-xs font-sora">
-                  Looking for an experienced people to help me find people in US
-                  to test my app. Looking for an experienced people to help me
-                  find people in US to test my app
+                  {data?.data.description}
                 </span>
               </div>
               <div className="flex flex-col py-5 gap-2">
@@ -111,21 +162,22 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                   <div className=" flex gap-2 items-start py-3">
                     <PeopleIcon />
                     <div className="flex flex-col">
-                      <span className="font-sora tex-xs text-[#2A2A2A] font-semibold">
+                      <span className="font-sora text-xs text-[#2A2A2A] font-semibold">
                         Members
                       </span>
-                      <span className="font-sora tex-xs text-[#8F8E93] w-[307px]">
-                        There are 449 members and 3 admins in this community
+                      <span className="font-sora text-xs text-[#8F8E93] max-w-[307px]">
+                        There are {data?.data.members_count} members and{' '}
+                        {data?.data.admin_count} admins in this community
                       </span>
                     </div>
                   </div>
                   <div className=" flex gap-2 items-start py-3">
                     <PeopleIcon />
                     <div className="flex flex-col">
-                      <span className="font-sora tex-xs text-[#2A2A2A] font-semibold">
-                        Private
+                      <span className="font-sora text-xs text-[#2A2A2A] font-semibold">
+                        {data?.data.privacy}
                       </span>
-                      <span className="font-sora tex-xs text-[#8F8E93] w-[307px]">
+                      <span className="font-sora text-xs text-[#8F8E93] max-w-[307px]">
                         Only members can see who’s in the community and what
                         they post.
                       </span>
@@ -134,13 +186,38 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                   <div className=" flex gap-2 items-start py-3">
                     <PeopleIcon />
                     <div className="flex flex-col">
-                      <span className="font-sora tex-xs text-[#2A2A2A] font-semibold">
+                      <span className="font-sora text-xs text-[#2A2A2A] font-semibold">
                         History
                       </span>
-                      <span className="font-sora tex-xs text-[#8F8E93] w-[307px]">
-                        Group created on 27 December, 2022
+                      <span className="font-sora text-xs text-[#8F8E93] w-[307px]">
+                        Group created on{' '}
+                        {dayjs(data?.data.created).format('DD MMMM, YYYY')}
                       </span>
                     </div>
+                  </div>
+                </div>
+              </div>
+              <div className="py-5 gap-2 flex flex-col">
+                <span className="text-[#2A2A2A] font-semibold text-sm font-sora">
+                  Community Rules
+                </span>
+                <div className="">
+                  <span>{data?.data.group_rules}</span>
+                </div>
+              </div>
+              <div className="py-5 gap-2 flex flex-col">
+                <span className="text-[#2A2A2A] font-semibold text-sm font-sora">
+                  Community Activity
+                </span>
+                <div className=" flex gap-2 items-start py-3">
+                  <PeopleIcon />
+                  <div className="flex flex-col">
+                    <span className="font-sora text-xs text-[#2A2A2A] font-semibold">
+                      {data?.data.posts_today} new posts today
+                    </span>
+                    <span className="font-sora text-xs text-[#8F8E93] max-w-[307px]">
+                      {data?.data.posts_last_month} posts in the last month
+                    </span>
                   </div>
                 </div>
               </div>

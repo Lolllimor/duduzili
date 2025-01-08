@@ -65,7 +65,6 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
       (item: PermissionGroup) => item.group_id === id
     );
 
-
   const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
@@ -193,6 +192,7 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
                     Permission Group
                   </label>
                   <MultipleSelector
+                    placeholder="Select permission"
                     data={data?.data}
                     selectedGroups={selectedGroups}
                     onSelectionChange={handleSelectionChange}

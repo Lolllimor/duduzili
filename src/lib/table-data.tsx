@@ -24,6 +24,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { DataTablePagination } from "./paginatkon";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -63,7 +64,7 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between"></div>
       {/* table */}
       {/* bg-[#F9FAFB] */}
-      <div className="">
+      <div className="border-b border-[#E4E7EC] flex flex-col overflow-auto">
         <Table className="text-[#565D62]  text-sm ">
           <TableHeader className="bg-[#F9FAFB] font-medium text-xs">
             {table.getHeaderGroups().map((headerGroup) => (
@@ -104,10 +105,10 @@ export function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  className="border-b border-[#E5E6E8] py-[100px] text-nowrap "
+                  className="border-b border-[#E5E6E8] py-[100px] text-nowrap overflow-auto "
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-6">
+                    <TableCell key={cell.id} className="px-6 py-4">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -129,6 +130,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
+      <DataTablePagination table={table} />
     </section>
   );
 }

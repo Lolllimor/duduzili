@@ -230,7 +230,7 @@ function InterestPage() {
       <hr />
       <div className="flex p-8 gap-8 flex-wrap overflow-auto h-full">
         <AddInterestModal />
-        {SeedData.map((item) => (
+        {/* {SeedData.map((item) => (
           <div
             key={item.name}
             className="border border-[#F5F5F5] rounded-xl w-[346px] h-[300px] flex justify-center items-center bg-white hover:bg-white  flex-col gap-1 shadow-interest-drop"
@@ -265,8 +265,8 @@ function InterestPage() {
               <span className="text-sm text-[#4534B8] font-semibold">#27</span>
             </div>
           </div>
-        ))}
-        {/* <InterestCard /> */}
+        ))} */}
+        <InterestCard />
       </div>
     </GeneralLayout>
   );

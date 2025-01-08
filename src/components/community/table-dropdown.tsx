@@ -38,7 +38,10 @@ export const TableDropdown = ({
       >
         Make {is_active ? 'Inactive' : 'Active'}
       </DropdownMenuItem>
-      <DropdownMenuItem className="text-[#F87A6D] focus:text-[#F87A6D]">
+      <DropdownMenuItem
+        className="text-[#F87A6D] focus:text-[#F87A6D]"
+        onClick={handleClick}
+      >
         Deactivate Community
       </DropdownMenuItem>
     </DropdownMenuContent>

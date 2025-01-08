@@ -87,6 +87,8 @@ export const Sidebar = () => {
 
   const pathName = usePathname();
 
+  const unparsedUser = cookieStorage.getItem('user-detail');
+  const user = unparsedUser && JSON.parse(unparsedUser);
   return (
     <div
       className={clsx(
@@ -186,13 +188,23 @@ export const Sidebar = () => {
             <div className=" border-t border-[#6A5DC6] mt-8 mb-6 mx-6 pb-6 ">
               <div className="flex items-center justify-between pt-6">
                 <div className="flex items-center gap-1">
-                  <Image src="/user.png" width={30} height={30} alt="user" />
+                  <Image
+                    src={
+                      user.userDetail.image
+                        ? user.userDetail.image
+                        : '/user.png'
+                    }
+                    width={30}
+                    height={30}
+                    alt="user"
+                  />
+
                   <div className="flex flex-col gap-1">
                     <h3 className="font-semibold text-xs font-sora text-[#ECEBF8]">
                       Duduzilian
                     </h3>
                     <p className="font-normal text-xs font-sora text-[#C7C2EA]">
-                      admin@duduzili.com
+                      {user.userDetail.email}
                     </p>
                   </div>
                 </div>

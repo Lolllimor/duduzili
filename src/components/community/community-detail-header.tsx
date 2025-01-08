@@ -27,7 +27,7 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
     }
   };
   return isLoading ? (
-    <div className="h-[270px] rounded-lg py-5 px-[22px]  flex flex-col  w-[789px] gap-4">
+    <div className="min-h-[270px] rounded-lg py-5 px-[22px]  flex flex-col  w-[789px] gap-4">
       <Skeleton className="h-[163px] w-full" />
       <div className="flex flex-col gap-1">
         <Skeleton className="h-[15px]" />
@@ -37,7 +37,7 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
       </div>
     </div>
   ) : (
-    <div className="h-[270px] relative rounded-xl flex w-full flex-col bg-[#4534B8]">
+    <div className="min-h-[270px] relative rounded-xl flex w-full flex-col bg-[#4534B8]">
       <div
         className="h-[163px] w-full rounded-t-xl px-[20px] pt-5 "
         style={{
@@ -81,20 +81,28 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
               {data?.data.members_count > 1 ? 'Members' : 'Member'}
             </span>
             <div className="flex items-center">
-              <div className="w-10 h-10 rounded-full border-[1.5px] border-black ml-[-15px] z-[60] bg-white"></div>
-              <div className="w-10 h-10 rounded-full border-[1.5px] border-black ml-[-15px] z-[70] bg-white"></div>
-              <div className="w-10 h-10 rounded-full border-[1.5px] border-black ml-[-15px] z-[80] bg-white"></div>
-              <div className="w-10 h-10 rounded-full border-[1.5px] border-black ml-[-15px] z-[90] bg-white"></div>
-              <div className="w-10 h-10 rounded-full border-[1.5px] border-black ml-[-15px] z-[100] bg-white"></div>
+              {data.data.photo_preview.map(
+                (item: string, idx: number) =>
+                  item !== null && (
+                    <Image
+                      key={idx}
+                      alt="Image preview"
+                      height={40}
+                      width={40}
+                      src={item}
+                      className="ml-[-15px] rounded-full border-2 border-white max-h-10 max-w-10"
+                    />
+                  )
+              )}
             </div>
           </div>
-          <Button
-            className="bg-white rounded-[4px] text-sm font-sora text-[#ED5556] h-10 px-[22px] "
-            onClick={handleClick}
-          >
-            Deactivate
-          </Button>
         </div>
+        <Button
+          className="bg-white rounded-[4px] text-sm font-sora text-[#ED5556] h-10 px-[22px] "
+          onClick={handleClick}
+        >
+          Deactivate
+        </Button>
       </div>
     </div>
   );

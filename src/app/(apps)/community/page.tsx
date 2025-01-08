@@ -13,7 +13,7 @@ function page() {
   console.log(data);
   return (
     <GeneralLayout pageTitle="Communities">
-      <div className="px-6 flex flex-col gap-6">
+      <div className="px-6 flex flex-col gap-6 pb-6">
         <CommunityTableHeader />
         {isLoading ? (
           <div className="flex flex-col bg-[#F9FAFB] rounded-2xl">

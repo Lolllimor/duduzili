@@ -2,12 +2,13 @@ import { PostItem } from '@/lib/type';
 import { Skeleton } from '../ui/skeleton';
 import PostContainer from '../post/post-container';
 import { useFetchCommunityPostQuery } from '@/redux/features/communityApi';
+import { EmptyState } from '../settings/empty-state';
 
 export const CommunityPost = ({ id }: { id: string }) => {
   const { data, isLoading } = useFetchCommunityPostQuery({ id });
   console.log(data);
   return (
-    <div className="flex gap-2 flex-wrap overflow-auto">
+    <div className="flex gap-2 flex-wrap overflow-auto h-full">
       {isLoading ? (
         <div className="flex flex-col gap-5 rounded-xl border border-[#F0F0F1] w-full min-w-[505px] p-6 max-sm:px-1">
           <div className=" flex gap-3">
@@ -27,7 +28,7 @@ export const CommunityPost = ({ id }: { id: string }) => {
             </div>
           </div>
         </div>
-      ) : (
+      ) : data.data.count ? (
         data?.data.results.map((item: PostItem, idx: number) => (
           <PostContainer
             key={idx}
@@ -71,6 +72,10 @@ export const CommunityPost = ({ id }: { id: string }) => {
             likesCount={item?.the_likes_count}
           />
         ))
+      ) : (
+        <div className="flex flex-col gap-5 rounded-xl border border-[#F0F0F1] bg-white flex-1 w-full min-w-[505px] p-6 max-sm:px-1">
+          <EmptyState title="Post" paragraph="No post has been made" />
+        </div>
       )}
     </div>
   );

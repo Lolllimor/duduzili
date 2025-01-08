@@ -56,6 +56,7 @@ export const endpoints = {
     fetchCommunityPost: 'api/administration/community-posts/',
     fetchCommunityAdmin: 'api/administration/community-admin/',
     fetchCommunityMembers: 'api/administration/community-members/',
+    fetchCommunityProfile: 'api/administration/community-profile',
   },
   feeds: {
     fetchDashboard: 'api/administration/feeds-dashboard/',

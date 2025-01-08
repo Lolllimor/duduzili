@@ -183,12 +183,12 @@ export const AddAdminAccess = () => {
               <div className="flex flex-col gap-4">
                 <div className=" flex flex-col w-full  gap-2">
                   <label
-                    htmlFor="email"
                     className="text-sm text-[#2A2A2A] font-medium font-inter"
                   >
                     Permission Group
                   </label>
                   <MultipleSelector
+                    placeholder="Select permission group"
                     data={data?.data.results.reduce(
                       (acc: any[], item: { name: any }) => {
                         acc.push(item.name);
