@@ -228,44 +228,9 @@ function InterestPage() {
   return (
     <GeneralLayout pageTitle="Interests">
       <hr />
-      <div className="flex p-8 gap-8 flex-wrap overflow-auto h-full">
+      <div className="flex p-8 gap-8 flex-wrap  h-full">
         <AddInterestModal />
-        {/* {SeedData.map((item) => (
-          <div
-            key={item.name}
-            className="border border-[#F5F5F5] rounded-xl w-[346px] h-[300px] flex justify-center items-center bg-white hover:bg-white  flex-col gap-1 shadow-interest-drop"
-          >
-            <div className="py-[18px] flex justify-between w-full items-center px-6">
-              <span className="text-sm text-[#2A2A2A] font-semibold">
-                {item.name}
-              </span>
-              <DropdownMenu>
-                <DropdownMenuTrigger>
-                  <HiOutlineDotsVertical />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="py-2 w-[137px]">
-                  <DropdownMenuItem>
-                    <AddInterestModal />
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="text-[#ED5556] hover:text-[#ED5556] flex gap-2 items-center text-xs">
-                    <Image src="/trash.svg" alt="edit" width={16} height={16} />
-                    Delete topic
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            <div className="flex gap-0.5 flex-wrap w-full h-full px-6">
-              {item.tags.map((tag, idx) => (
-                <p key={idx} className="text-[#494850] text-xs">
-                  #{tag}
-                </p>
-              ))}
-            </div>
-            <div className="py-[18px] flex justify-end w-full  px-6">
-              <span className="text-sm text-[#4534B8] font-semibold">#27</span>
-            </div>
-          </div>
-        ))} */}
+    
         <InterestCard />
       </div>
     </GeneralLayout>

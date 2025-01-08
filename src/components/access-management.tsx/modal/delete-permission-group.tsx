@@ -64,7 +64,6 @@ export const DeletePermissionGroup = ({
         <div className="flex justify-between font-medium pt-7 px-8 w-full h-fit">
           <DialogClose asChild>
             <Button
-              role="button"
               className="bg-[#F4F4F4] hover:bg-[#F4F4F4] border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center "
             >
               Cancel

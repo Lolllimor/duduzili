@@ -28,7 +28,7 @@ export const interestsApi = baseApi.injectEndpoints({
     deleteInterest: builder.mutation({
       query: (data) => ({
         url: endpoints.interests.deleteInterest,
-        method: 'POST',
+        method: 'DELETE',
         body: data,
       }),
       invalidatesTags: ['Interest'],
@@ -36,7 +36,7 @@ export const interestsApi = baseApi.injectEndpoints({
     editInterest: builder.mutation({
       query: (data) => ({
         url: endpoints.interests.editInterest,
-        method: 'POST',
+        method: 'PATCH',
         body: data,
       }),
       invalidatesTags: ['Interest'],

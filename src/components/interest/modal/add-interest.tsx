@@ -18,12 +18,13 @@ import {
 
 import {
   useCreateInterestMutation,
+  useEditInterestMutation,
   useFetchInterestCategoryQuery,
   useFetchUnasssociatedTagsQuery,
 } from '@/redux/features/interestsApi';
 import { z } from 'zod';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { Input } from '../../ui/input';
 import { Button } from '../../ui/button';
@@ -38,11 +39,12 @@ const formSchema = z.object({
   category: z.string().nonempty('A category is required'),
 });
 
-export const AddInterestModal = ({ id }: { id?: string }) => {
+export const AddInterestModal = ({ id }: { id?: any }) => {
   const [open, setOpen] = useState(false);
   const { data } = useFetchUnasssociatedTagsQuery();
   const { data: categoryData } = useFetchInterestCategoryQuery();
   const [createInterest, { isLoading }] = useCreateInterestMutation();
+  const [editInterest] = useEditInterestMutation();
   const [inputValue, setInputValue] = useState('');
   const [hashtags, setHashtags] = useState<string[]>([]);
 
@@ -60,12 +62,19 @@ export const AddInterestModal = ({ id }: { id?: string }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      await createInterest({
-        ...data,
-        tags: hashtags,
-      }).unwrap();
-      toast.success('Successfully created');
-      setOpen(false);
+      id
+        ? (await editInterest({
+            ...data,
+            tags: hashtags,
+            pf_id: id.pf_id,
+          }).unwrap(),
+          toast.success('Successfully updated'))
+        : (await createInterest({
+            ...data,
+            tags: hashtags,
+          }).unwrap(),
+          toast.success('Successfully created')),
+        setOpen(false);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
@@ -73,10 +82,9 @@ export const AddInterestModal = ({ id }: { id?: string }) => {
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ' ') {
-      // Check if the pressed key is 'Space'
       if (inputValue.trim()) {
-        setHashtags([...hashtags, inputValue.trim()]); // Add trimmed value to the array
-        setInputValue(''); // Clear the input
+        setHashtags([...hashtags, inputValue.trim()]);
+        setInputValue('');
       }
     }
   };
@@ -85,6 +93,15 @@ export const AddInterestModal = ({ id }: { id?: string }) => {
       prevHashtags.filter((tag) => tag !== tagToRemove)
     );
   };
+  console.log(id);
+
+  useEffect(() => {
+    if (id) {
+      setValue('name', id.name);
+      setValue('category', id.category);
+      setHashtags(id.tags_name);
+    }
+  }, []);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -154,7 +171,7 @@ export const AddInterestModal = ({ id }: { id?: string }) => {
               <SelectTrigger className="h-14 border-[#E5E6E8] rounded-sm  pl-4">
                 <SelectValue
                   className=" placeholder:text-sm placeholder:font-normal placeholder:text-[#ABAEB5] font-normal text-sm"
-                  placeholder="Select a verified email to display"
+                  placeholder="Select a category"
                   {...register('category')}
                 />
               </SelectTrigger>

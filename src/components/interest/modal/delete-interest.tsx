@@ -1,3 +1,4 @@
+'use client';
 import {
   Dialog,
   DialogClose,
@@ -5,19 +6,33 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '../../ui/input';
-import { Button } from '../../ui/button';
-
 import { IoClose } from 'react-icons/io5';
 
 import Image from 'next/image';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { Button } from '../../ui/button';
+import { useDeleteInterestMutation } from '@/redux/features/interestsApi';
+import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
-export const DeleteInterest = () => {
+export const DeleteInterest = ({ id }: { id: string }) => {
+  const [open, setOpen] = useState(false);
+  const [deleteInterest] = useDeleteInterestMutation();
+  const handleClick = async () => {
+    try {
+      const red = await deleteInterest({ pf_id: id }).unwrap();
+      toast.success('Successfully deleted');
+      setOpen(false);
+    } catch (error) {
+      errorMessageHandler(error as ErrorType);
+    }
+  };
+
   return (
-    <Dialog>
-      <DialogTrigger className="text-[#2A2A2A] flex gap-2 items-center text-xs ">
-        <Image src="/edit.svg" alt="edit" width={16} height={16} />
-        Edit topic
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger className="text-[#ED5556] focus:text-[#ED5556] flex gap-2 items-center text-xs">
+        <Image src="/trash.svg" alt="edit" width={16} height={16} />
+        Delete interest
       </DialogTrigger>
       <DialogContent className=" py-5 gap-0  w-[450px] [&>button]:hidden rounded-[16px] max-h-[376px] h-full  !px-0 flex flex-col">
         <DialogTitle>
@@ -41,18 +56,15 @@ export const DeleteInterest = () => {
         </div>
         <div className="w-full border-none h-[1px] bg-[#EAECF0]"></div>
         <div className="flex justify-between font-medium pt-7 px-8 w-full h-fit">
-          <div
-            role="button"
-            className="bg-[#F4F4F4] border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center "
-          >
+          <Button className="bg-[#F4F4F4] border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center ">
             Cancel
-          </div>
-          <div
-            role="button"
+          </Button>
+          <Button
+            onClick={() => handleClick()}
             className="bg-[#D40000] border-none rounded-[32px] h-[51px]  w-[177px] text-white flex justify-center items-center"
           >
             Delete
-          </div>
+          </Button>
         </div>
       </DialogContent>
     </Dialog>

@@ -48,7 +48,7 @@ export const AddAdminAccess = () => {
   const [postPermissionGroup, { isLoading }] = useAddAdminToGroupMutation();
 
 
-  const { handleSubmit, register, formState } = useForm<
+  const { handleSubmit, register, formState,reset } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
@@ -95,7 +95,14 @@ export const AddAdminAccess = () => {
   const { errors, isValid } = formState;
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={() => {
+        setOpen(!open);
+        reset();
+        setSelectedGroups([]);
+      }}
+    >
       <DialogTrigger asChild>
         <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#367EE8] font-inter">
           <IoMdAdd className="size-5" />
@@ -106,7 +113,13 @@ export const AddAdminAccess = () => {
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
             <span className="text-2xl font-bold"> Admin Access</span>
-            <DialogClose aria-label="Close">
+            <DialogClose
+              aria-label="Close"
+              onClick={() => {
+                reset();
+                setSelectedGroups([]);
+              }}
+            >
               <Image
                 src="/close.svg"
                 height={36}
@@ -179,9 +192,7 @@ export const AddAdminAccess = () => {
               </div>
               <div className="flex flex-col gap-4">
                 <div className=" flex flex-col w-full  gap-2">
-                  <label
-                    className="text-sm text-[#2A2A2A] font-medium font-inter"
-                  >
+                  <label className="text-sm text-[#2A2A2A] font-medium font-inter">
                     Permission Group
                   </label>
                   <MultipleSelector

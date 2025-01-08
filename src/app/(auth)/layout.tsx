@@ -1,5 +1,6 @@
 "use client";
 
+import SwiperComp from "@/lib/swiper-comp";
 import Image from "next/image";
 import React, { ReactNode, useEffect, useState } from "react";
 
@@ -28,9 +29,10 @@ function AuthLayout({ children }: { children: ReactNode }) {
           width={100}
           height={100}
           alt="login-image"
-          className="h-fit w-full opacity-20 mt-10"
+          className="h-fit w-full opacity-20 mt-10 absolute"
         />
-        <Image
+        <SwiperComp imageSources={imageSources} height="100px"  />
+        {/* <Image
           src={imageSources[currentStep]}
           width={100}
           height={100}
@@ -40,7 +42,7 @@ function AuthLayout({ children }: { children: ReactNode }) {
               ? " pb-[350px] max-w-[450px]"
               : " "
           } w-fit   absolute h-full pt-10 shrink-0 flex`}
-        />
+        /> */}
         <div className="h-[44%] bg-[url('/curve.svg')] bg-cover absolute z-10 w-full bottom-0 flex items-center  pt-6">
           <div className="flex flex-col items-center gap-2">
             <h1 className="font-semibold text-[clamp(16px,5vw,30px)]">

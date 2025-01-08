@@ -46,11 +46,8 @@ interface PermissionGroupData {
 }
 
 const formSchema = z.object({
-  name: z.string().min(8, { message: 'Minimum of 8 letter' }),
-  description: z.string().min(8, { message: 'Minimum of 8 letter' }),
-  permission_type: z
-    .array(z.string())
-    .min(1, { message: 'Minimum of 1 permission' }),
+  name: z.string().nonempty('Name is required'),
+  description: z.string().nonempty('Description is required'),
 });
 export const EditPermissionGroup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
@@ -64,9 +61,7 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
       (item: PermissionGroup) => item.group_id === id
     );
 
-  const { handleSubmit, register, formState, setValue } = useForm<
-    z.infer<typeof formSchema>
-  >({
+  const { handleSubmit, register, formState, reset } = useForm({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
@@ -84,7 +79,7 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
         group_id: id,
       }).unwrap();
 
-      toast.success('Successfully created');
+      toast.success('Successfully updated');
       setOpen(false);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
@@ -107,7 +102,14 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
     setSelectedGroups(filteredGroup?.readable_permission || []);
   }, [id]);
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={() => {
+        setOpen(!open);
+        reset();
+        setSelectedGroups([]);
+      }}
+    >
       <DialogTrigger asChild>
         <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#367EE8]">
           <IoMdAdd className="size-5" />
@@ -120,7 +122,13 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
             <span className="text-2xl font-bold">
               {id ? 'Edit' : 'Create New'} Permission Group
             </span>
-            <DialogClose aria-label="Close">
+            <DialogClose
+              aria-label="Close"
+              onClick={() => {
+                reset();
+                setSelectedGroups([]);
+              }}
+            >
               <Image
                 src="/close.svg"
                 height={36}

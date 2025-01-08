@@ -27,9 +27,18 @@ export const FeedCards = () => {
             <Image
               width={55}
               height={55}
-              src="/feeds/feeds-card-icon.svg"
+              src={`${
+                capitalize(normalizeUrlParams(key)) === 'User post'
+                  ? '/feeds/user-icon.png'
+                  : capitalize(normalizeUrlParams(key)) === 'Trending post'
+                  ? '/feeds/post-icon.png'
+                  : capitalize(normalizeUrlParams(key)) === 'Community post'
+                  ? '/feeds/community-icon.png'
+                  : '/feeds/admin-icon.png'
+              }`}
               alt="icon"
             />
+
             <div className="flex flex-col gap-2">
               <span className="text-[#475467] text-sm font-medium">
                 {capitalize(normalizeUrlParams(key))}
