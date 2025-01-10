@@ -93,7 +93,6 @@ export const AddInterestModal = ({ id }: { id?: any }) => {
       prevHashtags.filter((tag) => tag !== tagToRemove)
     );
   };
-  console.log(id);
 
   useEffect(() => {
     if (id) {

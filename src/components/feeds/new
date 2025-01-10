@@ -1,0 +1,489 @@
+"use client";
+
+import {
+  Avatar,
+  Textarea,
+  Divider,
+  useCombobox,
+  Combobox,
+  InputBase,
+  FileInput,
+  Popover,
+} from "@mantine/core";
+import { modals } from "@mantine/modals";
+import React, { ReactNode, useState } from "react";
+import { MdClose } from "react-icons/md";
+import AppButton from "../ui/app-button";
+import { usePortal } from "@ibnlanre/portal";
+import { profileAtom } from "@/src/store/atoms";
+import Image from "next/image";
+import UserEdit from "../icons/user-edit";
+import Users from "../icons/users";
+import GlobeGray from "../icons/globe-gray";
+import Addpictures from "../icons/add-pictures";
+import Camera from "../icons/camera";
+import { Hashtag, Microphone2, MusicSquare, Video } from "iconsax-react";
+import { useForm, yupResolver } from "@mantine/form";
+import { useMutation } from "@tanstack/react-query";
+import { builder } from "@/src/api/builder";
+import { toast } from "react-hot-toast";
+import { encrypt } from "@/src/utils/encrypt";
+import * as yup from "yup";
+import WebcamCapture from "./web-cam";
+import { useDisclosure } from "@mantine/hooks";
+import ViewMedia, { IMediaType } from "./view-media";
+import AudioPlayer from "../shared/audio-player";
+import ChatInput from "./chat-input";
+import { errorMessageHandler, ErrorType } from "@/src/utils/error-handler";
+import { exceedMaxFileSize } from "@/src/utils/check-max-file-size";
+
+function checkForHashSymbol(string: string, existingTags: string[]) {
+  var words = string.split(" ");
+  const splitByNewline = string.split("\n");
+  const newTags: string[] = [];
+
+  for (var i = 0; i < words.length; i++) {
+    if (words[i].startsWith("#") && !newTags.includes(words[i])) {
+      newTags.push(encrypt(words[i]));
+    }
+  }
+  if (splitByNewline.length) {
+    for (var i = 0; i < splitByNewline.length; i++) {
+      if (
+        splitByNewline[i].startsWith("#") &&
+        !newTags.includes(splitByNewline[i]) &&
+        !splitByNewline[i].includes(" ")
+      ) {
+        newTags.push(encrypt(splitByNewline[i]));
+      }
+    }
+  }
+
+  return newTags;
+}
+
+export interface FormType {
+  tags: string[];
+  mentions: string[];
+  content: string;
+  media: File[];
+}
+
+const schema = yup.object().shape({
+  content: yup.string().required("Please enter post content"),
+});
+
+function formatString(inputString: string) {
+  // Step 1: Extract words after # character
+  const ashRegex = /{{#([^}]*)}}/g;
+  const atRegex = /{{@([^}]*)}}/g;
+  let match;
+  const tags = [];
+  while ((match = ashRegex.exec(inputString)) !== null) {
+    tags.push(encrypt(match[1]));
+  }
+
+  let atmatch;
+  const mentions = [];
+  while ((atmatch = atRegex.exec(inputString)) !== null) {
+    mentions.push(encrypt(atmatch[1]));
+  }
+
+  // Step 2: Format the string
+  const formattedString = inputString
+    .replace(/{{#([^}]*)}}/g, (match, word) => #${word})
+    .replace(/{{@([^}]*)}}/g, (match, word) => @${word});
+
+  return { tags, mentions, formattedString };
+}
+
+function CreatePostModal({
+  community_id,
+  joinChannel,
+  createComment,
+  post_id,
+  createCommentLoading,
+  parent_id,
+  isComment,
+}: {
+  community_id?: string;
+  joinChannel?: () => void;
+  createComment?: (payload: { data: FormData; onSuccess: () => void }) => void;
+  post_id?: string;
+  createCommentLoading?: boolean;
+  parent_id?: string;
+  isComment?: boolean;
+}) {
+  const [user] = usePortal.atom(profileAtom);
+
+  const combobox = useCombobox({
+    onDropdownClose: () => combobox.resetSelectedOption(),
+  });
+
+  const data = [
+    {
+      icon: <GlobeGray />,
+      name: "Public",
+    },
+    {
+      icon: <Users />,
+      name: "Friends",
+    },
+    {
+      icon: <UserEdit />,
+      name: "Custom",
+    },
+  ];
+
+  const options = data?.map((item, idx) => (
+    <Combobox.Option value={item.name} key={idx}>
+      <div className="flex items-center gap-1">
+        {item.icon}
+        <p>{item.name}</p>
+      </div>
+    </Combobox.Option>
+  ));
+
+  const [privacy, setPrivacy] = useState<{
+    icon: null | ReactNode;
+    name: string;
+  }>({
+    icon: <GlobeGray />,
+    name: "Public",
+  });
+
+  const form = useForm<FormType>({
+    initialValues: {
+      tags: [],
+      mentions: [],
+      content: "",
+      media: [],
+    },
+    validate: yupResolver(schema),
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: builder.use().posts.create,
+    onSuccess() {
+      toast.success(${isComment ? "Comment" : "Post"} created successsfully);
+      joinChannel?.();
+      modals.closeAll();
+    },
+    onError(error) {
+      errorMessageHandler(error as ErrorType);
+    },
+  });
+
+  const [opened, { open, close }] = useDisclosure(false);
+  const [viewOpened, { open: openView, close: closeView }] =
+    useDisclosure(false);
+  const [audio, setAudio] = useState<File | null>(null);
+  const [video, setVideo] = useState<File | null>(null);
+
+  const [preview, setPreview] = useState<{
+    type: IMediaType;
+    file: File;
+  } | null>(null);
+
+  const handleSendMessage = () => {
+    const { tags, mentions, formattedString } = formatString(
+      form.values.content
+    );
+    const formData = new FormData();
+
+    Object.entries(form.values)?.forEach(([k, v]) => {
+      if (typeof v === "string") formData.append(k, encrypt(formattedString));
+      else if (k === "tags" && tags.length) {
+        formData.append(k, JSON.stringify(tags));
+      } else if (k === "mentions" && mentions.length) {
+        formData.append(k, JSON.stringify(mentions));
+      } else if (k === "media") {
+        form.values.media.forEach((el) => {
+          formData.append(k, el);
+        });
+      }
+    });
+    if (audio) {
+      formData.append("media", audio);
+    }
+    if (video) {
+      formData.append("media", video);
+    }
+    if (community_id) {
+      formData.append("community_id", encrypt(community_id));
+    }
+    if (post_id) {
+      formData.append("post_id", encrypt(post_id));
+    }
+    if (parent_id) {
+      formData.append("parent_id", encrypt(parent_id));
+    }
+    if (createComment) {
+      createComment({
+        data: formData,
+        onSuccess() {
+          form.reset();
+          setAudio(null);
+          setVideo(null);
+        },
+      });
+    } else {
+      mutate(formData);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={form.onSubmit(() => handleSendMessage())}
+      className="bg-white w-[680px] max-[767px]:w-[90vw] max-sm:h-[d70vh] rounded-[20px] p-5 pb-8 flex flex-col gap-8"
+    >
+      <header className="pb-5 flex items-center justify-between">
+        <h3 className="text-bold-18 text-duduzili-neutral-1000">
+          Create {isComment ? "Comment" : "Post"}
+        </h3>
+        <MdClose
+          className="cursor-pointer"
+          onClick={() => modals.closeAll()}
+          size={16}
+          color="#81848F"
+        />
+      </header>
+      <section className="flex max-sm:flex-1 flex-col gap-5">
+        <div className="flex w-full justify-between items-center">
+          <div className="flex items-center gap-2">
+            <Avatar size={44} src={user?.profile_picture} radius="xl" />
+            <div className="flex flex-col">
+              <h5 className="text-semibold-16 max-sm:text-semibold-14 text-duduzili-neutral-1000">
+                {user?.full_name}
+              </h5>
+              <p className="text-regular-14 max-sm:text-regular-12 text-duduzili-neutral-800">
+                @{user?.username}
+              </p>
+            </div>
+          </div>
+          {/* <Combobox
+            store={combobox}
+            onOptionSubmit={(val) => {
+              const obj = data.find((item) => item.name === val);
+              if (obj) setPrivacy(obj);
+
+              combobox.closeDropdown();
+            }}
+          >
+            <Combobox.Target>
+              <InputBase
+                component="button"
+                type="button"
+                styles={{
+                  input: {
+                    borderRadius: "8px",
+                    width: "120px",
+                    height: "48px",
+                    background: "#F5F5F5",
+                    border: "0.5px solid #D9D9DB",
+                  },
+                }}
+                pointer
+                rightSection={<Combobox.Chevron />}
+                rightSectionPointerEvents="none"
+                onClick={() => combobox.toggleDropdown()}
+              >
+                <div className="flex items-center gap-1">
+                  {privacy?.icon}
+                  {privacy?.name}
+                </div>
+              </InputBase>
+            </Combobox.Target>
+
+            <Combobox.Dropdown>
+              <Combobox.Options mah={200} style={{ overflowY: "auto" }}>
+                {options}
+              </Combobox.Options>
+            </Combobox.Dropdown>
+          </Combobox> */}
+        </div>
+        <div className="flex max-sm:flex-1 pt-2 border-[0.5px] border-[#D9D9DB] rounded-2xl flex-col">
+          <div className="flex flex-col max-sm:flex-1 gap-2">
+            <div className="p-4 flex flex-col justify-between max-sm:h-full">
+              <ChatInput
+                value={form.values.content}
+                setValue={(val: string) => {
+                  form.setFieldValue("content", val);
+                }}
+                setTags={(val: string) =>
+                  form.setFieldValue("tags", [...form.values.tags, val])
+                }
+                setMentions={(val: string) =>
+                  form.setFieldValue("mentions", [...form.values.mentions, val])
+                }
+                sendMessage={() => {
+                  if (!form.values.content) {
+                    return form.setFieldError(
+                      "content",
+                      "Please enter post content"
+                    );
+                  }
+                  handleSendMessage();
+                }}
+              />
+              <div className="flex flex-wrap gap-4">
+                {form.values?.media?.map((el, idx) => (
+                  <div
+                    className="w-[80px] h-[80px] max-sm:w-[60px] max-sm:h-[60px] relative cursor-pointer group rounded-lg shadow-lg border bg-gray-300"
+                    key={idx}
+                  >
+                    <div
+                      onClick={() => {
+                        setPreview({
+                          type: "image",
+                          file: el,
+                        });
+                        openView();
+                      }}
+                      className="group-hover:block duration-300 absolute rounded-lg inset-0 hidden bg-black opacity-20"
+                    />
+                    <span
+                      onClick={() => {
+                        const filtered = form.values.media.filter(
+                          (item) => item.name !== el.name
+                        );
+                        form.setFieldValue("media", filtered);
+                      }}
+                      className="bg-[#00000086] absolute rounded-full top-1  right-1 cursor-pointer z-10"
+                    >
+                      <MdClose color="white" />
+                    </span>
+                    <Image
+                      src={URL.createObjectURL(el)}
+                      width={100}
+                      height={100}
+                      alt={el.name}
+                      className="w-full h-full rounded-lg object-cover"
+                    />
+                  </div>
+                ))}
+                {video ? (
+                  <div className="w-[80px] h-[80px] relative cursor-pointer group rounded-lg shadow-lg border bg-gray-300">
+                    <div className="group-hover:block duration-300 absolute rounded-lg inset-0 hidden bg-black opacity-20" />
+                    <span
+                      onClick={() => {
+                        setVideo(null);
+                      }}
+                      className="bg-[#00000086] absolute rounded-full top-1  right-1 cursor-pointer z-10"
+                    >
+                      <MdClose color="white" />
+                    </span>
+                    <video
+                      onClick={() => {
+                        setPreview({
+                          type: "video",
+                          file: video,
+                        });
+                        openView();
+                      }}
+                      src={URL.createObjectURL(video)}
+                      controls={false}
+                      className="w-full h-full rounded-lg"
+                    />
+                  </div>
+                ) : null}
+                {audio ? (
+                  <AudioPlayer
+                    name={audio?.name}
+                    removeAudio={() => setAudio(null)}
+                    url={URL.createObjectURL(audio)}
+                    type="mini"
+                  />
+                ) : null}
+              </div>
+            </div>
+            {form.errors.content ? (
+              <p className="text-red-500 text-xs pl-4">{form.errors.content}</p>
+            ) : null}
+          </div>
+          <Divider />
+          <div className="p-4 flex items-center justify-between">
+            <div className="py-3 flex items-center gap-4">
+              <label htmlFor="picture-input">
+                <Addpictures className="cursor-pointer create-post-icons" />
+                <FileInput
+                  id="picture-input"
+                  multiple
+                  onChange={(val) => {
+                    val.forEach((item) => {
+                      if (exceedMaxFileSize(item)) {
+                        toast.error("File exceeds maximum size of 2MB");
+                      } else {
+                        form.setFieldValue("media", [
+                          ...form.values.media,
+                          item,
+                        ]);
+                      }
+                    });
+                  }}
+                  className="hidden"
+                  accept="image/png,image/jpeg"
+                />
+              </label>
+              <Camera
+                onClick={open}
+                className="cursor-pointer create-post-icons"
+              />
+              <label htmlFor="audio-input">
+                <MusicSquare
+                  className="cursor-pointer create-post-icons"
+                  color="#4534B8"
+                />
+                <FileInput
+                  id="audio-input"
+                  onChange={(val) => setAudio(val)}
+                  className="hidden"
+                  accept="audio/m4a,audio/mp3,audio/wav,audio/wma,audio/aac"
+                />
+              </label>
+              <label htmlFor="video-input">
+                <Video
+                  color="#4534B8"
+                  className="cursor-pointer create-post-icons"
+                />
+                <FileInput
+                  id="video-input"
+                  onChange={(val) => setVideo(val)}
+                  className="hidden"
+                  accept="video/mp4,video/mkv"
+                />
+              </label>
+              <Microphone2
+                color="#4534B8"
+                className="cursor-pointer create-post-icons"
+              />
+              {/*<Hashtag color="#4534B8" className="cursor-pointer" /> */}
+            </div>
+            <AppButton
+              loading={createCommentLoading || isPending}
+              type="submit"
+              color="white"
+              className="shadow-md "
+              disabled={!form.values.content.trim()}
+            >
+              Publish Post
+            </AppButton>
+          </div>
+        </div>
+      </section>
+      {opened ? (
+        <WebcamCapture form={form} opened={opened} close={close} />
+      ) : null}
+      {viewOpened ? (
+        <ViewMedia
+          file={preview?.file}
+          type={preview?.type}
+          opened={viewOpened}
+          close={closeView}
+        />
+      ) : null}
+    </form>
+  );
+}
+
+export default CreatePostModal;

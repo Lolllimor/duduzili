@@ -6,7 +6,6 @@ import { EmptyState } from '../settings/empty-state';
 
 export const CommunityPost = ({ id }: { id: string }) => {
   const { data, isLoading } = useFetchCommunityPostQuery({ id });
-  console.log(data);
   return (
     <div className="flex gap-2 flex-wrap overflow-auto h-full">
       {isLoading ? (

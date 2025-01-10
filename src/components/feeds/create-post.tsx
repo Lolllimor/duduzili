@@ -35,6 +35,15 @@ import { MdClose } from 'react-icons/md';
 import AudioPlayer from '../post/audio-player';
 import ViewMedia from './view-media';
 import WebcamCapture from './webcam-capture';
+import { cookieStorage } from '@ibnlanre/portal';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu';
+import { ChevronDown } from 'lucide-react';
 
 export interface FormType {
   tags: string[];
@@ -162,6 +171,33 @@ export const CreatePost = ({
     }
   };
 
+  const unparsedUser = cookieStorage.getItem('user-detail');
+  const user = unparsedUser && JSON.parse(unparsedUser);
+
+  // const data = [
+  //   {
+  //     icon: <GlobeGray />,
+  //     name: 'Public',
+  //   },
+  //   {
+  //     icon: <Users />,
+  //     name: 'Friends',
+  //   },
+  //   {
+  //     icon: <UserEdit />,
+  //     name: 'Custom',
+  //   },
+  // ];
+
+  // const options = data?.map((item, idx) => (
+  //   <Combobox.Option value={item.name} key={idx}>
+  //     <div className="flex items-center gap-1">
+  //       {item.icon}
+  //       <p>{item.name}</p>
+  //     </div>
+  //   </Combobox.Option>
+  // ));
+
 
   return (
     <Dialog>
@@ -171,9 +207,9 @@ export const CreatePost = ({
           Create Post
         </Button>
       </DialogTrigger>
-      <DialogContent className="px-6 py-8 gap-0 w-[clamp(200px,50vw,645px)] shrink [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
-        <DialogTitle className="h-fit bg-[#FCFCFD]">
-          <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
+      <DialogContent className=" px-0 py-8 gap-0 w-[clamp(200px,50vw,645px)] shrink [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
+        <DialogTitle className="h-fit bg-[#FCFCFD] pb-5 border-b border-[#F3F3F3] px-6">
+          <div className="flex justify-between w-full ">
             <span className="text-2xl font-bold"> Create Post</span>
             <DialogClose aria-label="Close">
               <Image
@@ -186,10 +222,19 @@ export const CreatePost = ({
             </DialogClose>
           </div>
         </DialogTitle>
-        <form className=" flex flex-col py-8  gap-5">
+        <form className=" flex flex-col py-8 gap-5 px-6">
           <div className="flex justify-between items-center">
             <div className="flex gap-2 ">
-              <div className="w-11 h-11 rounded-full border border-[#F0F0F1]"></div>
+              <Image
+                src={
+                  user && user.userDetail.image
+                    ? user.userDetail.image
+                    : '/user.png'
+                }
+                width={44}
+                height={44}
+                alt="user"
+              />
               <div className="flex flex-col justify-between">
                 <span className="text-[#2A2A2A] text-base font-semibold">
                   Duduzili
@@ -197,7 +242,24 @@ export const CreatePost = ({
                 <span className="text-[#494850] text-sm ">@duduzili</span>
               </div>
             </div>
-            <Select
+            <DropdownMenu>
+              <DropdownMenuTrigger className="w-[130px] bg-[#F5F5F5] flex items-center justify-between h-[39px] border-[0.5px] border-[#D9D9DB] shadow-none rounded-md px-2">
+                <div className="flex items-center gap-1">
+                  <Image
+                    src="/feeds/world.svg"
+                    width={18}
+                    height={18}
+                    alt="image"
+                  />
+                  {visibility}
+                </div>
+                <ChevronDown className="h-3 w-3 text-[#8F8E93]" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem></DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            {/* <Select
               defaultValue={visibility}
               onValueChange={(val) => setVisibility(val)}
             >
@@ -213,17 +275,17 @@ export const CreatePost = ({
                   <SelectItem value="custom">Custom</SelectItem>
                 </SelectGroup>
               </SelectContent>
-            </Select>
+            </Select> */}
           </div>
           <div className="border border-[#D9D9DB] rounded-[16px] h-fit  py-2 pt-[23px]">
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 px-4 ">
               <ChatInput
                 value={watch().content}
                 setValue={(value) => {
                   setValue('content', value);
                 }}
               />
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 pb-2">
                 {watch('media')?.map((el, idx) => (
                   <div
                     className="w-[80px] h-[80px] max-sm:w-[60px] max-sm:h-[60px] relative cursor-pointer group rounded-lg shadow-lg border bg-gray-300"

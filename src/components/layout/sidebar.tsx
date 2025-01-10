@@ -33,7 +33,7 @@ export const Sidebar = () => {
     setToggle(!toggle);
   };
   const sideBar = [
-    { name: 'home', link: '/dashboard', icon: <House size={24} /> },
+    { name: 'Dashboard', link: '/dashboard', icon: <House size={24} /> },
 
     {
       name: 'User',

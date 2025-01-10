@@ -13,7 +13,6 @@ import { IoClose } from 'react-icons/io5';
 
 import Image from 'next/image';
 import {
-  useDeletePermissionGroupMutation,
   useRevokeUserAccessMutation,
 } from '@/redux/features/managementApi';
 import toast from 'react-hot-toast';

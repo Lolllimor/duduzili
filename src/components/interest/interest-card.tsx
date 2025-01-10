@@ -45,7 +45,7 @@ export const InterestCard = () => {
                   <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                     <AddInterestModal id={item} />
                   </DropdownMenuItem>
-                  <DropdownMenuItem
+                  <DropdownMenuItem 
                     className="text-[#ED5556] focus:text-[#ED5556] flex gap-2 items-center text-xs"
                     onSelect={(e) => e.preventDefault()}
                   >

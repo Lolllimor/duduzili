@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { FeedCards } from '@/components/feeds/feed-cards';
 import { CreatePost } from '@/components/feeds/create-post';
 import PostContainer from '@/components/post/post-container';
-import GenaralLayout from '@/components/layout/generalLayout';
+import GeneralLayout from '@/components/layout/generalLayout';
 import { TreandingTopics } from '@/components/feeds/trending-topics';
 import { useFetchTrendingPostQuery } from '@/redux/features/feedApi';
 
@@ -13,7 +13,7 @@ import { useFetchTrendingPostQuery } from '@/redux/features/feedApi';
 const page = () => {
   const { data, isLoading } = useFetchTrendingPostQuery();
   return (
-    <GenaralLayout pageTitle="Feeds" moreOptions={<CreatePost />}>
+    <GeneralLayout pageTitle="Feeds" moreOptions={<CreatePost />}>
       <div className="flex flex-col px-8 gap-8">
         <FeedCards />
         <div className="flex  flex-col px-6 py-[19px] gap-10 shadow rounded-2xl h-full">
@@ -94,7 +94,7 @@ const page = () => {
           </div>
         </div>
       </div>
-    </GenaralLayout>
+    </GeneralLayout>
   );
 };
 

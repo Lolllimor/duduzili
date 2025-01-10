@@ -61,12 +61,12 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
       (item: PermissionGroup) => item.group_id === id
     );
 
-  const { handleSubmit, register, formState, reset } = useForm({
+  const { handleSubmit, register, formState, reset, setValue } = useForm({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: filteredGroup?.name || '',
-      description: filteredGroup?.description || '',
+      name: '',
+      description: '',
       permission_type: [''],
     },
   });
@@ -99,8 +99,12 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
   const { errors, isValid } = formState;
 
   useEffect(() => {
-    setSelectedGroups(filteredGroup?.readable_permission || []);
-  }, [id]);
+    if (filteredGroup) {
+      setValue('name', filteredGroup?.name);
+      setValue('description', filteredGroup?.description);
+      setSelectedGroups(filteredGroup?.readable_permission);
+    }
+  }, [id, filteredGroup]);
   return (
     <Dialog
       open={open}

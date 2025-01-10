@@ -1,5 +1,13 @@
 export const endpoints = {
   signin: 'api/administration/admin-sign-in/',
+  dashboard: {
+    fetchNewUser: 'api/administration/new-users/',
+    fetchAgeGroup: 'api/administration/age-group/',
+    fetchGenderRatio: 'api/administration/gender-ratio/',
+    fetchUserCountry: 'api/administration/user-country/',
+    fetchDashboardUser: 'api/administration/dashboard-users/',
+    fetchDashboardOverview: 'api/administration/dashboard-overview/',
+  },
   setting: {
     about: {
       fetch: 'api/administration/fetch-about/',
@@ -71,5 +79,12 @@ export const endpoints = {
     fetchInterestCategory: 'api/administration/interest-category/',
     deleteInterest: 'api/administration/action-interests/',
     editInterest: 'api/administration/action-interests/',
+  },
+  report: {
+    createReportType: 'api/administration/create-report-type/',
+    fetchReportList: 'api/administration/report-type-list/',
+    fetchReportTypeDetail: 'api/administration/report-type',
+    deleteReportType: 'api/administration/report-type/',
+    fetchReportingList: 'api/administration/reporting-list/',
   },
 };
