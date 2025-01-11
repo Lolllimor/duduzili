@@ -10,18 +10,24 @@ export type ErrorType = {
   message: string;
 };
 export const errorMessageHandler = (obj: ErrorType) => {
+  console.log(obj);
   if (obj.response) {
     if (obj.response.status === 401) {
-      cookieStorage.removeItem("duduzili_auth");
+      cookieStorage.removeItem('duduzili_auth');
       return (location.href = '/');
     }
     if (obj.response.status === 500) {
-      if (obj.response?.data?.errors && typeof obj.response?.data?.errors === 'string')
+      if (
+        obj.response?.data?.errors &&
+        typeof obj.response?.data?.errors === 'string'
+      )
         return toast.error(obj?.response?.data?.errors);
       return toast.error(obj?.response?.data?.message);
     }
     if (obj.response.status === 404) {
-      return toast.error('Page not found, Please contact the site administrator');
+      return toast.error(
+        'Page not found, Please contact the site administrator'
+      );
     }
     const data = obj?.response?.data?.data;
     const errors = obj?.response?.data?.errors;
@@ -44,7 +50,10 @@ export const errorMessageHandler = (obj: ErrorType) => {
           }
         });
     } else if (obj?.response?.data?.error) {
-      if (typeof obj.response.data.error === 'string' && obj.response.data.message) {
+      if (
+        typeof obj.response.data.error === 'string' &&
+        obj.response.data.message
+      ) {
         return toast.error(String(obj.response.data.message));
       }
       if (typeof obj.response.data.error === 'string') {

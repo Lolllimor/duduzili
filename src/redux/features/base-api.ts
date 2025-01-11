@@ -43,6 +43,7 @@ const axiosBaseQuery =
         error: {
           status: err.response?.status,
           response: err.response,
+          message: err.message,
         },
       };
     }
@@ -66,7 +67,7 @@ export const baseApi = createApi({
     'Community',
     'Feed',
     'Interest',
-    "Report"
+    'Report',
   ],
   endpoints: () => ({}),
 });
