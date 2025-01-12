@@ -85,6 +85,10 @@ export default {
       'caret-blink': 'caret-blink 1.25s ease-out infinite',
       pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
     },
+    backgroundImage: {
+      'dash-chart-gradient':
+        'linear-gradient(180deg, rgba(235, 242, 255, 0) 0%, #EBF2FF 100%)',
+    },
   },
   plugins: [require('tailwindcss-animate')],
 } satisfies Config;

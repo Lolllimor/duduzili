@@ -22,14 +22,12 @@ export const Dashboard = () => {
       <div className="border-[2px] p-8 border-[#F5F5F5] bg-[#FCFCFD] rounded-[20px]">
         <div className="flex flex-col gap-5">
           <h3>Overview</h3>
-          <div className="flex items-center gap-8 justify-between">
+          <div className="flex items-center gap-8  flex-wrap">
             {Object.entries(data?.data || {}).map(([key, value], idx) => (
               <div
                 key={key}
-                className={`flex flex-col ${
-                  idx === 0
-                    ? 'bg-[#4534B8] text-white gap-7 shadow-custom rounded-[16px] p-6 w-full'
-                    : 'bg-[#FFFFFF] gap-7 shadow-custom rounded-[16px] p-6 w-full'
+                className={`flex flex-col shrink-0 w-[clamp(300px,20vw,325px)] p-6  gap-7 shadow-custom rounded-[16px]  ${
+                  idx === 0 ? 'bg-[#4534B8] text-white  ' : 'bg-[#FFFFFF] '
                 }`}
               >
                 <p

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { user } from '@/lib/dummy-data';
 import { useFetchNewUserQuery } from '@/redux/features/dashboardApi';
 import dayjs from 'dayjs';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 export const NewUser = () => {
   const { data } = useFetchNewUserQuery();
   return (
@@ -20,13 +21,11 @@ export const NewUser = () => {
           ) => (
             <section key={idx} className="flex items-center justify-between">
               <div className="flex items-start gap-4">
-                <Image
-                  src={item.profile_picture}
-                  width={48}
-                  height={48}
-                  alt=""
-                  className="rounded-full h-12 w-12"
-                />
+                <Avatar className="w-12 h-12 rounded-full">
+                  <AvatarImage src={item.profile_picture} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+
                 <div className="flex flex-col gap-1">
                   <p className="font-semibold font-sora text-sm text-[#2A2A2A]">
                     {item.full_name}
