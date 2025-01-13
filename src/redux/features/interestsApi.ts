@@ -3,7 +3,7 @@ import { endpoints } from '../endpoint';
 
 export const interestsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    fetchInterest: builder.query<any, { page?: string }>({
+    fetchInterest: builder.query<any, { page?: number }>({
       query: (arg) => {
         const page = arg?.page;
         return {

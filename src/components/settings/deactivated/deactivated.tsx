@@ -7,6 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/lib/table-data';
 import { DeactivatedColumn } from './table-column';
 import { useCustomTable } from '@/lib/custom-data';
+import { deactivatedAtom } from '@/lib/query-store';
 
 export const Deactivated = () => {
   const { data, isLoading } = useFetchDeactivatedQuery();
@@ -50,7 +51,7 @@ export const Deactivated = () => {
             </div>
           </div>
 
-          <DataTable table={table} totalCount={data.data.count} />
+          <DataTable queryAtom={deactivatedAtom} table={table} totalCount={data.data.count} />
         </div>
       ) : (
         <EmptyState

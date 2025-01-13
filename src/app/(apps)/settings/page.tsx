@@ -11,7 +11,7 @@ import { SocialMediaIntegration } from '@/components/settings/social-integration
 function ConfigPage() {
   return (
     <GeneralLayout pageTitle="Settings">
-      <div className=" w-full h-full items-start px-6 ">
+      <div className=" w-full h-full items-start px-6 pb-5">
         <Tabs
           defaultValue="about"
           className="w-full  gap-6 flex flex-col h-full "
@@ -65,7 +65,7 @@ function ConfigPage() {
             value="about"
             className="w-full border border-[#E5E6E8] rounded-[10px] bg-white h-full overflow-auto "
           >
-            <About />
+            {/* <About /> */}
           </TabsContent>
           <TabsContent
             value="contact"

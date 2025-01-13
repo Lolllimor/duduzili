@@ -11,7 +11,7 @@ export const managementApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Permission'],
     }),
-    fetchPermissionGroup: builder.query<any, { page?: string }>({
+    fetchPermissionGroup: builder.query<any, { page?: number }>({
       query: (arg) => {
         const page = arg?.page;
         return {

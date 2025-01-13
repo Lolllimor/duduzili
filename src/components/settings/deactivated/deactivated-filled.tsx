@@ -5,6 +5,7 @@ import { useFetchDeactivatedQuery } from '@/redux/features/settingsApi';
 import { SearchIcon } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomTable } from '@/lib/custom-data';
+import { deactivatedAtom } from '@/lib/query-store';
 
 export const DeactivatedFilled = () => {
   const { data, isLoading } = useFetchDeactivatedQuery();
@@ -46,7 +47,7 @@ export const DeactivatedFilled = () => {
             </div>
           ))
       ) : (
-        <DataTable table={table} totalCount={data.data.count} />
+        <DataTable queryAtom={deactivatedAtom} table={table} totalCount={data.data.count} />
       )}
     </div>
   );

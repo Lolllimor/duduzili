@@ -54,7 +54,7 @@ export const AddFaq = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="text-[#2A2A2A] flex gap-2 items-center text-xs ">
+      <DialogTrigger className="text-[#2A2A2A] flex gap-2 items-center text-xs " asChild>
         <Button className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2 font-inter bg-[#4534B8] text-white justify-center">
           <IoMdAdd className="size-5" />
           Add Question

@@ -7,16 +7,14 @@ import { useFetchAboutQuery } from '@/redux/features/settingsApi';
 
 export const AboutFilled = () => {
   const { data, isLoading } = useFetchAboutQuery();
+const formatText = (text?: string) =>
+  text
+    ?.split('\n\n')
+    .map((paragraph) => `<p>${paragraph.replace(/\n/g, '<br/><br/>')}</p>`)
+    .join(' <br/>') || '<p>No content available.</p>';
+const formattedText = formatText(data?.data.about);
+const sanitizedText = DOMPurify.sanitize(formattedText);
 
-  const formattedText =
-    data?.data.about
-      .split('\n\n')
-      .map(
-        (paragraph: string) =>
-          `<p>${paragraph.replace(/\n/g, '<br/><br/>')}</p>`
-      )
-      .join(' <br/>') || '';
-  const sanitizedText = DOMPurify.sanitize(formattedText);
   return (
     <div className="flex flex-col p-8 gap-10 h-full">
       <div className="flex justify-between items-center">

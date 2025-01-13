@@ -1,3 +1,5 @@
+"use client"
+
 import { useSearchParams } from "next/navigation";
 
 function useUrlParams<T = string>(search?: string) {

@@ -10,12 +10,14 @@ import { HeaderBtn } from '@/components/access-management.tsx/header-btn';
 import { useFetchPermissionGroupQuery } from '@/redux/features/managementApi';
 import { ManagementColumn } from '@/components/access-management.tsx/table-column';
 import { Skeleton } from '@/components/ui/skeleton';
+import { managementAtom, managementDetailAtom } from '@/lib/query-store';
+import { usePortal } from '@ibnlanre/portal';
 
 function Page() {
-  const { query: page = '1' } = useUrlParams('page');
-  const { data, isLoading } = useFetchPermissionGroupQuery({ page: page });
-
-  
+  const [queries, setQueries] = usePortal.atom(managementDetailAtom);
+  const { data, isLoading } = useFetchPermissionGroupQuery({
+    page: queries.page_index,
+  });
 
   const { table } = useCustomTable({
     tableData: data?.data.results,
@@ -24,7 +26,6 @@ function Page() {
 
   return (
     <GenaralLayout pageTitle="Access Management" moreOptions={<HeaderBtn />}>
-      
       {isLoading ? (
         <div className="flex flex-col bg-[#F9FAFB] rounded-2xl">
           {Array(15)
@@ -56,7 +57,11 @@ function Page() {
             <span className="text-[#667085]">Search group</span>
           </div>
           <div className="border rounded-lg h-full">
-            <DataTable table={table} totalCount={data.data.count} />
+            <DataTable
+              table={table}
+              totalCount={data.data.count}
+              queryAtom={managementAtom}
+            />
           </div>
         </div>
       ) : (

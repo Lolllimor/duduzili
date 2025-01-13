@@ -3,24 +3,25 @@ import {
   PaginationItem,
   PaginationLink,
 } from '@/components/ui/pagination';
-import useUrlParams from '@/hooks/use-url-params';
+import { Atom, usePortal } from '@ibnlanre/portal';
 import { JSX } from 'react';
 
 export const generatePaginationLinks = (
-  currentPage: number,
+  queryAtom: Atom<any, undefined>,
   totalPages: number
 ) => {
   const pages: JSX.Element[] = [];
-
-  const { pushParam, query: pageParam } = useUrlParams('page');
+  const [filter, setFilter] = usePortal.atom(
+    queryAtom as Atom<{ page_index: number; page_size: number }, undefined>
+  );
   if (totalPages <= 6) {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(
         <PaginationItem key={i}>
           <PaginationLink
             className={`${i === 1 && 'pointer-events-none opacity-50'}`}
-            onClick={() => pushParam({ key: 'page', value: i })}
-            isActive={i === currentPage}
+            onClick={() => setFilter({ ...filter, page_index: i })}
+            isActive={i === filter.page_index}
           >
             {i}
           </PaginationLink>
@@ -32,23 +33,25 @@ export const generatePaginationLinks = (
       pages.push(
         <PaginationItem key={i}>
           <PaginationLink
-            onClick={() => pushParam({ key: 'page', value: i })}
-            isActive={i === currentPage}
+            onClick={() => setFilter({ ...filter, page_index: i })}
+            isActive={i === filter.page_index}
           >
             {i}
           </PaginationLink>
         </PaginationItem>
       );
     }
-    if (2 < currentPage && currentPage < totalPages - 1) {
+    if (2 < filter.page_index && filter.page_index < totalPages - 1) {
       pages.push(<PaginationEllipsis />);
       pages.push(
-        <PaginationItem key={currentPage}>
+        <PaginationItem key={filter.page_index}>
           <PaginationLink
-            onClick={() => pushParam({ key: 'page', value: currentPage })}
+            onClick={() =>
+              setFilter({ ...filter, page_index: filter.page_index })
+            }
             isActive={true}
           >
-            {currentPage}
+            {filter.page_index}
           </PaginationLink>
         </PaginationItem>
       );
@@ -58,8 +61,8 @@ export const generatePaginationLinks = (
       pages.push(
         <PaginationItem key={i}>
           <PaginationLink
-            onClick={() => pushParam({ key: 'page', value: i })}
-            isActive={i === currentPage}
+            onClick={() => setFilter({ ...filter, page_index: i })}
+            isActive={i === filter.page_index}
           >
             {i}
           </PaginationLink>

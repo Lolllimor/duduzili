@@ -3,7 +3,7 @@ import { baseApi } from './base-api';
 
 export const communityApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    fetchCommunityList: builder.query<any, { page?: string }>({
+    fetchCommunityList: builder.query<any, { page?: number }>({
       query: (arg) => {
         const page = arg?.page;
         return {

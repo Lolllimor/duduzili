@@ -12,6 +12,7 @@ import { normalizeUrlParams } from '@/lib/normalize-url';
 import { AddAdmin } from '@/components/access-management.tsx/modal/add-admin';
 import { EditPermissionGroup } from '@/components/access-management.tsx/modal/edit-permission-group';
 import { useCustomTable } from '@/lib/custom-data';
+import { managementDetailAtom } from '@/lib/query-store';
 
 function Page({
   params,
@@ -50,7 +51,7 @@ function Page({
             <span className="text-[#667085]">Search group</span>
           </div>
           <div className="border rounded-lg h-full">
-            <DataTable table={table} totalCount={data?.data.count} />
+            <DataTable queryAtom={managementDetailAtom} table={table} totalCount={data?.data.count} />
           </div>
         </div>
       ) : (

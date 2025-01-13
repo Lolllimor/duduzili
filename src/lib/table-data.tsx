@@ -13,17 +13,19 @@ import {
 import { Suspense, useState } from 'react';
 import { RxCaretSort } from 'react-icons/rx';
 import Paginator from './paginatkon';
+import { Atom } from '@ibnlanre/portal';
 
 interface DataTableProps<TData, TValue> {
   isLoading?: boolean;
   table: ReactTable<any>;
   totalCount: number;
+  queryAtom: Atom<any, undefined>;
 }
 
 export function DataTable<TData, TValue>({
   isLoading,
   table,
-  totalCount,
+  totalCount, queryAtom
 }: DataTableProps<TData, TValue>) {
   return (
     <section className="w-full h-fit  flex flex-col">
@@ -111,9 +113,8 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <Suspense>
-        <Paginator totalCount={totalCount} />
-      </Suspense>
+        <Paginator totalCount={totalCount}  queryAtom={queryAtom}/>
+     
     </section>
   );
 }

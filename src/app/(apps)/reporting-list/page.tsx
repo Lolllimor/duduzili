@@ -5,6 +5,7 @@ import { ReportTableHeader } from '@/components/report/report-table-header';
 import { EmptyState } from '@/components/settings/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomTable } from '@/lib/custom-data';
+import { reportingAtom } from '@/lib/query-store';
 import { DataTable } from '@/lib/table-data';
 import { useFetchReportingListQuery } from '@/redux/features/reportApi';
 
@@ -12,7 +13,7 @@ function page() {
   const { data, isLoading } = useFetchReportingListQuery();
 
   const { table } = useCustomTable({
-    tableData: data.data.results,
+    tableData: data?.data.results,
     columns: ReportColumn,
   });
   return (
@@ -45,7 +46,7 @@ function page() {
           </div>
         ) : data?.data.count ? (
           <div className="border rounded-lg h-full">
-            <DataTable totalCount={data?.data.count} table={table} />
+            <DataTable totalCount={data?.data.count} table={table} queryAtom={reportingAtom}/>
           </div>
         ) : (
           <EmptyState

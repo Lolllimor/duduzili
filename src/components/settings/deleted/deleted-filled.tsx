@@ -6,6 +6,7 @@ import { DataTable } from '@/lib/table-data';
 import { DeletedColumn } from './table-column';
 import { useCustomTable } from '@/lib/custom-data';
 import { useFetchDeletedQuery } from '@/redux/features/settingsApi';
+import { deletedAtom } from '@/lib/query-store';
 
 export const DeletedFilled = () => {
   const { data, isLoading } = useFetchDeletedQuery();
@@ -45,8 +46,8 @@ export const DeletedFilled = () => {
             ))}
         </div>
       ) : data?.data.count ? (
-        <div className="border rounded-lg h-full flex overflow-auto">
-          <DataTable table={table} totalCount={data.data.count} />
+        <div className=" rounded-lg h-full flex overflow-auto">
+          <DataTable queryAtom={deletedAtom} table={table} totalCount={data.data.count} />
         </div>
       ) : (
         <EmptyState
