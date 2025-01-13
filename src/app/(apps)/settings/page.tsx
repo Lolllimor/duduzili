@@ -65,7 +65,7 @@ function ConfigPage() {
             value="about"
             className="w-full border border-[#E5E6E8] rounded-[10px] bg-white h-full overflow-auto "
           >
-            {/* <About /> */}
+            <About />
           </TabsContent>
           <TabsContent
             value="contact"
