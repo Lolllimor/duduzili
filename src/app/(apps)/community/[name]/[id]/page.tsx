@@ -1,6 +1,7 @@
 'use client';
 import { CommunityDetailHeader } from '@/components/community/community-detail-header';
 import { CommunityPost } from '@/components/community/community-post';
+import { getInitials } from '@/components/community/profile-drawer';
 import GeneralLayout from '@/components/layout/generalLayout';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -46,7 +47,7 @@ function Page({ params }: { params: Promise<{ name: string; id: string }> }) {
     >
       <div className="flex flex-1 bg-[#F5F6FA] p-6 h-full">
         <div className="gap-5 grid grid-cols-[2fr_1fr] w-full">
-          <div className="flex flex-col gap-5 overflow-auto min-w-[789px]">
+          <div className="flex flex-col gap-5 overflow-auto min-w-[600px]">
             <CommunityDetailHeader id={id} />
             <CommunityPost id={id} />
           </div>
@@ -76,7 +77,9 @@ function Page({ params }: { params: Promise<{ name: string; id: string }> }) {
                     <div className="flex gap-3 items-center" key={idx}>
                       <Avatar className="w-10 h-10 rounded-full">
                         <AvatarImage src={item.member_profile_picture} />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarFallback>
+                          {getInitials(item.member_full_name)}
+                        </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col font-sora justify-between">
                         <span className="text-sm text-[#2A2A2A]">
@@ -125,7 +128,9 @@ function Page({ params }: { params: Promise<{ name: string; id: string }> }) {
                     <div className="flex gap-3 items-center" key={idx}>
                       <Avatar className="w-10 h-10 rounded-full">
                         <AvatarImage src={item.member_profile_picture} />
-                        <AvatarFallback>CN</AvatarFallback>
+                        <AvatarFallback>
+                          {getInitials(item.member_full_name)}
+                        </AvatarFallback>
                       </Avatar>
                       <div className="flex flex-col font-sora justify-between">
                         <span className="text-sm text-[#2A2A2A]">

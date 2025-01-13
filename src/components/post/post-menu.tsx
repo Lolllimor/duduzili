@@ -31,7 +31,7 @@ function PostMenu({
 
   return (
     <span className="cursor-pointer">
-      <MdMoreVert size={18} />
+      {/* <MdMoreVert size={18} /> */}
     </span>
     // <DropdownMenu>
     //   <DropdownMenuTrigger>

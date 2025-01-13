@@ -6,6 +6,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { FetchPermissionGroupResult } from '@/lib/managementTypes';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { CSMore } from './cs-more';
+import { getInitials } from '../community/profile-drawer';
 
 export const CSColumn: ColumnDef<any>[] = [
   {
@@ -16,7 +17,9 @@ export const CSColumn: ColumnDef<any>[] = [
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src="/dashboard/profile.svg" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>
+              {getInitials(row.original.username)}
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
             <p className="font-medium font-sora text-sm text-[#101928]">

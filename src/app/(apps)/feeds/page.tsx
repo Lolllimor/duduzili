@@ -13,18 +13,20 @@ import { useFetchTrendingPostQuery } from '@/redux/features/feedApi';
 const page = () => {
   const { data, isLoading } = useFetchTrendingPostQuery();
   return (
-    <GeneralLayout pageTitle="Feeds" moreOptions={<CreatePost />}>
-      <div className="flex flex-col px-8 gap-8">
+    <GeneralLayout pageTitle="Feeds"
+      // moreOptions={<CreatePost />}
+    >
+      <div className="flex flex-col px-8 gap-8 pb-5 h-full overflow-auto">
         <FeedCards />
-        <div className="flex  flex-col px-6 py-[19px] gap-10 shadow rounded-2xl h-full">
+        <div className="flex  flex-col px-6 py-[19px] gap-10 shadow rounded-2xl h-full overflow-auto min-h-[505px]">
           <div className="flex flex-col gap-[21px]">
             <span className="text-[#101828] font-inter font-semibold">
               Trending
             </span>
             <hr />
           </div>
-          <div className=" grid grid-cols-[1.5fr_1fr] gap-10">
-            <div className="flex gap-8 flex-wrap">
+          <div className=" grid grid-cols-[1.5fr_1fr] gap-10  h-full overflow-auto">
+            <div className="flex gap-8 flex-wrap  ">
               {isLoading ? (
                 <div className="flex flex-col gap-5 rounded-xl border border-[#F0F0F1] w-full min-w-[505px] p-6 max-sm:px-1">
                   <div className=" flex gap-3">

@@ -21,6 +21,7 @@ import CommunityPostHeader from './community-post-header';
 import PostContentWrapper from './post-content-wrapper';
 import { PostOwnerDetails, PostResponseCommunityDetails } from '@/lib/type';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { getInitials } from '../community/profile-drawer';
 
 export interface PostContainerProps {
   style?: CSSProperties;
@@ -309,14 +310,14 @@ function PostContainer(props?: PostContainerProps) {
         <section className="flex items-center justify-between">
           <div className="flex items-center gap-[clamp(16px,3.3vh,48px)]">
             <span
-              onClick={() => {
-                setPostLiked(!postLiked);
-                if (postLiked) {
-                  setPostLikeCount((p) => (p ? p - 1 : p));
-                } else setPostLikeCount((p) => p + 1);
-                props?.onLikeClick?.();
-              }}
-              className="flex items-center cursor-pointer gap-2"
+              // onClick={() => {
+              //   setPostLiked(!postLiked);
+              //   if (postLiked) {
+              //     setPostLikeCount((p) => (p ? p - 1 : p));
+              //   } else setPostLikeCount((p) => p + 1);
+              //   props?.onLikeClick?.();
+              // }}
+              className="flex items-center  gap-2"
             >
               <Heart
                 size={18}
@@ -359,12 +360,12 @@ function PostContainer(props?: PostContainerProps) {
           {props?.isComment ? null : (
             <Save2
               size={18}
-              className="cursor-pointer"
+              className=""
               color={isSaved ? '#4534B8' : '#494850'}
               variant={isSaved ? 'Bold' : 'Outline'}
-              onClick={() =>
-                saveOrRemoveFromFavourites(props?.postId as string)
-              }
+              // onClick={() =>
+              //   saveOrRemoveFromFavourites(props?.postId as string)
+              // }
             />
           )}
         </section>
@@ -372,7 +373,9 @@ function PostContainer(props?: PostContainerProps) {
           {props?.likesPictures?.map((item, idx) => (
             <Avatar key={idx}>
               <AvatarImage src={item} />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>
+                {getInitials(props?.poster?.full_name || '')}
+              </AvatarFallback>
             </Avatar>
           ))}
 

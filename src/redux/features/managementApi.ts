@@ -1,5 +1,6 @@
 import { baseApi } from './base-api';
 import { endpoints } from '../endpoint';
+import { sanitizeParams } from '@/lib/sanitize-params';
 
 export const managementApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -10,11 +11,15 @@ export const managementApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Permission'],
     }),
-    fetchPermissionGroup: builder.query<any, void>({
-      query: () => ({
-        url: endpoints.management.permissionGroup.crud,
-        method: 'GET',
-      }),
+    fetchPermissionGroup: builder.query<any, { page?: string }>({
+      query: (arg) => {
+        const page = arg?.page;
+        return {
+          url: endpoints.management.permissionGroup.crud,
+          method: 'GET',
+          params: page ? { page } : undefined,
+        };
+      },
       providesTags: ['Permission'],
     }),
     postPermissionGroup: builder.mutation({

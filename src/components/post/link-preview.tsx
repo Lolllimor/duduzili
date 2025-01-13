@@ -1,4 +1,3 @@
-
 import YouTube from 'react-youtube';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -76,17 +75,17 @@ function LinkPreview({ text }: { text: string }) {
     isFetching ? (
       <LinkPreviewSkeleton />
     ) : (
-      <a target="_blank" href={preview} className="flex flex-col">
+      <a target="_blank" href={preview} className="flex flex-col  rounded-b">
         <img
           src={data?.metadata?.image ?? '/internet.png'}
           alt="site metadata image"
           className="h-[149px] object-cover w-full rounded-t-lg"
         />
-        <div className="bg-duduzili-neutral-200 rounded-b-lg py-3 px-2 flex flex-col gap-1">
-          <p className="text-regular-14 text-duduzili-neutral-600">
+        <div className="bg-[#F5F5F5] py-3 px-2 flex flex-col gap-1 rounded-b-lg ">
+          <p className="text-sm  text-[#8F8E93]">
             {data?.metadata?.hostname ?? preview}
           </p>
-          <h5 className="text-semibold-14 text-duduzili-neutral-1000">
+          <h5 className="text-semibold text-sm text-[#2A2A2A]">
             {data?.metadata?.description}
           </h5>
         </div>

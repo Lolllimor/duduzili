@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['res.cloudinary.com', 'flagcdn.com', 'upload.wikimedia.org'], // Add the hostname here
+    unoptimized: true,
   },
 };
 

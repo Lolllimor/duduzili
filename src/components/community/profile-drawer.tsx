@@ -8,37 +8,27 @@ import PeopleIcon from '../icons/people-icon';
 import { useFetchAboutQuery } from '@/redux/features/settingsApi';
 import { useFetchCommunityProfileQuery } from '@/redux/features/communityApi';
 import dayjs from 'dayjs';
+import EyeIcon from '../icons/eye-icon';
+import HistoryIcon from '../icons/history-icon';
+
+export function getInitials(text: string) {
+  if (!text) return '';
+
+  const words = text.trim().split(' ');
+
+  if (words.length === 1) {
+    return words[0][0].toUpperCase();
+  }
+
+  if (words.length >= 2) {
+    return words[0][0].toUpperCase() + words[1][0].toUpperCase();
+  }
+
+  return '';
+}
 
 export const ProfileDrawer = ({ id }: { id: string }) => {
   const { data } = useFetchCommunityProfileQuery(id);
-
-  // {
-  //     "success": "",
-  //     "status_code": "",
-  //     "data": {
-  //         "name": "Frontend Devs",
-  //         "description": "A short description about Frontend Developers all over the world",
-  //         "members_count": 6,
-  //         "posts_count": 9,
-  //         "members_photo_preview": [
-  //             null,
-  //             null,
-  //             "https://res.cloudinary.com/duduomo/image/upload/v1729526974/samnj3imoomkonbvc8si.png",
-  //             null,
-  //             "https://res.cloudinary.com/duduomo/image/upload/v1736173924/tyaexmryxlam3du8ttwg.jpg"
-  //         ],
-  //         "admin_photo_preview": [
-  //             "https://res.cloudinary.com/duduomo/image/upload/v1729526974/samnj3imoomkonbvc8si.png"
-  //         ],
-  //         "admin_count": 1,
-  //         "privacy": "Public",
-  //         "created": "2024-10-28T11:05:09.022905+01:00",
-  //         "group_rules": "Just do good",
-  //         "posts_today": 0,
-  //         "posts_last_month": 1
-  //     },
-  //     "message": ""
-  // }
 
   return (
     <Drawer.Root direction="right">
@@ -59,17 +49,19 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
       >
         <div className="flex flex-col h-full bg-white pt-5 pr-5 rounded-l-[16px]">
           <Drawer.Close>
-            <div className="w-full flex justify-end">
+            <div className="w-full flex justify-end z-10">
               <IoClose className="text-[41px] cursor-pointer" />
             </div>
           </Drawer.Close>
           <Drawer.Title />
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-8 h-full pb-6">
             <div className="pl-10 flex flex-col gap-6">
               <div className="flex items-center gap-5 mt-[-20px]">
                 <Avatar className="w-[100px] h-[100px] rounded-full">
                   <AvatarImage src="" />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarFallback>
+                    {getInitials(data?.data.name)}
+                  </AvatarFallback>
                 </Avatar>
 
                 <span className="text-[#2A2A2A] text-2xl font-sora font-semibold">
@@ -145,7 +137,7 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                 </div>
               </div>
             </div>
-            <div className="flex px-10 flex-col">
+            <div className="flex px-10 flex-col overflow-auto">
               <div className="flex flex-col py-5 gap-2">
                 <span className="text-[#2A2A2A] font-semibold text-sm font-sora">
                   Description
@@ -172,7 +164,7 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                     </div>
                   </div>
                   <div className=" flex gap-2 items-start py-3">
-                    <PeopleIcon />
+                    <EyeIcon />
                     <div className="flex flex-col">
                       <span className="font-sora text-xs text-[#2A2A2A] font-semibold">
                         {data?.data.privacy}
@@ -184,7 +176,7 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                     </div>
                   </div>
                   <div className=" flex gap-2 items-start py-3">
-                    <PeopleIcon />
+                    <HistoryIcon />
                     <div className="flex flex-col">
                       <span className="font-sora text-xs text-[#2A2A2A] font-semibold">
                         History
@@ -201,7 +193,7 @@ export const ProfileDrawer = ({ id }: { id: string }) => {
                 <span className="text-[#2A2A2A] font-semibold text-sm font-sora">
                   Community Rules
                 </span>
-                <div className="">
+                <div className="font-sora text-xs text-[#8F8E93] max-w-[307px]">
                   <span>{data?.data.group_rules}</span>
                 </div>
               </div>

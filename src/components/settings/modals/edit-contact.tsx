@@ -81,10 +81,10 @@ export const EditContact = () => {
         asChild
         className="text-[#2A2A2A] flex gap-2 items-center cursor-pointer text-xs "
       >
-        <div className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2.5 bg-[#4534B8] text-white justify-center">
+        <Button className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2 bg-[#4534B8] text-white justify-center font-inter">
           <IoMdAdd className="size-5" />
           {data?.data.contact_info ? 'Edit' : 'Add '} Info
-        </div>
+        </Button>
       </DialogTrigger>
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
         <DialogTitle className="h-fit">

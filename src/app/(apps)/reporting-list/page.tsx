@@ -4,11 +4,17 @@ import { ReportColumn } from '@/components/report/report-column';
 import { ReportTableHeader } from '@/components/report/report-table-header';
 import { EmptyState } from '@/components/settings/empty-state';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useCustomTable } from '@/lib/custom-data';
 import { DataTable } from '@/lib/table-data';
 import { useFetchReportingListQuery } from '@/redux/features/reportApi';
 
 function page() {
   const { data, isLoading } = useFetchReportingListQuery();
+
+  const { table } = useCustomTable({
+    tableData: data.data.results,
+    columns: ReportColumn,
+  });
   return (
     <GeneralLayout pageTitle="Reporting List">
       <div className="px-6 flex flex-col gap-6 pb-6 h-full">
@@ -39,7 +45,7 @@ function page() {
           </div>
         ) : data?.data.count ? (
           <div className="border rounded-lg h-full">
-            <DataTable columns={ReportColumn} data={data?.data.results} />
+            <DataTable totalCount={data?.data.count} table={table} />
           </div>
         ) : (
           <EmptyState

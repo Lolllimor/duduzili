@@ -72,7 +72,7 @@ export const AddEditAbout = () => {
         className="text-[#2A2A2A] flex gap-2 items-center text-xs "
         asChild
       >
-        <Button className="h-10 w-[160px] rounded-[48px] text-sm font-semibold flex items-center gap-2.5 bg-[#4534B8] text-white">
+        <Button className="h-10 px-4 font-inter rounded-[48px] text-sm font-semibold flex items-center gap-2 bg-[#4534B8] text-white">
           <IoMdAdd className="size-5" />
           About Duduzili
         </Button>

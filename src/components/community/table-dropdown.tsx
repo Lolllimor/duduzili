@@ -19,7 +19,7 @@ export const TableDropdown = ({
   const handleClick = async () => {
     try {
       const res = await toggle({ community_id: id }).unwrap();
-      toast.success('Successfully toggled');
+      toast.success(`Successfully ${is_active ? 'Deactivated' : 'Activated'}`);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
@@ -33,16 +33,12 @@ export const TableDropdown = ({
       </DropdownMenuItem>
       <DropdownMenuItem>View on duduzili</DropdownMenuItem>{' '}
       <DropdownMenuItem
-        onClick={handleClick}
-        className={`${is_active ? '' : 'text-[#2D874E]'}`}
-      >
-        Make {is_active ? 'Inactive' : 'Active'}
-      </DropdownMenuItem>
-      <DropdownMenuItem
-        className="text-[#F87A6D] focus:text-[#F87A6D]"
+        className={`${
+          is_active ? 'text-[#F87A6D] focus:text-[#F87A6D]' : 'text-[#2D874E]'
+        }`}
         onClick={handleClick}
       >
-        Deactivate Community
+        {is_active ? 'Deactivate' : 'Activate'} Community
       </DropdownMenuItem>
     </DropdownMenuContent>
   );

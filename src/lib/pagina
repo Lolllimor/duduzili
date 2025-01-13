@@ -1,97 +1,168 @@
-import { Table } from "@tanstack/react-table";
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsLeft,
-  ChevronsRight,
-} from "lucide-react";
+import { Table } from '@tanstack/react-table';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
+import { useSearchParams } from 'next/navigation';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from '@/components/ui/pagination';
+import useUrlParams from '@/hooks/use-url-params';
+import { useMemo, useState } from 'react';
 
 interface DataTablePaginationProps<TData> {
-  table: Table<TData>;
+  table?: Table<TData>;
+  totalCount: number;
 }
 
 export function DataTablePagination<TData>({
   table,
+  totalCount,
 }: DataTablePaginationProps<TData>) {
-  return (
-    <div className="flex items-center justify-between px-2">
-      <div className="flex-1 text-sm text-muted-foreground">
-        {table.getFilteredSelectedRowModel().rows.length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+  const searchParams = useSearchParams();
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const pageSizeParam = searchParams.get('page_size');
+  const { pushParam, query: pageParam } = useUrlParams('page');
+
+  const page = pageParam ? +pageParam : 1;
+  const pageSize = pageSizeParam ? +pageSizeParam : 10;
+
+  const totalPage = Math.ceil(totalCount / pageSize);
+
+  const currentTotalCountBasedOnPage = pageSize * page;
+
+  const getPageNumbers = useMemo(() => {
+    const pages: number[] = [];
+
+    // For 2 pages, just show both numbers
+    if (totalPage === 2) {
+      return [1, 2];
+    }
+
+    // For 3-7 pages, show all numbers
+    if (totalPage <= 7) {
+      for (let i = 1; i <= totalPage; i++) {
+        pages.push(i);
+      }
+      return pages;
+    }
+
+    // For more than 7 pages, use ellipsis logic
+    const showEllipsisStart = currentPage > 4;
+    const showEllipsisEnd = currentPage < totalPage - 3;
+
+    if (showEllipsisStart) {
+      pages.push(1, '...');
+    } else {
+      for (let i = 1; i <= 3; i++) {
+        pages.push(i);
+      }
+    }
+
+    if (showEllipsisStart && showEllipsisEnd) {
+      pages.push(currentPage - 1, currentPage, currentPage + 1);
+    }
+
+    if (showEllipsisEnd) {
+      pages.push('...', totalPage);
+    } else {
+      for (
+        let i = Math.max(
+          totalPage - 2,
+          showEllipsisStart ? currentPage - 1 : 4
+        );
+        i <= totalPage;
+        i++
+      ) {
+        pages.push(i);
+      }
+    }
+
+    return pages;
+  }, [currentPage, totalPage]);
+
+  return totalCount ? (
+    <div className="flex items-center justify-between px-8 py-6  ">
+      <div className="flex  items-center justify-center text-sm text-[#667185]  font-inter font-semibold">
+        Page {page} of {totalPage}
       </div>
-      <div className="flex items-center space-x-6 lg:space-x-8">
-        <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
+      <div>
+        <Pagination>
+          <PaginationContent className="gap-1 flex items-center">
+            {}
+            {Array.from({ length: 3 }).map((_, idx) => (
+              <PaginationItem key={idx}>
+                <PaginationLink
+                  onClick={() => {
+                    pushParam({ key: 'page', value: idx + 1 });
+
+                    setCurrentPage(idx + 1);
+                  }}
+                  isActive={page === idx + 1}
+                  href="#"
+                  className="font-sm !text-[#98A2B3] font-inter"
+                >
+                  {idx + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            {totalPage > 7 && (
+              <>
+                {totalPage > 3 && (
+                  <PaginationItem className="text-[#98A2B3]">
+                    ...
+                  </PaginationItem>
+                )}
+                {Array.from({ length: 3 }).map((_, idx) => (
+                  <PaginationItem key={totalPage - 3 + idx}>
+                    <PaginationLink
+                      onClick={() => {
+                        pushParam({ key: 'page', value: totalPage - 3 + idx });
+                        setCurrentPage(totalPage - 3 + idx);
+                      }}
+                      isActive={page === totalPage - 3 + idx}
+                      href="#"
+                      className="font-sm !text-[#98A2B3] font-inter"
+                    >
+                      {totalPage - 3 + idx}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+              </>
+            )}
+          </PaginationContent>
+        </Pagination>
+      </div>
+      <div className="flex items-center ">
+        <div className="flex items-center gap-4">
+          <Button
+            className=" h-9 w-[111px] item-center flex gap-2 border border-[#D0D5DD] bg-transparent hover:bg-transparent rounded-lg shadow-md"
+            onClick={() => {
+              setCurrentPage(currentPage - 1),
+                pushParam({ key: 'page', value: currentPage - 1 });
             }}
+            disabled={currentPage < 2}
           >
-            <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to first page</span>
-            <ChevronsLeft />
+            <ArrowLeft className="text-[#344054] h-5 w-5" />
+            <span className="text-[#344054] text-sm font-semibold">
+              Previous
+            </span>
           </Button>
           <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            className=" h-9 w-[111px] bg-transparent hover:bg-transparent item-center flex gap-2 border border-[#D0D5DD] rounded-lg shadow-md"
+            onClick={() => {
+              setCurrentPage(currentPage + 1),
+                pushParam({ key: 'page', value: currentPage + 1 });
+            }}
+            disabled={currentPage > totalPage - 2}
           >
-            <span className="sr-only">Go to previous page</span>
-            <ChevronLeft />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to next page</span>
-            <ChevronRight />
-          </Button>
-          <Button
-            variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            <ChevronsRight />
+            <span className="text-[#344054] text-sm font-semibold">Next</span>
+            <ArrowRight className="text-[#344054] h-5 w-5" />
           </Button>
         </div>
       </div>
     </div>
-  );
+  ) : null;
 }

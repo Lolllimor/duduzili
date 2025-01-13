@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { EditContact } from './modals/edit-contact';
 import { ContactInfo as ContactDataType } from '@/lib/settingTypes';
 import { useFetchContactQuery } from '@/redux/features/settingsApi';
-import { decrypt } from '@/lib/decrypt';
 
 export const ContactInfo = () => {
   const { data, error, isFetching } = useFetchContactQuery();
@@ -35,13 +34,13 @@ export const ContactInfo = () => {
           </div>
           <div className="flex gap-4 items-center">
             <Image
-              src="/settings/envelope.svg"
+              src="/settings/phone.svg"
               alt="envelope"
               width={56}
               height={56}
             />
             <div className="flex flex-col justify-between">
-              <span className="text-sm text-[#757575]">Phone number</span>
+              <span className="text-sm text-[#757575]">Phone Number</span>
               <span className="text-[#2A2A2A] text-base font-medium">
                 {item.phone}
               </span>

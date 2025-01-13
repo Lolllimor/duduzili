@@ -8,10 +8,10 @@ import toast from 'react-hot-toast';
 import { Button } from '../ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { Skeleton } from '../ui/skeleton';
-import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+import { ViewMember } from './view-member';
 import { useRouter } from 'next/navigation';
 import { ProfileDrawer } from './profile-drawer';
-import { ViewMember } from './view-member';
+import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 export const CommunityDetailHeader = ({ id }: { id: string }) => {
   const { back } = useRouter();

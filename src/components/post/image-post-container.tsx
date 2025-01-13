@@ -4,7 +4,13 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { PostContainerProps } from './post-container';
 import clsx from 'clsx';
-import { Dialog, DialogTrigger } from '../ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from '../ui/dialog';
 
 const LazyLoadedImage = ({
   url,
@@ -45,7 +51,7 @@ const LazyLoadedImage = ({
       )}
     >
       {isVisible && (
-        <img
+        <Image
           src={url}
           width={800}
           height={300}
@@ -82,26 +88,26 @@ function ImagePostContainer({
 }) {
   //   const { setModalState } = useContext(ModalContext);
   return (
-    // <Dialog>
-    //   <DialogTrigger>
-    <div
-      className={clsx(
-        noHeight ? 'h-full' : 'h-fit',
-        'relative group w-full rounded-2xl',
-        className
-      )}
-      //   onClick={() => {
-      //     setModalState({
-      //       opened: true,
-      //       file,
-      //       files,
-      //       currentIndex,
-      //       name,
-      //       postDetails,
-      //     });
-      //   }}
-    >
-      {/* <div
+    <Dialog>
+      <DialogTrigger>
+        <div
+          className={clsx(
+            noHeight ? 'h-full' : 'h-fit',
+            'relative group w-full rounded-2xl',
+            className
+          )}
+          //   onClick={() => {
+          //     setModalState({
+          //       opened: true,
+          //       file,
+          //       files,
+          //       currentIndex,
+          //       name,
+          //       postDetails,
+          //     });
+          //   }}
+        >
+          {/* <div
         onClick={() => {
           setModalState({
             opened: true,
@@ -114,10 +120,19 @@ function ImagePostContainer({
         }}
         className="absolute hidden group-hover:block opacity-10 bg-black cursor-pointer inset-0 rounded-2xl"
       /> */}
-      <LazyLoadedImage className={className} url={url} noHeight={noHeight} />
-    </div>
-    //   </DialogTrigger>
-    // </Dialog>
+          <LazyLoadedImage
+            className={className}
+            url={url}
+            noHeight={noHeight}
+          />
+        </div>
+      </DialogTrigger>
+      <DialogContent className="w-fit rounded-none bg-transparent border-none p-0 h-full flex items-center justify-center">
+        <DialogTitle></DialogTitle>
+        <DialogDescription></DialogDescription>
+        <LazyLoadedImage className={className} url={url} noHeight={noHeight} />
+      </DialogContent>
+    </Dialog>
   );
 }
 

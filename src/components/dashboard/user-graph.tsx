@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import { Checkbox } from '../ui/checkbox';
 import { useFetchDashboardUserQuery } from '@/redux/features/dashboardApi';
+import { Skeleton } from '../ui/skeleton';
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -25,7 +26,7 @@ export const UserGraph = () => {
   const [isActiveMale, setIsActiveMale] = useState(true);
   const [isActiveFemale, setIsActiveFemale] = useState(true);
   const [isActiveAllUser, setIsActiveAllUser] = useState(true);
-  const { data } = useFetchDashboardUserQuery();
+  const { data, isLoading } = useFetchDashboardUserQuery();
 
   const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -125,86 +126,97 @@ export const UserGraph = () => {
           </div>
         </div>
       </div>
+      {isLoading ? (
+        <Skeleton className="h-[461px] w-full rounded-[16px]" />
+      ) : (
+        <div className="rounded-[16px] bg-white h-[461px] min-h-[397px] p-6 w-full shrink-0">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              width={1024}
+              height={397}
+              data={tableData}
+              margin={{
+                top: 10,
+                right: 0,
+                left: 0,
+                bottom: 10,
+              }}
+            >
+              <defs>
+                <linearGradient id="gradientCursor" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="rgba(235, 242, 255, 0)" />
+                  <stop offset="100%" stopColor="#EBF2FF" />
+                </linearGradient>
+              </defs>
 
-      <div className="rounded-[16px] bg-white h-[461px] min-h-[397px] p-6 w-full shrink-0">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            width={1024}
-            height={397}
-            data={tableData}
-            margin={{
-              top: 10,
-              right: 0,
-              left: 0,
-              bottom: 10,
-            }}
-          >
-            <defs>
-              <linearGradient id="gradientCursor" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="rgba(235, 242, 255, 0)" />
-                <stop offset="100%" stopColor="#EBF2FF" />
-              </linearGradient>
-            </defs>
-
-            <XAxis dataKey="month" axisLine={false} tickLine={false} dy={18} />
-            <YAxis axisLine={false} tickLine={false} dx={-36} />
-            <Tooltip
-              content={<CustomTooltip />}
-              cursor={<CustomizedCursor />}
-            />
-            {isActiveFemale && (
-              <Line
-                activeDot={{
-                  r: 10,
-                  fill: '#367EE8',
-                  stroke: '#fff',
-                  strokeWidth: 5,
-                  filter: 'drop-shadow(0px 4px 4px rgba(176, 183, 195, 0.17))',
-                }}
-                dot={false}
-                type="monotone"
-                dataKey="female"
-                stroke="#367EE8"
-                strokeWidth={2.5}
+              <XAxis
+                dataKey="month"
+                axisLine={false}
+                tickLine={false}
+                dy={18}
               />
-            )}
-
-            {isActiveMale && (
-              <Line
-                activeDot={{
-                  r: 10,
-                  fill: '#E59055',
-                  stroke: '#fff',
-                  strokeWidth: 5,
-                  filter: 'drop-shadow(0px 4px 4px rgba(176, 183, 195, 0.17))',
-                }}
-                dot={false}
-                type="monotone"
-                dataKey="male"
-                stroke="#E59055"
-                strokeWidth={2.5}
+              <YAxis axisLine={false} tickLine={false} dx={-36} />
+              <Tooltip
+                content={<CustomTooltip />}
+                cursor={<CustomizedCursor />}
               />
-            )}
+              {isActiveFemale && (
+                <Line
+                  activeDot={{
+                    r: 10,
+                    fill: '#367EE8',
+                    stroke: '#fff',
+                    strokeWidth: 5,
+                    filter:
+                      'drop-shadow(0px 4px 4px rgba(176, 183, 195, 0.17))',
+                  }}
+                  dot={false}
+                  type="monotone"
+                  dataKey="female"
+                  stroke="#367EE8"
+                  strokeWidth={2.5}
+                />
+              )}
 
-            {isActiveAllUser && (
-              <Line
-                activeDot={{
-                  r: 10,
-                  fill: '#4534B8',
-                  stroke: '#fff',
-                  strokeWidth: 5,
-                  filter: 'drop-shadow(0px 4px 4px rgba(176, 183, 195, 0.17))',
-                }}
-                dot={false}
-                type="monotone"
-                dataKey="allUsers"
-                stroke="#4534B8"
-                strokeWidth={2.5}
-              />
-            )}
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
+              {isActiveMale && (
+                <Line
+                  activeDot={{
+                    r: 10,
+                    fill: '#E59055',
+                    stroke: '#fff',
+                    strokeWidth: 5,
+                    filter:
+                      'drop-shadow(0px 4px 4px rgba(176, 183, 195, 0.17))',
+                  }}
+                  dot={false}
+                  type="monotone"
+                  dataKey="male"
+                  stroke="#E59055"
+                  strokeWidth={2.5}
+                />
+              )}
+
+              {isActiveAllUser && (
+                <Line
+                  activeDot={{
+                    r: 10,
+                    fill: '#4534B8',
+                    stroke: '#fff',
+                    strokeWidth: 5,
+                    filter:
+                      'drop-shadow(0px 4px 4px rgba(176, 183, 195, 0.17))',
+                  }}
+                  dot={false}
+                  type="monotone"
+                  dataKey="allUsers"
+                  stroke="#4534B8"
+                  strokeWidth={2.5}
+                />
+              )}
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
 };

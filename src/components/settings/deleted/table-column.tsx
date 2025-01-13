@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ColumnDef } from '@tanstack/react-table';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { getInitials } from '@/components/community/profile-drawer';
 
 
 export const DeletedColumn: ColumnDef<any>[] = [
@@ -36,7 +37,7 @@ export const DeletedColumn: ColumnDef<any>[] = [
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src={row.original.profile_picture || ''} />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>{ getInitials(row.original.full_name)}</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
             <p className="font-medium font-sora text-sm text-[#101928]">

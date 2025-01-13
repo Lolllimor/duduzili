@@ -148,7 +148,7 @@ function AudioPlayer({
     <div
       className={clsx(
         'min-h-[200px] max-sm:min-h-[100px]',
-        ' grid grid-cols-[29%_1fr] bg-[url(/community/Audio.svg)] h-[263px] w-[607px] bg-center bg-contain rounded-[14px]',
+        ' grid grid-cols-[29%_1fr] bg-[url(/community/Audio.svg)] h-[263px] w-[620px] px-3 bg-no-repeat bg-center bg-contain rounded-[14px]',
         width,
         containerclassName
       )}

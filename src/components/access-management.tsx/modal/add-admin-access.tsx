@@ -42,7 +42,7 @@ const formSchema = z.object({
 
 export const AddAdminAccess = () => {
   const [open, setOpen] = useState(false);
-  const { data } = useFetchPermissionGroupQuery();
+  const { data } = useFetchPermissionGroupQuery({});
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const [postPermissionGroup, { isLoading }] = useAddAdminToGroupMutation();

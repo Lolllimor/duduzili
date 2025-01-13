@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 import PostMenu from './post-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { getInitials } from '../community/profile-drawer';
 
 dayjs.extend(RelativeTime);
 
@@ -20,7 +21,9 @@ function CommunityPostHeader(props?: PostContainerProps) {
             <AvatarImage
               src={props?.communityDetails?.community_cover_photo ?? ''}
             />
-            <AvatarFallback>CI</AvatarFallback>
+            <AvatarFallback>
+              {getInitials(props?.poster?.full_name || '')}
+            </AvatarFallback>
           </Avatar>
           {/* <img
             alt="profile picture"
@@ -48,7 +51,9 @@ function CommunityPostHeader(props?: PostContainerProps) {
           >
             <Avatar className="size-6">
               <AvatarImage src={props?.poster?.profile_picture} />
-              <AvatarFallback></AvatarFallback>
+              <AvatarFallback>
+                {getInitials(props?.poster?.full_name || '')}
+              </AvatarFallback>
             </Avatar>
             {/* <Avatar
               alt="profile picture"

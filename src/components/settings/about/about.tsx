@@ -1,23 +1,67 @@
 'use client';
-import React, { useEffect } from 'react';
+import DOMPurify from 'dompurify';
+import { IoMdAdd } from 'react-icons/io';
 import { EmptyState } from '../empty-state';
 import { AboutFilled } from './about-filled';
+import { Skeleton } from '@/components/ui/skeleton';
 import { AddEditAbout } from '../modals/add-edit-about';
 
 import { useFetchAboutQuery } from '@/redux/features/settingsApi';
+import { Button } from '@/components/ui/button';
 
 export const About = () => {
-  const { data } = useFetchAboutQuery();
-
+  const { data, isLoading } = useFetchAboutQuery();
+  const formattedText =
+    data?.data.about
+      .split('\n\n')
+      .map(
+        (paragraph: string) =>
+          `<p>${paragraph.replace(/\n/g, '<br/><br/>')}</p>`
+      )
+      .join(' <br/>') || '';
+  const sanitizedText = DOMPurify.sanitize(formattedText);
   return (
     <div className="h-full">
-      {data?.data.about !== '' ? (
-        <AboutFilled />
+      {isLoading ? (
+        <div className="flex flex-col p-8 gap-10 h-full">
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-bold">About Duduzili</span>
+
+            <Button
+              disabled
+              className="h-10 px-4 font-inter rounded-[48px] text-sm font-semibold flex items-center gap-2 bg-[#4534B8] text-white"
+            >
+              <IoMdAdd className="size-5" />
+              About Duduzili
+            </Button>
+          </div>
+          <div className="flex flex-col overflow-auto gap-3 h-full text-xl">
+            {Array(25)
+              .fill(0)
+              .map((item, idx) => (
+                <Skeleton key={idx} className="h-3 w-full" />
+              ))}
+          </div>
+        </div>
+      ) : data?.data.about ? (
+        <div className="flex flex-col p-8 gap-10 h-full">
+          <div className="flex justify-between items-center">
+            <span className="text-2xl font-bold">About Duduzili</span>
+
+            <AddEditAbout />
+          </div>
+
+          <div
+            className="flex flex-col overflow-auto h-full text-xl"
+            dangerouslySetInnerHTML={{
+              __html: sanitizedText,
+            }}
+          ></div>
+        </div>
       ) : (
         <EmptyState
           title="About Duduzili"
-          paragraph=" Write a descriptive content about the platform for users
-                      to learn"
+          paragraph="Write a descriptive content about the platform for users to learn"
           btn={<AddEditAbout />}
         />
       )}

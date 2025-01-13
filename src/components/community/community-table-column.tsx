@@ -5,6 +5,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { MoreOptions } from '../access-management.tsx/more-option';
 import { TableDropdown } from './table-dropdown';
+import { getInitials } from './profile-drawer';
 
 export const CommunityColumn: ColumnDef<any>[] = [
   {
@@ -37,7 +38,7 @@ export const CommunityColumn: ColumnDef<any>[] = [
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src={row.original.cover_photo} />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>{getInitials(row.original.name)}</AvatarFallback>
           </Avatar>
           <p className="font-medium font-inter text-sm text-[#101928]">
             {row.original.name}

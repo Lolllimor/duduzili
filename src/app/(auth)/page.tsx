@@ -15,7 +15,7 @@ import { useLoginMutation } from '@/redux/features/settingsApi';
 import { PasswordInput } from '@/components/post/password-input';
 
 const page = () => {
-  const [login, { isSuccess, isLoading, isError, error }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
 
   const { push } = useRouter();
 

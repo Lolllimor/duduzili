@@ -11,6 +11,7 @@ import { use } from 'react';
 import { normalizeUrlParams } from '@/lib/normalize-url';
 import { AddAdmin } from '@/components/access-management.tsx/modal/add-admin';
 import { EditPermissionGroup } from '@/components/access-management.tsx/modal/edit-permission-group';
+import { useCustomTable } from '@/lib/custom-data';
 
 function Page({
   params,
@@ -20,6 +21,11 @@ function Page({
   const { name, group_id } = React.use(params);
   const router = useRouter();
   const { data } = useViewMembersQuery(group_id);
+
+  const { table } = useCustomTable({
+    tableData: data?.data.results,
+    columns: CSColumn,
+  });
 
   useEffect(() => {
     if (!group_id) {
@@ -44,7 +50,7 @@ function Page({
             <span className="text-[#667085]">Search group</span>
           </div>
           <div className="border rounded-lg h-full">
-            <DataTable columns={CSColumn} data={data.data.results} />
+            <DataTable table={table} totalCount={data?.data.count} />
           </div>
         </div>
       ) : (

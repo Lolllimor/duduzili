@@ -52,7 +52,7 @@ const formSchema = z.object({
 export const EditPermissionGroup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const { data } = useFetchPermissionQuery();
-  const { data: PermissionGroupData } = useFetchPermissionGroupQuery();
+  const { data: PermissionGroupData } = useFetchPermissionGroupQuery({});
   const [updatePermissionGroup, { isLoading }] =
     useUpdatePermissionGroupMutation();
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);

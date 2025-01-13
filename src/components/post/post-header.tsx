@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import RelativeTime from 'dayjs/plugin/relativeTime';
 import PostMenu from './post-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { getInitials } from '../community/profile-drawer';
 
 dayjs.extend(RelativeTime);
 function PostHeader(props?: PostContainerProps) {
@@ -16,7 +17,9 @@ function PostHeader(props?: PostContainerProps) {
         <Link href={`/${props?.poster?.username}`}>
           <Avatar className="w-11 h-11">
             <AvatarImage src={props?.poster?.profile_picture ?? ''} />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarFallback>
+              {getInitials(props?.poster?.full_name || "")}
+            </AvatarFallback>
           </Avatar>
           {/* <img
             alt="profile picture"

@@ -1,12 +1,17 @@
-"use client"
+'use client';
 import { DataTable } from '@/lib/table-data';
-import { DeactivatedData } from '@/lib/settingTypes';
 import { DeactivatedColumn } from './table-column';
 import { useFetchDeactivatedQuery } from '@/redux/features/settingsApi';
 import { SearchIcon } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useCustomTable } from '@/lib/custom-data';
 
 export const DeactivatedFilled = () => {
-  const { data } = useFetchDeactivatedQuery();
+  const { data, isLoading } = useFetchDeactivatedQuery();
+  const { table } = useCustomTable({
+    tableData: data.data.results,
+    columns: DeactivatedColumn,
+  });
   return (
     <div className="p-6 flex flex-col gap-8 bg-white h-full">
       <div className="flex justify-between items-center">
@@ -18,7 +23,31 @@ export const DeactivatedFilled = () => {
           <span className="text-[#667085]">Search User</span>
         </div>
       </div>
-      <DataTable columns={DeactivatedColumn} data={data.data.results} />
+      {isLoading ? (
+        Array(15)
+          .fill(0)
+          .map((item, idx) => (
+            <div className="w-full flex " key={idx}>
+              <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
+                <Skeleton className="h-[15px]" />
+              </span>
+              <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
+                <Skeleton className="h-[15px]" />
+              </span>
+              <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
+                <Skeleton className="h-[15px]" />
+              </span>
+              <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
+                <Skeleton className="h-[15px]" />
+              </span>
+              <span className="table-cell  w-full font-normal pl-6 pr-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
+                <Skeleton className="h-[15px]" />
+              </span>
+            </div>
+          ))
+      ) : (
+        <DataTable table={table} totalCount={data.data.count} />
+      )}
     </div>
   );
 };

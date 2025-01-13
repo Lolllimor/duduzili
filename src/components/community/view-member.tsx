@@ -1,5 +1,6 @@
 'use client';
-import { ReactNode } from 'react';
+
+import { ReactNode, useState } from 'react';
 import {
   Dialog,
   DialogClose,
@@ -13,6 +14,7 @@ import { SearchIcon } from 'lucide-react';
 import { useFetchCommunityMembersQuery } from '@/redux/features/communityApi';
 import { Skeleton } from '../ui/skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { getInitials } from './profile-drawer';
 
 interface Member {
   member_profile_picture: string;
@@ -33,6 +35,16 @@ export const ViewMember = ({
 }) => {
   const { data: members, isLoading: membersLoading } =
     useFetchCommunityMembersQuery(id);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Filter members based on the search term
+  const filteredMembers = members?.data.results.filter(
+    (member: Member) =>
+      member.member_full_name
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      member.member_username.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <Dialog>
@@ -40,7 +52,7 @@ export const ViewMember = ({
       <DialogDescription></DialogDescription>
       <DialogContent className="max-w-[470px] rounded-2xl h-4/5 border-none p-0 flex flex-col">
         <DialogTitle className="h-fit border-b border-[#F3F3F3]">
-          <div className="flex justify-between w-full py-6 px-[34px] ">
+          <div className="flex justify-between w-full py-6 px-[34px]">
             <div className="flex items-center gap-2">
               <span className="text-[18px] font-sora font-bold">
                 Community Members
@@ -60,37 +72,41 @@ export const ViewMember = ({
             </DialogClose>
           </div>
         </DialogTitle>
-        <div className="px-[34px] flex flex-col gap-4  w-full">
+        <div className="px-[34px] flex flex-col gap-4 w-full">
+          {/* Search Input */}
           <div className="h-[48px] border rounded-lg flex items-center pl-4 gap-2.5 w-full">
             <SearchIcon className="text-[#667085] w-6 h-6" />
-            <span className="text-[#667085] text-sm font-sora">
-              Search members
-            </span>
+            <input
+              type="text"
+              placeholder="Search members"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full border-none outline-none text-sm text-[#2A2A2A] placeholder-[#667085] font-sora"
+            />
           </div>
+
+          {/* Members List */}
           <div className="flex flex-col gap-4">
             {membersLoading ? (
               <div className="flex flex-col gap-4">
-                <div className="flex gap-3">
-                  <Skeleton className="w-10 h-10 rounded-full" />
-                  <div className="flex gap-1.5 flex-col">
-                    <Skeleton className="h-3 w-20" />
-                    <Skeleton className="h-3 w-12" />
+                {[...Array(2)].map((_, idx) => (
+                  <div className="flex gap-3" key={idx}>
+                    <Skeleton className="w-10 h-10 rounded-full" />
+                    <div className="flex gap-1.5 flex-col">
+                      <Skeleton className="h-3 w-20" />
+                      <Skeleton className="h-3 w-12" />
+                    </div>
                   </div>
-                </div>
-                <div className="flex gap-3">
-                  <Skeleton className="w-10 h-10 rounded-full" />
-                  <div className="flex gap-1.5 flex-col">
-                    <Skeleton className="h-3 w-20" />
-                    <Skeleton className="h-3 w-12" />
-                  </div>
-                </div>
+                ))}
               </div>
-            ) : members?.data.count ? (
-              members?.data.results.map((item: Member, idx: number) => (
+            ) : filteredMembers?.length ? (
+              filteredMembers.map((item: Member, idx: number) => (
                 <div className="flex gap-3 items-center" key={idx}>
                   <Avatar className="w-10 h-10 rounded-full">
                     <AvatarImage src={item.member_profile_picture} />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarFallback>
+                      {getInitials(item.member_full_name)}
+                    </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col font-sora justify-between">
                     <span className="text-sm text-[#2A2A2A]">
@@ -103,7 +119,9 @@ export const ViewMember = ({
                 </div>
               ))
             ) : (
-              <p>No member</p>
+              <p className="text-center text-sm text-[#667085]">
+                No members found
+              </p>
             )}
           </div>
         </div>

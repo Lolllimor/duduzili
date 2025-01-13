@@ -1,11 +1,12 @@
 'use client';
 
 import DOMPurify from 'dompurify';
+import { Skeleton } from '@/components/ui/skeleton';
 import { AddEditAbout } from '../modals/add-edit-about';
 import { useFetchAboutQuery } from '@/redux/features/settingsApi';
 
 export const AboutFilled = () => {
-  const { data } = useFetchAboutQuery();
+  const { data, isLoading } = useFetchAboutQuery();
 
   const formattedText =
     data?.data.about
@@ -23,12 +24,20 @@ export const AboutFilled = () => {
 
         <AddEditAbout />
       </div>
-      <div
-        className="flex flex-col overflow-auto h-full text-xl"
-        dangerouslySetInnerHTML={{
-          __html: sanitizedText,
-        }}
-      ></div>
+      {isLoading ? (
+        <div className="flex flex-col overflow-auto h-full text-xl">
+          <Skeleton className="h-2 w-10" />
+          <Skeleton className="h-2 w-full" />
+          <Skeleton className="h-2 w-full" />
+        </div>
+      ) : (
+        <div
+          className="flex flex-col overflow-auto h-full text-xl"
+          dangerouslySetInnerHTML={{
+            __html: sanitizedText,
+          }}
+        ></div>
+      )}
     </div>
   );
 };

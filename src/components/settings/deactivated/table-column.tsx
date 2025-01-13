@@ -5,8 +5,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { DeactivatedResult } from '@/lib/settingTypes';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ActivateBtn } from './activatebtn';
-
-
+import { getInitials } from '@/components/community/profile-drawer';
 
 export const DeactivatedColumn: ColumnDef<DeactivatedResult>[] = [
   {
@@ -38,8 +37,10 @@ export const DeactivatedColumn: ColumnDef<DeactivatedResult>[] = [
       return (
         <div className="flex items-center gap-3">
           <Avatar>
-            <AvatarImage src={row.original.profile_picture || ""} />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src={row.original.profile_picture || ''} />
+            <AvatarFallback>
+              {getInitials(row.original.full_name)}
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
             <p className="font-medium font-sora text-sm text-[#101928]">
@@ -111,7 +112,7 @@ export const DeactivatedColumn: ColumnDef<DeactivatedResult>[] = [
     header: 'Action',
     cell: ({ row }) => {
       return <ActivateBtn username={row.original.username} />;
-      },
+    },
     enableSorting: false,
   },
 ];

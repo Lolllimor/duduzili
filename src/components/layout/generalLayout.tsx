@@ -14,7 +14,7 @@ function GeneralLayout({
   return (
     <div className="flex-1 h-[100dvh] flex flex-col">
       <AppHeader pageTitle={pageTitle} moreOptions={moreOptions} />
-      <main style={{ height: '100dvh' }} className=" overflow-auto  ">
+      <main className=" overflow-auto h-full flex ">
         {children}
       </main>
     </div>
