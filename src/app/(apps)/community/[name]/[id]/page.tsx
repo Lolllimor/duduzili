@@ -30,7 +30,7 @@ function Page({ params }: { params: Promise<{ name: string; id: string }> }) {
 
   const { data, isLoading } = useFetchCommunityAdminQuery(id);
   const { data: members, isLoading: membersLoading } =
-    useFetchCommunityMembersQuery(id);
+    useFetchCommunityMembersQuery({id:id});
 
   useEffect(() => {
     if (!id) {

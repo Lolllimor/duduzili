@@ -31,11 +31,11 @@ export const ManagementMore = ({
   return (
     <DropdownMenuContent className="text-sm font-inter rounded-lg w-[128px]">
       <DropdownMenuItem>
-        <Link href={`/management/${normalizeUrl(name)}/${group_id}`}>
+        <Link href={`/management/${group_id}`}>
           View Group
         </Link>
       </DropdownMenuItem>
-      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+      <DropdownMenuItem>
         <CreatePermissionGroup id={group_id} />
       </DropdownMenuItem>
       <DropdownMenuItem
@@ -44,10 +44,7 @@ export const ManagementMore = ({
       >
         Make {is_active ? 'Inactive' : 'Active'}
       </DropdownMenuItem>
-      <DropdownMenuItem
-        onSelect={(e) => e.preventDefault()}
-        className="text-[#BA1A1A] focus:text-[#BA1A1A]"
-      >
+      <DropdownMenuItem className="text-[#BA1A1A] focus:text-[#BA1A1A]">
         <DeletePermissionGroup id={group_id} name={name} />
       </DropdownMenuItem>
     </DropdownMenuContent>

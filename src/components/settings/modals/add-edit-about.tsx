@@ -32,7 +32,7 @@ const formSchema = z.object({
 });
 export const AddEditAbout = () => {
   const [open, setOpen] = useState(false);
-  const { data, error, isFetching } = useFetchAboutQuery();
+  const { data } = useFetchAboutQuery();
   const [
     postAbout,
     {
@@ -77,7 +77,7 @@ export const AddEditAbout = () => {
           About Duduzili
         </Button>
       </DialogTrigger>
-      <DialogContent className="px-6 py-8 gap-5 w-fit  [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto text-inter">
+      <DialogContent className="px-6 py-8 gap-5 w-fit  [&>button]:hidden !rounded-[20px] max-h-[clamp(300px,75vh,823px)] overflow-auto text-inter">
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
             <span className="text-2xl font-bold">About Duduzili</span>

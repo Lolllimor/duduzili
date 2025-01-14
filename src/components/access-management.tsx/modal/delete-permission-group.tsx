@@ -37,7 +37,10 @@ export const DeletePermissionGroup = ({
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="text-[#BA1A1A] focus:text-[#BA1A1A]">
+      <DialogTrigger
+        className="text-[#BA1A1A] focus:text-[#BA1A1A]"
+        onClick={(e) => e.stopPropagation()}
+      >
         Delete Group
       </DialogTrigger>
       <DialogContent className=" py-5 gap-0  w-[450px] [&>button]:hidden rounded-[16px] max-h-[376px] h-full  !px-0 flex flex-col">
@@ -63,9 +66,7 @@ export const DeletePermissionGroup = ({
         <div className="w-full border-none h-[1px] bg-[#EAECF0]"></div>
         <div className="flex justify-between font-medium pt-7 px-8 w-full h-fit">
           <DialogClose asChild>
-            <Button
-              className="bg-[#F4F4F4] hover:bg-[#F4F4F4] border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center "
-            >
+            <Button className="bg-[#F4F4F4] hover:bg-[#F4F4F4] border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center ">
               Cancel
             </Button>
           </DialogClose>

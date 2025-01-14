@@ -340,7 +340,7 @@ function PostContainer(props?: PostContainerProps) {
                   ? `/comment/${props?.postId}/${props?.poster?.username}/${props?.commentId}`
                   : `/posts/${props?.poster?.username}/${props?.postId}`
               }
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 pointer-events-none  "
             >
               <Message size={18} color="#494850" />
               <span className="text-regular-14 text-duduzili-neutral-800">

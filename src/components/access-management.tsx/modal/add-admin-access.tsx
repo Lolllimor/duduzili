@@ -80,17 +80,20 @@ export const AddAdminAccess = () => {
     );
     setSelectedGroups(selectedValues);
   };
+const handleRemoveGroup = (group: string) => {
+  setSelectedGroups((prevGroups) => {
+    const updatedGroups = prevGroups.filter((item) => item !== group);
 
-  const handleRemoveGroup = (group: string) => {
-    setSelectedGroups((prevGroups) =>
-      prevGroups.filter((item) => item !== group)
-    );
     setSelectedIds(
       data?.data.results
-        .filter((item: { name: string }) => selectedGroups.includes(item.name))
+        .filter((item: { name: string }) => updatedGroups.includes(item.name))
         .map((item: { group_id: string }) => item.group_id)
     );
-  };
+
+    return updatedGroups;
+  });
+};
+
 
   const { errors, isValid } = formState;
 

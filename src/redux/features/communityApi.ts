@@ -3,13 +3,13 @@ import { baseApi } from './base-api';
 
 export const communityApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    fetchCommunityList: builder.query<any, { page?: number }>({
+    fetchCommunityList: builder.query({
       query: (arg) => {
-        const page = arg?.page;
+        const { ...params } = arg || {};
         return {
           url: endpoints.community.fetchCommunityList,
           method: 'GET',
-          params: page ? { page } : undefined,
+          params: { ...params },
         };
       },
       providesTags: ['Community'],
@@ -37,10 +37,14 @@ export const communityApi = baseApi.injectEndpoints({
       providesTags: ['Community'],
     }),
     fetchCommunityMembers: builder.query({
-      query: (id: string) => ({
-        url: `${endpoints.community.fetchCommunityMembers}?community_id=${id}`,
-        method: 'GET',
-      }),
+      query: ( arg) => {
+        const {id, ...params } = arg || {};
+        return {
+          url: `${endpoints.community.fetchCommunityMembers}?community_id=${id}`,
+          method: 'GET',
+          params:{...params}
+        };
+      },
       providesTags: ['Community'],
     }),
     fetchCommunityProfile: builder.query({

@@ -39,11 +39,10 @@ const formSchema = z.object({
   category: z.string().nonempty('A category is required'),
 });
 
-export const AddInterestModal = ({ item }: { item?: any }) => {
+export const EditInterestModal = ({ item }: { item?: any }) => {
   const [open, setOpen] = useState(false);
-  const { data } = useFetchUnasssociatedTagsQuery();
   const { data: categoryData } = useFetchInterestCategoryQuery();
-  const [createInterest, { isLoading }] = useCreateInterestMutation();
+  const [createInterest] = useCreateInterestMutation();
   const [editInterest] = useEditInterestMutation();
   const [inputValue, setInputValue] = useState('');
   const [hashtags, setHashtags] = useState<string[]>([]);
@@ -62,26 +61,20 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      item
-        ? (await editInterest({
-            ...data,
-            tags: hashtags,
-            pf_id: item.pf_id,
-          }).unwrap(),
-          toast.success('Successfully updated'))
-        : (await createInterest({
-            ...data,
-            tags: hashtags,
-          }).unwrap(),
-          toast.success('Successfully created')),
-        setOpen(false);
+      await editInterest({
+        ...data,
+        tags: hashtags,
+        pf_id: item.pf_id,
+      }).unwrap(),
+        toast.success('Successfully updated');
+
+      setOpen(false);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-   
     if (e.key === ' ') {
       if (inputValue.trim()) {
         setHashtags([...hashtags, inputValue.trim()]);
@@ -101,45 +94,31 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
       setValue('category', item.category);
       setHashtags(item.tags_name);
     }
-  }, [item]);
+  }, []);
 
+  console.log(item);
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={() => {
+        setOpen(!open);
+        reset();
+        setHashtags(item.tags_name || []);
+      }}
+    >
       <DialogTrigger
-        asChild
-        className="text-[#2A2A2A] flex gap-2 items-center text-xs w-full "
-      >
-        {item ? (
-          <Button
-            onClick={(e) => e.stopPropagation()}
-            className="border-none bg-transparent hover:bg-transparent shadow-none w-full p-0 items-start justify-start text-[#292929] h-fit text-start flex"
-          >
-            <Image src="/edit.svg" alt="edit" width={16} height={16} />
-            Edit interest
-          </Button>
-        ) : (
-          <Button className="border-2 border-dashed border-[#D9D9DB] rounded-xl w-[346px] h-[300px] flex justify-center items-center bg-white hover:bg-white gap-6 flex-col ">
-            <div className="w-20 h-20 rounded-full bg-[#ECEBF8] flex items-center justify-center">
-              <Image
-                src="/hashtag.svg"
-                alt="hashtag-image"
-                width={32}
-                height={32}
-              />
-            </div>
-            <span className="text-[#242428] text-base">Add New Topic</span>
-          </Button>
-        )}
-      </DialogTrigger>
-      <DialogContent
-        className="px-6 py-8 gap-5 w-[645px] [&>button]:hidden !rounded-[20px] max-h-[634px] h-fit overflow-auto"
         onClick={(e) => e.stopPropagation()}
+        className="text-[#2A2A2A] flex gap-2 items-center text-xs "
       >
+        <div className=" flex gap-2 items-center text-xs">
+          <Image src="/edit.svg" alt="edit" width={16} height={16} />
+          Edit interest
+        </div>
+      </DialogTrigger>
+      <DialogContent className="px-6 py-8 gap-5 w-[645px] !rounded-[20px] max-h-[634px] h-fit overflow-auto">
         <DialogTitle>
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
-            <span className="text-2xl font-bold">
-              {item ? 'Edit' : 'Add'} Interest
-            </span>
+            <span className="text-2xl font-bold">Edit Interest</span>
             <DialogClose aria-label="Close">
               <Image
                 src="/close.svg"
@@ -165,11 +144,6 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
               placeholder="Enter title"
               className="h-14 border-[#E5E6E8] rounded-sm  placeholder:text-sm placeholder:font-normal placeholder:text-[#ABAEB5] font-normal pl-4"
             />
-            {errors.name && (
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.name.message}
-              </div>
-            )}
           </div>
           <div className=" flex flex-col w-full  gap-1.5">
             <label
@@ -212,10 +186,9 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
                 Hashtags
               </label>
               <Input
+                onClick={(e) => e.stopPropagation()}
                 value={inputValue}
-                onChange={(e) => {
-                  setInputValue(e.target.value);
-                }}
+                onChange={(e) => setInputValue(e.target.value)}
                 onKeyUp={handleKeyUp}
                 placeholder="Enter tag"
                 className="h-14 border-[#E5E6E8] rounded-sm  placeholder:text-sm placeholder:font-normal placeholder:text-[#ABAEB5] font-normal pl-4"
@@ -238,6 +211,7 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
           </div>
 
           <Button
+            onClick={(e) => e.stopPropagation()}
             type="submit"
             className="bg-[#4534B8] border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center mt-5 "
           >

@@ -30,14 +30,17 @@ export const DeleteInterest = ({ id }: { id: string }) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="text-[#ED5556] focus:text-[#ED5556] flex gap-2 items-center text-xs">
+      <DialogTrigger
+        className="text-[#ED5556] focus:text-[#ED5556] flex gap-2 items-center text-xs"
+        onClick={(e) => e.stopPropagation()}
+      >
         <Image src="/trash.svg" alt="edit" width={16} height={16} />
         Delete interest
       </DialogTrigger>
       <DialogContent className=" py-5 gap-0  w-[450px] [&>button]:hidden rounded-[16px] max-h-[376px] h-full  !px-0 flex flex-col">
         <DialogTitle>
           <div className="flex justify-end w-full px-8 ">
-            <DialogClose aria-label="Close" className="">
+            <DialogClose aria-label="Close" className="z-10 cursor-pointer">
               <IoClose className="size-6 text-[#667085]" />
             </DialogClose>
           </div>

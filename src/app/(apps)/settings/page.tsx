@@ -16,7 +16,7 @@ function ConfigPage() {
           defaultValue="about"
           className="w-full  gap-6 flex flex-col h-full "
         >
-          <TabsList className="w-full text-sm gap-2 flex justify-start rounded-[10px] h-fit border border-[#F2F4F7]  bg-[#F9FAFB] ">
+          <TabsList className="w-full text-sm gap-2 flex justify-start rounded-[10px] h-fit border border-[#F2F4F7]  bg-[#F9FAFB] overflow-x-auto overflow-y-hidden ">
             <TabsTrigger
               value="about"
               className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] "

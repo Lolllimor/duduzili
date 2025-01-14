@@ -17,9 +17,10 @@ import { usePortal } from '@ibnlanre/portal';
 import { interest } from '@/lib/query-store';
 
 function InterestPage() {
-  
   const [queries, setQueries] = usePortal.atom(interest);
-  const { data, isLoading } = useFetchInterestQuery({ page: queries.page_index });
+  const { data, isLoading } = useFetchInterestQuery({
+    page: queries.page_index,
+  });
 
   return (
     <GeneralLayout pageTitle="Interests">
@@ -61,15 +62,10 @@ function InterestPage() {
                           <HiOutlineDotsVertical />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="py-2 w-[137px]">
-                          <DropdownMenuItem
-                            onSelect={(e) => e.preventDefault()}
-                          >
-                            <AddInterestModal id={item} />
+                          <DropdownMenuItem>
+                            <AddInterestModal item={item} />
                           </DropdownMenuItem>
-                          <DropdownMenuItem
-                            className="text-[#ED5556] focus:text-[#ED5556] flex gap-2 items-center text-xs"
-                            onSelect={(e) => e.preventDefault()}
-                          >
+                          <DropdownMenuItem className="text-[#ED5556] focus:text-[#ED5556] flex gap-2 items-center text-xs">
                             <DeleteInterest id={item.pf_id} />
                           </DropdownMenuItem>
                         </DropdownMenuContent>

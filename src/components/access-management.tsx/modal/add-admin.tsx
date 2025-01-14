@@ -38,7 +38,7 @@ const formSchema = z.object({
     .email({ message: 'Must be a valid email address' }),
 });
 
-export const AddAdmin = ({ id }: { id: string }) => {
+export const AddAdmin = ({ id , name}: { id: string, name: string }) => {
   const [open, setOpen] = useState(false);
   const [postAddAdmin, { isLoading }] = useAddAdminMutation();
 
@@ -62,6 +62,7 @@ export const AddAdmin = ({ id }: { id: string }) => {
       }).unwrap();
       toast.success('Successfully created');
       setOpen(false);
+      reset()
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
@@ -80,7 +81,7 @@ export const AddAdmin = ({ id }: { id: string }) => {
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] shrink [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
-            <span className="text-2xl font-bold"> Admin Access</span>
+            <span className="text-2xl font-bold"> {name}</span>
             <DialogClose
               aria-label="Close"
               onClick={() => {

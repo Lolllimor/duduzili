@@ -13,7 +13,7 @@ export const settingsApi = baseApi.injectEndpoints({
     fetchAbout: builder.query<any, void>({
       query: () => ({
         url: endpoints.setting.about.fetch,
-        method: 'GET'
+        method: 'GET',
       }),
       providesTags: ['About'],
     }),
@@ -81,11 +81,18 @@ export const settingsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['SMI'],
     }),
-    fetchDeactivated: builder.query<any, void>({
-      query: () => ({
-        url: endpoints.setting.deactivated.fetch,
-        method: 'GET',
-      }),
+    fetchDeactivated: builder.query({
+      query: (arg) => {
+        const { page, ...otherParams } = arg || {};
+        return {
+          url: endpoints.setting.deactivated.fetch,
+          method: 'GET',
+          params: {
+            ...(page && { page }),
+            ...otherParams,
+          },
+        };
+      },
       providesTags: ['Deactivated'],
     }),
     activateDeactivated: builder.mutation({
@@ -96,11 +103,17 @@ export const settingsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Deactivated'],
     }),
-    fetchDeleted: builder.query<any, void>({
-      query: () => ({
-        url: endpoints.setting.deleted.fetch,
-        method: 'GET',
-      }),
+    fetchDeleted: builder.query({
+      query: (arg) => {
+        const { ...params } = arg || {};
+        return {
+          url: endpoints.setting.deleted.fetch,
+          method: 'GET',
+          params: {
+            ...params,
+          },
+        };
+      },
       providesTags: ['Deleted'],
     }),
   }),

@@ -1,57 +1,50 @@
 'use client';
-import { SearchIcon } from 'lucide-react';
 import { EmptyState } from '../empty-state';
-import { DeactivatedFilled } from './deactivated-filled';
 import { useFetchDeactivatedQuery } from '@/redux/features/settingsApi';
-import { Skeleton } from '@/components/ui/skeleton';
 import { DataTable } from '@/lib/table-data';
 import { DeactivatedColumn } from './table-column';
 import { useCustomTable } from '@/lib/custom-data';
 import { deactivatedAtom } from '@/lib/query-store';
+import { SearchForm } from '@/components/search-comp';
+import { useState } from 'react';
+import { usePortal } from '@ibnlanre/portal';
+import { TableSkeleton } from '@/components/table-skeleton';
 
 export const Deactivated = () => {
-  const { data, isLoading } = useFetchDeactivatedQuery();
+  const [debounced, setDebounced] = useState<string>();
+  const [queries, setQueries] = usePortal.atom(deactivatedAtom);
+  const { data, isLoading } = useFetchDeactivatedQuery({
+    page: queries.page_index,
+    search: debounced,
+  });
   const { table } = useCustomTable({
     tableData: data?.data.results,
     columns: DeactivatedColumn,
   });
+
+
+  const handleSearch = (searchTerm: any) => {
+    setDebounced(searchTerm);
+  };
   return (
-    <div className="h-full">
+    <div className="h-full w-full">
       {isLoading ? (
-        Array(15)
-          .fill(0)
-          .map((item, idx) => (
-            <div className="w-full flex " key={idx}>
-              <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                <Skeleton className="h-[15px]" />
-              </span>
-              <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                <Skeleton className="h-[15px]" />
-              </span>
-              <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                <Skeleton className="h-[15px]" />
-              </span>
-              <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                <Skeleton className="h-[15px]" />
-              </span>
-              <span className="table-cell  w-full font-normal pl-6 pr-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                <Skeleton className="h-[15px]" />
-              </span>
-            </div>
-          ))
+        <TableSkeleton />
       ) : data?.data.count ? (
-        <div className="p-6 flex flex-col gap-8 bg-white h-full">
+        <div className="p-6 flex flex-col gap-8 bg-white h-full w-full overflow-auto">
           <div className="flex justify-between items-center">
             <span className="font-inter text-[2A2A2A] text-2xl font-bold">
               Deactivated Accounts
             </span>
-            <div className="h-[44px] border rounded-lg w-[277px] flex items-center pl-4 gap-2">
-              <SearchIcon className="text-[#667085]" />
-              <span className="text-[#667085]">Search User</span>
-            </div>
+
+            <SearchForm placeholder="Search User" onSearch={handleSearch} />
           </div>
 
-          <DataTable queryAtom={deactivatedAtom} table={table} totalCount={data.data.count} />
+          <DataTable
+            queryAtom={deactivatedAtom}
+            table={table}
+            totalCount={data.data.count}
+          />
         </div>
       ) : (
         <EmptyState

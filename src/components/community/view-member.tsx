@@ -15,6 +15,7 @@ import { useFetchCommunityMembersQuery } from '@/redux/features/communityApi';
 import { Skeleton } from '../ui/skeleton';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { getInitials } from './profile-drawer';
+import { SearchForm } from '../search-comp';
 
 interface Member {
   member_profile_picture: string;
@@ -33,19 +34,14 @@ export const ViewMember = ({
   trigger: ReactNode;
   id: string;
 }) => {
+  const [debounced, setDebounced] = useState<string>();
   const { data: members, isLoading: membersLoading } =
-    useFetchCommunityMembersQuery(id);
+    useFetchCommunityMembersQuery({ id: id, search: debounced });
   const [searchTerm, setSearchTerm] = useState('');
-
-  // Filter members based on the search term
-  const filteredMembers = members?.data.results.filter(
-    (member: Member) =>
-      member.member_full_name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      member.member_username.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+  
+   const handleSearch = (searchTerm: any) => {
+     setDebounced(searchTerm);
+   };
   return (
     <Dialog>
       <DialogTrigger>{trigger}</DialogTrigger>
@@ -74,16 +70,8 @@ export const ViewMember = ({
         </DialogTitle>
         <div className="px-[34px] flex flex-col gap-4 w-full">
           {/* Search Input */}
-          <div className="h-[48px] border rounded-lg flex items-center pl-4 gap-2.5 w-full">
-            <SearchIcon className="text-[#667085] w-6 h-6" />
-            <input
-              type="text"
-              placeholder="Search members"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full border-none outline-none text-sm text-[#2A2A2A] placeholder-[#667085] font-sora"
-            />
-          </div>
+     
+             <SearchForm placeholder="Search Members" onSearch={handleSearch} classname='w-full' />
 
           {/* Members List */}
           <div className="flex flex-col gap-4">
@@ -99,8 +87,8 @@ export const ViewMember = ({
                   </div>
                 ))}
               </div>
-            ) : filteredMembers?.length ? (
-              filteredMembers.map((item: Member, idx: number) => (
+            ) :(members.data.count ?(
+              members?.data.results.map((item: Member, idx: number) => (
                 <div className="flex gap-3 items-center" key={idx}>
                   <Avatar className="w-10 h-10 rounded-full">
                     <AvatarImage src={item.member_profile_picture} />
@@ -122,7 +110,7 @@ export const ViewMember = ({
               <p className="text-center text-sm text-[#667085]">
                 No members found
               </p>
-            )}
+            ))}
           </div>
         </div>
       </DialogContent>

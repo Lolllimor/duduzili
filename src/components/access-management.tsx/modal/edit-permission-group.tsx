@@ -52,22 +52,24 @@ const formSchema = z.object({
 export const EditPermissionGroup = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
   const { data } = useFetchPermissionQuery();
-  const { data: PermissionGroupData } = useFetchPermissionGroupQuery({});
+  const { data: PermissionGroupData } = useFetchPermissionGroupQuery({
+    id: id,
+  });
   const [updatePermissionGroup, { isLoading }] =
     useUpdatePermissionGroupMutation();
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const filteredGroup: PermissionGroup | undefined =
     PermissionGroupData?.data?.results.find(
       (item: PermissionGroup) => item.group_id === id
     );
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
 
   const { handleSubmit, register, formState, reset, setValue } = useForm({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: '',
-      description: '',
-      permission_type: [''],
+      name: filteredGroup?.name || '',
+      description: filteredGroup?.description || '',
+      permission_type: filteredGroup?.description || [''],
     },
   });
 
@@ -99,19 +101,17 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
   const { errors, isValid } = formState;
 
   useEffect(() => {
-    if (filteredGroup) {
-      setValue('name', filteredGroup?.name);
-      setValue('description', filteredGroup?.description);
-      setSelectedGroups(filteredGroup?.readable_permission);
-    }
-  }, [id, filteredGroup]);
+    setValue('name', filteredGroup?.name || '');
+    setValue('description', filteredGroup?.description || '');
+  }, [open, id]);
+
   return (
     <Dialog
       open={open}
       onOpenChange={() => {
         setOpen(!open);
         reset();
-        setSelectedGroups([]);
+        setSelectedGroups(filteredGroup?.readable_permission || []);
       }}
     >
       <DialogTrigger asChild>
@@ -180,9 +180,15 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
                   placeholder="Enter text here..."
                   className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-base font-outfit"
                 />
-                <p className="text-[#81848F] text-sm">
-                  Not more than 200 characters
-                </p>
+                {errors.description ? (
+                  <div className="text-red-500 text-sm font-normal pt-1">
+                    {errors.description.message}
+                  </div>
+                ) : (
+                  <p className="text-[#81848F] text-sm">
+                    Not more than 200 characters
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col gap-4">

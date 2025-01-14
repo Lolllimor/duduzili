@@ -12,7 +12,7 @@ function GeneralLayout({
   moreOptions?: ReactNode;
 }) {
   return (
-    <div className="flex-1 h-[100dvh] flex flex-col">
+    <div className="flex-1 h-[100dvh] flex flex-col overflow-auto">
       <AppHeader pageTitle={pageTitle} moreOptions={moreOptions} />
       <main className=" overflow-auto h-full flex ">
         {children}

@@ -29,7 +29,6 @@ import {
 } from '@/redux/features/managementApi';
 import { IoMdAdd } from 'react-icons/io';
 import { FaSpinner } from 'react-icons/fa';
-import { decrypt } from '@/lib/decrypt';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 interface PermissionGroup {
@@ -37,12 +36,6 @@ interface PermissionGroup {
   name: string;
   description: string;
   readable_permission: string[];
-}
-
-interface PermissionGroupData {
-  data: {
-    results: PermissionGroup[];
-  };
 }
 
 const formSchema = z.object({
@@ -56,19 +49,19 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
   const [postPermissionGroup, { isLoading }] = usePostPermissionGroupMutation();
   const [updatePermissionGroup, { isLoading: updating }] =
     useUpdatePermissionGroupMutation();
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
   const filteredGroup: PermissionGroup | undefined =
     PermissionGroupData?.data?.results.find(
       (item: PermissionGroup) => item.group_id === id
     );
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
 
-  const { handleSubmit, register, formState, setValue, reset } = useForm({
+  const { handleSubmit, register, formState, reset, setValue } = useForm({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
       name: filteredGroup?.name || '',
       description: filteredGroup?.description || '',
-      permission_type: [''],
+      permission_type: filteredGroup?.description || [''],
     },
   });
 
@@ -85,7 +78,7 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
             permission_type: selectedGroups,
           }).unwrap();
 
-      toast.success('Successfully created');
+      toast.success(`Successfully ${id ? 'Updated' : 'Created'}`);
       setOpen(false);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
@@ -103,7 +96,6 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
   };
 
   const { errors, isValid } = formState;
-
   useEffect(() => {
     setSelectedGroups(filteredGroup?.readable_permission || []);
   }, [id]);
@@ -113,12 +105,18 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
       onOpenChange={() => {
         setOpen(!open);
         reset();
-        setSelectedGroups([]);
+
+        setSelectedGroups(filteredGroup?.readable_permission || []);
       }}
     >
       <DialogTrigger asChild>
         {id ? (
-          <p>Edit Group</p>
+          <Button
+            onClick={(e) => e.stopPropagation()}
+            className="border-none bg-transparent hover:bg-transparent shadow-none w-full p-0 block text-[#292929] h-fit text-start"
+          >
+            <p>Edit Group</p>
+          </Button>
         ) : (
           <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#4534B8]">
             <IoMdAdd className="size-5" />
@@ -186,9 +184,15 @@ export const CreatePermissionGroup = ({ id }: { id?: string }) => {
                   placeholder="Enter text here..."
                   className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-base font-outfit"
                 />
-                <p className="text-[#81848F] text-sm">
-                  Not more than 200 characters
-                </p>
+                {errors.description ? (
+                  <div className="text-red-500 text-sm font-normal pt-1">
+                    {errors.description.message}
+                  </div>
+                ) : (
+                  <p className="text-[#81848F] text-sm">
+                    Not more than 200 characters
+                  </p>
+                )}
               </div>
 
               <div className="flex flex-col gap-4">

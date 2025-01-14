@@ -57,7 +57,7 @@ export const EditContact = () => {
     mode: 'onChange',
     defaultValues: {
       email: data ? data.data.contact_info[0].email : '',
-      phone: data ? data.data.contact_info[0].phone : '',
+      phone: data ? `+${data.data.contact_info[0].phone.toString()} ` : '',
       address: data ? data.data.contact_info[0].address : '',
     },
   });
@@ -67,7 +67,7 @@ export const EditContact = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const response = await postContact({ contact_info: [data] }).unwrap();
-   
+
       toast.success('Successfully updated');
       setOpen(false);
     } catch (error) {

@@ -31,20 +31,19 @@ export const CSMore = ({
 
   return (
     <DropdownMenuContent className="text-sm font-inter rounded-lg w-[128px]">
-      <DropdownMenuItem>
+      {/* <DropdownMenuItem>
         <UpdateProfile />
-      </DropdownMenuItem>
+      </DropdownMenuItem> */}
       <DropdownMenuItem
         onClick={handleClick}
         className={`${is_active ? '' : 'text-[#2D874E]'}`}
       >
         Make {is_active ? 'Inactive' : 'Active'}
       </DropdownMenuItem>
-      <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-        {/* <CreatePermissionGroup id={group_id} />
-         */}
+      {/* <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+     
         Reset Password
-      </DropdownMenuItem>
+      </DropdownMenuItem> */}
       <DropdownMenuItem
         onSelect={(e) => e.preventDefault()}
         className="text-[#BA1A1A] focus:text-[#BA1A1A]"

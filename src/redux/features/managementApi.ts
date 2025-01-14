@@ -11,13 +11,13 @@ export const managementApi = baseApi.injectEndpoints({
       }),
       providesTags: ['Permission'],
     }),
-    fetchPermissionGroup: builder.query<any, { page?: number }>({
+    fetchPermissionGroup: builder.query({
       query: (arg) => {
-        const page = arg?.page;
+        const { ...params } = arg || {};
         return {
           url: endpoints.management.permissionGroup.crud,
           method: 'GET',
-          params: page ? { page } : undefined,
+          params: { ...params },
         };
       },
       providesTags: ['Permission'],
@@ -86,10 +86,14 @@ export const managementApi = baseApi.injectEndpoints({
       invalidatesTags: ['Permission'],
     }),
     viewMembers: builder.query({
-      query: (username: string) => ({
-        url: `${endpoints.management.viewMembers}?group_id=${username}`,
-        method: 'GET',
-      }),
+      query: (arg) => {
+        const { id, ...params } = arg || {};
+        return {
+          url: `${endpoints.management.viewMembers}?group_id=${id}`,
+          method: 'GET',
+          params: { ...params },
+        };
+      },
       providesTags: ['Permission'],
     }),
     fetchPermissionGroupList: builder.query<any, void>({

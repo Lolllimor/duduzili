@@ -28,7 +28,7 @@ export function DataTable<TData, TValue>({
   totalCount, queryAtom
 }: DataTableProps<TData, TValue>) {
   return (
-    <section className="w-full h-fit  flex flex-col">
+    <section className="w-full h-fit ">
       <div className="border-b border-[#E4E7EC] flex flex-col overflow-auto w-full h-full">
         <Table className="text-[#565D62]  text-sm w-full h-full ">
           <TableHeader className="bg-[#F9FAFB] font-medium text-xs">

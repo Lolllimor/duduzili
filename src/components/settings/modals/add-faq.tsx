@@ -22,8 +22,8 @@ import { usePostFaqMutation } from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 
 const formSchema = z.object({
-  question: z.string().min(8, { message: 'Minimum of 8 letter' }),
-  answer: z.string().min(8, { message: 'Minimum of 8 letter' }),
+  question: z.string().nonempty('A question is required'),
+  answer: z.string().nonempty('An answer is required'),
 });
 
 export const AddFaq = () => {
@@ -46,6 +46,7 @@ export const AddFaq = () => {
       const response = await postFaq(data).unwrap();
       toast.success('Successfully created');
       setOpen(false);
+      reset();
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
@@ -54,7 +55,10 @@ export const AddFaq = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger className="text-[#2A2A2A] flex gap-2 items-center text-xs " asChild>
+      <DialogTrigger
+        className="text-[#2A2A2A] flex gap-2 items-center text-xs "
+        asChild
+      >
         <Button className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2 font-inter bg-[#4534B8] text-white justify-center">
           <IoMdAdd className="size-5" />
           Add Question
@@ -64,7 +68,12 @@ export const AddFaq = () => {
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
             <span className="text-2xl font-bold"> Add New FAQ</span>
-            <DialogClose aria-label="Close">
+            <DialogClose
+              aria-label="Close"
+              onClick={() => {
+                reset();
+              }}
+            >
               <Image
                 src="/close.svg"
                 height={36}
@@ -76,46 +85,48 @@ export const AddFaq = () => {
           </div>
         </DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className=" flex flex-col w-full  gap-2 font-poppins">
-            <label
-              htmlFor="phone number"
-              className="text-sm text-[#2A2A2A] font-medium "
-            >
-              Question
-            </label>
-            <Input
-              {...register('question')}
-              placeholder="e.g. How do I register on Duduzili"
-              className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#ABAEB5] font-normal text-[14px]"
-            />
-            {errors.question && (
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.question.message}
-              </div>
-            )}
-          </div>
+          <div className="flex flex-col gap-6">
+            <div className=" flex flex-col w-full  gap-2 font-poppins">
+              <label
+                htmlFor="phone number"
+                className="text-sm text-[#2A2A2A] font-medium "
+              >
+                Question
+              </label>
+              <Input
+                {...register('question')}
+                placeholder="e.g. How do I register on Duduzili"
+                className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#ABAEB5] font-normal text-[14px]"
+              />
+              {errors.question && (
+                <div className="text-red-500 text-sm font-normal pt-1">
+                  {errors.question.message}
+                </div>
+              )}
+            </div>
 
-          <div className=" flex flex-col w-full  gap-1.5 font-poppins">
-            <label
-              htmlFor="answer"
-              className="text-base text-[#2A2A2A] font-medium "
-            >
-              Answer
-            </label>
-            <Textarea
-              {...register('answer')}
-              placeholder="Enter text here..."
-              className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-[14px]"
-            />
-            {errors.answer ? (
-              <div className="text-red-500 text-sm font-normal pt-1">
-                {errors.answer.message}
-              </div>
-            ) : (
-              <p className="text-[#81848F] text-sm">
-                Not more than 200 characters
-              </p>
-            )}
+            <div className=" flex flex-col w-full  gap-1.5 font-poppins">
+              <label
+                htmlFor="answer"
+                className="text-sm text-[#2A2A2A] font-medium "
+              >
+                Answer
+              </label>
+              <Textarea
+                {...register('answer')}
+                placeholder="Enter text here..."
+                className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-[14px]"
+              />
+              {errors.answer ? (
+                <div className="text-red-500 text-sm font-normal pt-1">
+                  {errors.answer.message}
+                </div>
+              ) : (
+                <p className="text-[#81848F] text-sm">
+                  Not more than 200 characters
+                </p>
+              )}
+            </div>
           </div>
 
           <Button

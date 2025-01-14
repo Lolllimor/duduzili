@@ -10,46 +10,40 @@ import { EmptyState } from '@/components/settings/empty-state';
 import { useFetchCommunityListQuery } from '@/redux/features/communityApi';
 import { CommunityColumn } from '@/components/community/community-table-column';
 import { CommunityTableHeader } from '@/components/community/community-table-header';
-
+import { TableSkeleton } from '@/components/table-skeleton';
+import { SearchForm } from '@/components/search-comp';
+import { useState } from 'react';
 
 function page() {
-    const [queries, setQueries] = usePortal.atom(communityAtom);
-  const { data, isLoading } = useFetchCommunityListQuery({ page:queries.page_index });
+  const [queries, setQueries] = usePortal.atom(communityAtom);
+
+  const [debounced, setDebounced] = useState<string>();
+  const { data, isLoading } = useFetchCommunityListQuery({
+    page: queries.page_index,
+    search: debounced,
+  });
   const { table } = useCustomTable({
     tableData: data?.data.results,
     columns: CommunityColumn,
   });
+  const handleSearch = (searchTerm: any) => {
+    setDebounced(searchTerm);
+  };
   return (
     <GeneralLayout pageTitle="Communities">
       <div className="px-6 flex flex-col gap-6  h-full pb-6  w-full">
-        <CommunityTableHeader table={table} />
+        <SearchForm placeholder="Search Group" onSearch={handleSearch} />
         {isLoading ? (
           <div className="flex flex-col bg-[#F9FAFB] rounded-2xl">
-            {Array(15)
-              .fill(0)
-              .map((item, idx) => (
-                <div className="w-full flex " key={idx}>
-                  <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                    <Skeleton className="h-[15px]" />
-                  </span>
-                  <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                    <Skeleton className="h-[15px]" />
-                  </span>
-                  <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                    <Skeleton className="h-[15px]" />
-                  </span>
-                  <span className="table-cell  w-full font-normal pl-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                    <Skeleton className="h-[15px]" />
-                  </span>
-                  <span className="table-cell  w-full font-normal pl-6 pr-6 bg-[#F9FAFB] text-[14px] text-uacs-neutral-9 py-4 border-b border-[#F5F5F5]">
-                    <Skeleton className="h-[15px]" />
-                  </span>
-                </div>
-              ))}
+            <TableSkeleton />
           </div>
         ) : data?.data.count ? (
           <div className="border rounded-lg h-full flex overflow-auto">
-            <DataTable queryAtom={communityAtom} table={table} totalCount={data?.data.count} />
+            <DataTable
+              queryAtom={communityAtom}
+              table={table}
+              totalCount={data?.data.count}
+            />
           </div>
         ) : (
           <EmptyState
