@@ -32,7 +32,7 @@ import { useForm } from 'react-hook-form';
 import { IoClose } from 'react-icons/io5';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
-import { MultipleSelector } from '@/components/settings/privacy/multi-select';
+import EditBlackIcon from '@/components/icons/edit-black-icon';
 
 const formSchema = z.object({
   name: z.string().nonempty('Name is required'),
@@ -54,7 +54,7 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: '',
+      name: item?.name ||'',
       category: '',
     },
   });
@@ -80,43 +80,36 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
     }
   };
 
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-   
-    if (e.key === ' ') {
-      if (inputValue.trim()) {
-        setHashtags([...hashtags, inputValue.trim()]);
-        setInputValue('');
-      }
-    }
-  };
+  
   const handleRemoveGroup = (tagToRemove: string) => {
     setHashtags((prevHashtags) =>
       prevHashtags.filter((tag) => tag !== tagToRemove)
     );
   };
 
-  useEffect(() => {
-    if (item) {
-      setValue('name', item.name);
-      setValue('category', item.category);
-      setHashtags(item.tags_name);
-    }
-  }, [item]);
+  
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={() => {
+        setOpen(!open);
+        reset();
+        setHashtags(item.tag_name || []);
+      }}
+    >
       <DialogTrigger
         asChild
         className="text-[#2A2A2A] flex gap-2 items-center text-xs w-full "
       >
         {item ? (
-          <Button
+          <div
             onClick={(e) => e.stopPropagation()}
-            className="border-none bg-transparent hover:bg-transparent shadow-none w-full p-0 items-start justify-start text-[#292929] h-fit text-start flex"
+            className="border-none bg-transparent items-center justify-start text-[#292929] h-fit text-start flex"
           >
-            <Image src="/edit.svg" alt="edit" width={16} height={16} />
+            <EditBlackIcon />
             Edit interest
-          </Button>
+          </div>
         ) : (
           <Button className="border-2 border-dashed border-[#D9D9DB] rounded-xl w-[346px] h-[300px] flex justify-center items-center bg-white hover:bg-white gap-6 flex-col ">
             <div className="w-20 h-20 rounded-full bg-[#ECEBF8] flex items-center justify-center">
@@ -162,6 +155,11 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
             </label>
             <Input
               {...register('name')}
+              onKeyDown={(e) => {
+                if (e.key === ' ') {
+                  e.stopPropagation();
+                }
+              }}
               placeholder="Enter title"
               className="h-14 border-[#E5E6E8] rounded-sm  placeholder:text-sm placeholder:font-normal placeholder:text-[#ABAEB5] font-normal pl-4"
             />
@@ -216,7 +214,15 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
                 onChange={(e) => {
                   setInputValue(e.target.value);
                 }}
-                onKeyUp={handleKeyUp}
+                onKeyDown={(e) => {
+                  if (e.key === ' ') {
+                    e.preventDefault();
+                    if (inputValue.trim()) {
+                      setHashtags([...hashtags, inputValue.trim()]);
+                      setInputValue('');
+                    }
+                  }
+                }}
                 placeholder="Enter tag"
                 className="h-14 border-[#E5E6E8] rounded-sm  placeholder:text-sm placeholder:font-normal placeholder:text-[#ABAEB5] font-normal pl-4"
               />

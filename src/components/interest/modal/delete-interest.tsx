@@ -14,6 +14,7 @@ import toast from 'react-hot-toast';
 import { Button } from '../../ui/button';
 import { useDeleteInterestMutation } from '@/redux/features/interestsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+import TrashIcon from '@/components/icons/trash-icon';
 
 export const DeleteInterest = ({ id }: { id: string }) => {
   const [open, setOpen] = useState(false);
@@ -34,7 +35,7 @@ export const DeleteInterest = ({ id }: { id: string }) => {
         className="text-[#ED5556] focus:text-[#ED5556] flex gap-2 items-center text-xs"
         onClick={(e) => e.stopPropagation()}
       >
-        <Image src="/trash.svg" alt="edit" width={16} height={16} />
+        <TrashIcon />
         Delete interest
       </DialogTrigger>
       <DialogContent className=" py-5 gap-0  w-[450px] [&>button]:hidden rounded-[16px] max-h-[376px] h-full  !px-0 flex flex-col">

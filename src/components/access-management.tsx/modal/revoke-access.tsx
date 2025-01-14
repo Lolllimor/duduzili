@@ -12,13 +12,12 @@ import { Button } from '../../ui/button';
 import { IoClose } from 'react-icons/io5';
 
 import Image from 'next/image';
-import {
-  useRevokeUserAccessMutation,
-} from '@/redux/features/managementApi';
+import { useRevokeUserAccessMutation } from '@/redux/features/managementApi';
 import toast from 'react-hot-toast';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import RevokeAccessIcon from '@/components/icons/revoke-access-icon';
 
 export const RevokeAccess = ({
   id,
@@ -59,7 +58,7 @@ export const RevokeAccess = ({
           </DialogClose>
         </div>
         <div className="px-8 flex flex-col items-start gap-5 mt-[-20px] mb-9">
-          <Image src="/delete.svg" alt="delete-icon" height={60} width={60} />
+          <RevokeAccessIcon />
           <div className="flex flex-col gap-4">
             <span className=" text-[22px] font-semibold text-[#242428]">
               Delete Permission Group
