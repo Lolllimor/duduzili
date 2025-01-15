@@ -96,7 +96,6 @@ export const EditInterestModal = ({ item }: { item?: any }) => {
     }
   }, []);
 
-  console.log(item);
   return (
     <Dialog
       open={open}

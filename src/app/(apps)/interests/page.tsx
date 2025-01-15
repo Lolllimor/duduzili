@@ -15,19 +15,29 @@ import { Skeleton } from '@/components/ui/skeleton';
 import Paginator from '@/lib/paginatkon';
 import { usePortal } from '@ibnlanre/portal';
 import { interest } from '@/lib/query-store';
+import { SearchForm } from '@/components/search-comp';
+import { useState } from 'react';
 
 function InterestPage() {
   const [queries, setQueries] = usePortal.atom(interest);
+  
+    const [debounced, setDebounced] = useState<string>();
   const { data, isLoading } = useFetchInterestQuery({
     page: queries.page_index,
+
+    search: debounced,
   });
 
+  const handleSearch = (searchTerm: any) => {
+    setDebounced(searchTerm);
+  };
   return (
-    <GeneralLayout pageTitle="Interests">
-      <hr />
+    <GeneralLayout pageTitle="Interests" className='flex-col'>
+      <hr className='w-full'/>
 
-      <div className="flex flex-col overflow-auto h-full">
-        <div className="flex p-8 gap-8 flex-wrap  h-full overflow-auto">
+      <div className="flex flex-col overflow-auto h-full p-8 gap-8">
+        <SearchForm placeholder="Search Group" onSearch={handleSearch} />
+        <div className="flex  gap-8 flex-wrap  h-full overflow-auto">
           <AddInterestModal />
 
           {isLoading

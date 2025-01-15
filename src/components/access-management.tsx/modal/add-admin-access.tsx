@@ -18,6 +18,7 @@ import { MultipleSelector } from '../../settings/privacy/multi-select';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import {
+  useAddAdminMutation,
   useAddAdminToGroupMutation,
   useFetchPermissionGroupQuery,
 } from '@/redux/features/managementApi';
@@ -35,9 +36,6 @@ const formSchema = z.object({
       invalid_type_error: 'Must be a string',
     })
     .email({ message: 'Must be a valid email address' }),
-  // permission_group: z
-  //   .array(z.string())
-  //   .min(1, { message: 'Minimum of 1 permission' }),
 });
 
 export const AddAdminAccess = () => {
@@ -45,10 +43,9 @@ export const AddAdminAccess = () => {
   const { data } = useFetchPermissionGroupQuery({});
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  const [postPermissionGroup, { isLoading }] = useAddAdminToGroupMutation();
+  const [postAddAdmin, { isLoading }] = useAddAdminMutation();
 
-
-  const { handleSubmit, register, formState,reset } = useForm<
+  const { handleSubmit, register, formState, reset } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
@@ -62,9 +59,9 @@ export const AddAdminAccess = () => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await postPermissionGroup({
+      const response = await postAddAdmin({
         ...data,
-        group_id: String(selectedIds),
+        permission_group: selectedIds,
       }).unwrap();
       toast.success('Successfully created');
       setOpen(false);
@@ -80,20 +77,19 @@ export const AddAdminAccess = () => {
     );
     setSelectedGroups(selectedValues);
   };
-const handleRemoveGroup = (group: string) => {
-  setSelectedGroups((prevGroups) => {
-    const updatedGroups = prevGroups.filter((item) => item !== group);
+  const handleRemoveGroup = (group: string) => {
+    setSelectedGroups((prevGroups) => {
+      const updatedGroups = prevGroups.filter((item) => item !== group);
 
-    setSelectedIds(
-      data?.data.results
-        .filter((item: { name: string }) => updatedGroups.includes(item.name))
-        .map((item: { group_id: string }) => item.group_id)
-    );
+      setSelectedIds(
+        data?.data.results
+          .filter((item: { name: string }) => updatedGroups.includes(item.name))
+          .map((item: { group_id: string }) => item.group_id)
+      );
 
-    return updatedGroups;
-  });
-};
-
+      return updatedGroups;
+    });
+  };
 
   const { errors, isValid } = formState;
 

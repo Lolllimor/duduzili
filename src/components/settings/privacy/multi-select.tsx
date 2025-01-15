@@ -41,11 +41,12 @@ export function MultipleSelector({
     } else {
       newValue = [...selectedGroups, val];
     }
-    onSelectionChange(newValue); // Update the parent state with the selected values
+    onSelectionChange(newValue);
   };
 
+  const filteredData = data?.filter((item) => !selectedGroups.includes(item));
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal={true}>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -63,12 +64,12 @@ export function MultipleSelector({
         className="!w-full p-0"
         onFocusOutside={(e) => e.preventDefault()}
       >
-        {data?.length ? (
+        {filteredData?.length ? (
           <Command className="!w-full">
             <CommandGroup>
-              <CommandList>
-                {data?.length &&
-                  data.map((fw, idx) => (
+              <CommandList className="overflow-auto">
+                {filteredData?.length &&
+                  filteredData.map((fw, idx) => (
                     <CommandItem
                       className="cursor-pointer"
                       key={idx}
@@ -84,7 +85,9 @@ export function MultipleSelector({
             </CommandGroup>
           </Command>
         ) : (
-          <p className='w-full px-10 h-8 flex items-center justify-center'>No data</p>
+          <p className="w-full px-10 h-8 flex items-center justify-center">
+            No data
+          </p>
         )}
       </PopoverContent>
     </Popover>

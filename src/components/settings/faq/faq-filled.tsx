@@ -8,17 +8,18 @@ import {
   useFetchFaqQuery,
 } from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+import { DeleteFaq } from '@/components/delete-faq';
+
+interface FaqItem {
+  faq_id: string;
+  question: string;
+  answer: string;
+}
 
 export const FaqFilled = () => {
   const { data } = useFetchFaqQuery();
   const [deleteFaq, { isSuccess, isLoading, isError, error }] =
     useDeleteFaqMutation();
-
-  interface FaqItem {
-    faq_id: string;
-    question: string;
-    answer: string;
-  }
 
   const handleClick = async (value: string) => {
     try {
@@ -48,14 +49,7 @@ export const FaqFilled = () => {
                   {item.answer}
                 </span>
               </div>
-              <Image
-                onClick={() => handleClick(item.faq_id)}
-                src="/settings/bin.svg"
-                alt="trash"
-                width={24}
-                height={24}
-                className="cursor-pointer"
-              />
+              <DeleteFaq id={ item.faq_id} />
             </div>
             {index !== data.count - 1 && (
               <div className="h-[1px] w-full bg-[#EAECF0] my-8"></div>

@@ -27,6 +27,7 @@ import {
   usePostPrivacyMutation,
 } from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+import TiptapEditor from '@/components/editor';
 
 const formSchema = z.object({
   text: z.string().min(5, {
@@ -37,16 +38,9 @@ const formSchema = z.object({
 export const AddEditPrivacy = () => {
   const [open, setOpen] = useState(false);
   const { data, isLoading } = useFetchPrivacyQuery();
-  const [
-    postPrivacy,
-    {
-      isSuccess: uploadSuccess,
-      isLoading: uploadingPost,
-      isError,
-      error: uploadError,
-    },
-  ] = usePostPrivacyMutation();
+  const [postPrivacy, { isLoading: uploadingPost }] = usePostPrivacyMutation();
 
+  const [content, setContent] = useState('');
   const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
@@ -103,11 +97,13 @@ export const AddEditPrivacy = () => {
             >
               Policy
             </label>
-            <Textarea
-              disabled={isLoading}
-              {...register('text')}
-              placeholder="Start typing..."
-              className="text-base resize-none !h-[clamp(200px,50vh,545px)] border flex overflow-auto border-[#E5E6E8] w-[clamp(400px,40vw,740px)]"
+            <TiptapEditor
+              className="!h-[clamp(200px,50vh,545px)] w-[clamp(400px,40vw,740px)]"
+              content={data?.data.about}
+              onChange={(val) => {
+                setValue('text', val);
+                setContent(val);
+              }}
             />
             {errors.text && (
               <div className="text-red-500 text-sm font-normal pt-1">

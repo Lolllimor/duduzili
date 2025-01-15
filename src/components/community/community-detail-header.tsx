@@ -41,7 +41,7 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
       <div
         className="h-[163px] w-full rounded-t-xl px-[20px] pt-5 "
         style={{
-          backgroundImage: `url(${data.data.cover_photo})`,
+          backgroundImage: `url(${data.data.cover_photo ? data.data.cover_photo : "/default-community.svg"})`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',

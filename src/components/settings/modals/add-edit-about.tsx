@@ -15,7 +15,7 @@ import { FaSpinner } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -24,6 +24,7 @@ import {
   usePostAboutMutation,
 } from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+import TiptapEditor from '@/components/editor';
 
 const formSchema = z.object({
   text: z.string().min(5, {
@@ -43,13 +44,14 @@ export const AddEditAbout = () => {
     },
   ] = usePostAboutMutation();
 
-  const { handleSubmit, register, formState, control } = useForm<
+  const [content, setContent] = useState('');
+  const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      text: data ? data.data.about : '',
+      text: content,
     },
   });
 
@@ -101,11 +103,15 @@ export const AddEditAbout = () => {
             >
               About
             </label>
-            <Textarea
-              {...register('text')}
-              placeholder="Start typing..."
-              className=" text-base resize-none !h-[clamp(200px,50vh,545px)] border flex overflow-auto border-[#E5E6E8] w-[clamp(400px,40vw,740px)]"
+            <TiptapEditor
+              className="!h-[clamp(200px,50vh,545px)] w-[clamp(400px,40vw,740px)]"
+              content={data?.data.about}
+              onChange={(val) => {
+                setValue('text', val);
+                setContent(val);
+              }}
             />
+           
             {errors.text && (
               <div className="text-red-500 text-sm font-normal pt-1">
                 {errors.text.message}

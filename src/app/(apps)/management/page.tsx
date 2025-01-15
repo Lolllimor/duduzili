@@ -41,6 +41,8 @@ function Page() {
           </div>
         ) : data?.data.count ? (
           <div className="flex flex-col gap-6 w-full h-full ">
+          
+
             <div className="border rounded-lg h-fit">
               <DataTable
                 table={table}

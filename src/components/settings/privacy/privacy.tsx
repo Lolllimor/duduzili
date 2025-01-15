@@ -18,7 +18,9 @@ export const Privacy = () => {
       ?.split('\n\n')
       .map(
         (paragraph: string) =>
-          `<p>${paragraph.replace(/\n/g, '<br/><br/>')}</p>`
+          `<p>${paragraph
+            .replace(/\n/g, '<br/>')
+            .replace(/<p><\/p>/g, '<br/>')}</p>`
       )
       .join(' <br/>') || '';
   const sanitizedText = DOMPurify.sanitize(formattedText);

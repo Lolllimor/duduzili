@@ -9,13 +9,16 @@ export const PrivacyFilled = () => {
 
   const formattedText =
     data?.data.about
-      ?.split('\n\n')
+      ?.split(/\n\n/)
       .map(
         (paragraph: string) =>
-          `<p>${paragraph.replace(/\n/g, '<br/><br/>')}</p>`
+          `<p>${paragraph
+            .replace(/\n/, '<br/>')
+            .replace(/<p><\/p>/, '<br/>')}</p>`
       )
-      .join(' <br/>') || '';
+      .join(' <br/>') || '<p>No content available.</p>';
   const sanitizedText = DOMPurify.sanitize(formattedText);
+  
   return (
     <div className="flex flex-col p-8 gap-10 overflow-auto h-full">
       <div className="flex justify-between items-center">
