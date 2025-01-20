@@ -13,6 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
 import { useLoginMutation } from '@/redux/features/settingsApi';
 import { PasswordInput } from '@/components/post/password-input';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const page = () => {
   const [login, { isLoading }] = useLoginMutation();
@@ -72,12 +73,6 @@ const page = () => {
       <div className="py-[47px] flex flex-col pl-[32px] pr-[20px] w-full">
         <div className="flex justify-between items-center">
           <Image src="/logo-auth.svg" alt="logo" width={180} height={40} />
-          <div className="flex items-center gap-1 ">
-            <span className="text-sm tracking-wide">Don’t have an account?</span>
-            <a href="/" className="text-sm text-[#4534B8] font-semibold ">
-              Sign up
-            </a>
-          </div>
         </div>
         <div className=" flex flex-col mx-auto flex-1  mt-[30%] z-10 gap-10 pb-[30px]">
           <div className="flex flex-col items-center gap-2">
@@ -90,36 +85,6 @@ const page = () => {
             </p>
           </div>
           <div className="flex flex-col gap-8 w-[400px]">
-            <div className="flex items-center justify-between">
-              <Button variant="outline" size="login">
-                <Image
-                  src="/google.png"
-                  alt="google"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
-                />
-                <p className="text-base text-[#313131]">Google</p>
-              </Button>
-              <Button variant="outline" size="login">
-                <Image
-                  src="/apple.png"
-                  alt="apple"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
-                />
-                <p className="text-base text-[#313131]">Apple</p>
-              </Button>
-            </div>
-            <div className="flex items-center w-full gap-[17px]">
-              <hr className="w-full" />
-              <p className="text-[#494850] text-xs text-nowrap">
-                Or continue with
-              </p>
-              <hr className="w-full" />
-            </div>
-
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-4 w-full"
@@ -149,7 +114,8 @@ const page = () => {
                 >
                   Password
                 </label>
-                <PasswordInput placeholder='Password'
+                <PasswordInput
+                  placeholder="Password"
                   {...register('password')}
                   id="current_password"
                   autoComplete="current-password"
@@ -162,7 +128,10 @@ const page = () => {
               </div>
               <div className=" flex items-center justify-between my-4">
                 <div className="gap-2 flex items-center">
-                  <span className="text-[#494850] text-sm font-sora">Remember me</span>
+                  <Checkbox id="terms" />
+                  <span className="text-[#494850] text-sm font-sora">
+                    Remember me
+                  </span>
                 </div>
                 <a
                   href="/reset-password"
@@ -171,7 +140,11 @@ const page = () => {
                   Forgot password?
                 </a>
               </div>
-              <Button variant="primary" type="submit" className='text-base font-sora'>
+              <Button
+                variant="primary"
+                type="submit"
+                className="text-base font-sora"
+              >
                 {isLoading ? <FaSpinner className="animate-spin" /> : 'Log in'}
               </Button>
             </form>
