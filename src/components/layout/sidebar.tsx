@@ -77,7 +77,7 @@ export const Sidebar = () => {
       icon: <BiUserCheck size={24} />,
     },
     {
-      name: 'Admin',
+      name: 'Admin log',
       link: '/admin',
       icon: <HiOutlinePresentationChartLine size={24} />,
     },

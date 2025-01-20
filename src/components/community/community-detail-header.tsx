@@ -21,11 +21,15 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
   const handleClick = async () => {
     try {
       const res = await toggle({ community_id: id }).unwrap();
-      toast.success('Successfully toggled');
+      toast.success(
+        `Successfully ${data.data.is_active ? 'Deactivated' : 'Activated'}`
+      );
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
   };
+  console.log(data.data.is_active);
+
   return isLoading ? (
     <div className="min-h-[270px] rounded-lg py-5 px-[22px]  flex flex-col  w-[789px] gap-4">
       <Skeleton className="h-[163px] w-full" />
@@ -108,10 +112,14 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
             </div>
           </div>
           <Button
-            className="bg-white rounded-[4px] text-sm font-sora text-[#ED5556] h-10 px-[22px] "
+            className={`bg-white rounded-[4px] text-sm font-sora h-10 px-[22px] ${
+              data.data.is_active
+                ? 'text-[#ED5556] hover:bg-[#ED5556] hover:text-white '
+                : 'text-[#2D874E] hover:bg-[#2D874E] hover:text-white'
+            } `}
             onClick={handleClick}
           >
-            Deactivate
+            {data.data.is_active ? ' Deactivate' : 'Activate'}
           </Button>
         </div>
       </div>

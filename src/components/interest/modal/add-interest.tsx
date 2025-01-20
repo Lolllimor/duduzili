@@ -54,7 +54,7 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: item?.name ||'',
+      name: item?.name || '',
       category: '',
     },
   });
@@ -75,19 +75,18 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
           }).unwrap(),
           toast.success('Successfully created')),
         setOpen(false);
+      reset();
+      setHashtags([]);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
   };
 
-  
   const handleRemoveGroup = (tagToRemove: string) => {
     setHashtags((prevHashtags) =>
       prevHashtags.filter((tag) => tag !== tagToRemove)
     );
   };
-
-  
 
   return (
     <Dialog
@@ -95,7 +94,7 @@ export const AddInterestModal = ({ item }: { item?: any }) => {
       onOpenChange={() => {
         setOpen(!open);
         reset();
-        setHashtags(item.tag_name || []);
+        setHashtags(item?.tag_name || []);
       }}
     >
       <DialogTrigger

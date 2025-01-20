@@ -20,8 +20,8 @@ import { useState } from 'react';
 
 function InterestPage() {
   const [queries, setQueries] = usePortal.atom(interest);
-  
-    const [debounced, setDebounced] = useState<string>();
+
+  const [debounced, setDebounced] = useState<string>();
   const { data, isLoading } = useFetchInterestQuery({
     page: queries.page_index,
 
@@ -32,8 +32,11 @@ function InterestPage() {
     setDebounced(searchTerm);
   };
   return (
-    <GeneralLayout pageTitle="Interests" className='flex-col'>
-      <hr className='w-full'/>
+    <GeneralLayout
+      pageTitle="Interests"
+      className=" flex flex-col overflow-hidden h-[calc(100vh-100px)] "
+    >
+      <hr className="w-full" />
 
       <div className="flex flex-col overflow-auto h-full p-8 gap-8">
         <SearchForm placeholder="Search Group" onSearch={handleSearch} />

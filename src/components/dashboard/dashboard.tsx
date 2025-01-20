@@ -51,7 +51,9 @@ export const Dashboard = () => {
                       idx === 0 ? 'text-white' : 'text-[#494850]'
                     } font-semibold text-base font-sora`}
                   >
-                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                    {key.charAt(0).toUpperCase() + key.slice(1) === 'Community'
+                      ? 'Communities '
+                      : key.charAt(0).toUpperCase() + key.slice(1)}
                   </p>
 
                   <div className="flex flex-col gap-2">
