@@ -22,13 +22,12 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
     try {
       const res = await toggle({ community_id: id }).unwrap();
       toast.success(
-        `Successfully ${data.data.is_active ? 'Deactivated' : 'Activated'}`
+        `Successfully ${data?.data.is_active ? 'Deactivated' : 'Activated'}`
       );
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
   };
-  console.log(data.data.is_active);
 
   return isLoading ? (
     <div className="min-h-[270px] rounded-lg py-5 px-[22px]  flex flex-col  w-[789px] gap-4">
@@ -46,8 +45,8 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
         className="h-[163px] w-full rounded-t-xl px-[20px] pt-5 "
         style={{
           backgroundImage: `url(${
-            data.data.cover_photo
-              ? data.data.cover_photo
+            data?.data.cover_photo
+              ? data?.data.cover_photo
               : '/default-community.svg'
           })`,
           backgroundPosition: 'center',
@@ -113,13 +112,13 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
           </div>
           <Button
             className={`bg-white rounded-[4px] text-sm font-sora h-10 px-[22px] ${
-              data.data.is_active
+              data?.data.is_active
                 ? 'text-[#ED5556] hover:bg-[#ED5556] hover:text-white '
                 : 'text-[#2D874E] hover:bg-[#2D874E] hover:text-white'
             } `}
             onClick={handleClick}
           >
-            {data.data.is_active ? ' Deactivate' : 'Activate'}
+            {data?.data.is_active ? ' Deactivate' : 'Activate'}
           </Button>
         </div>
       </div>

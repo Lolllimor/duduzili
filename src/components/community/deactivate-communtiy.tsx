@@ -36,7 +36,6 @@ export const DeactivateCommunity = ({
     }
   };
 
-    console.log(is_active)
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
