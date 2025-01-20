@@ -60,7 +60,7 @@ const page = () => {
   };
 
   return (
-    <div className="flex w-full bg-[#fafafa] pl-[20px] pr-[32px] relative h-full justify-center overflow-y-auto ">
+    <div className="flex w-full bg-[#fafafa] pl-5 pr-8 relative h-full justify-center overflow-y-auto font-sora pb-60">
       <Image
         src="/form-bg.svg"
         alt="bg"
@@ -73,8 +73,8 @@ const page = () => {
         <div className="flex justify-between items-center">
           <Image src="/logo-auth.svg" alt="logo" width={180} height={40} />
           <div className="flex items-center gap-1 ">
-            <span className="text-sm">Don’t have an account?</span>
-            <a href="/" className="text-sm text-[#4534B8] ">
+            <span className="text-sm tracking-wide">Don’t have an account?</span>
+            <a href="/" className="text-sm text-[#4534B8] font-semibold ">
               Sign up
             </a>
           </div>
@@ -91,7 +91,7 @@ const page = () => {
           </div>
           <div className="flex flex-col gap-8 w-[400px]">
             <div className="flex items-center justify-between">
-              <Button className="w-[194px] h-12 bg-white border border-[#D9D9DB] rounded-lg flex gap-[13px]">
+              <Button variant="outline" size="login">
                 <Image
                   src="/google.png"
                   alt="google"
@@ -101,7 +101,7 @@ const page = () => {
                 />
                 <p className="text-base text-[#313131]">Google</p>
               </Button>
-              <Button className="w-[194px] h-12 bg-white border border-[#D9D9DB] rounded-lg flex gap-[13px]">
+              <Button variant="outline" size="login">
                 <Image
                   src="/apple.png"
                   alt="apple"
@@ -127,14 +127,14 @@ const page = () => {
               <div className=" flex flex-col w-full  gap-1.5">
                 <label
                   htmlFor="username"
-                  className="text-xs text-[#494850] font-semibold"
+                  className="text-xs text-[#494850] font-semibold font-sora"
                 >
                   Username/Email Address
                 </label>
                 <Input
                   {...register('username_email')}
                   placeholder="Username/Email Address"
-                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] font-normal"
+                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] placeholder:font-sora placeholder:text-xs font-normal"
                 />
                 {errors.username_email && (
                   <div className="text-red-500 text-sm font-normal pt-1">
@@ -145,16 +145,13 @@ const page = () => {
               <div className="flex flex-col w-full  gap-1.5">
                 <label
                   htmlFor="password"
-                  className="text-xs text-[#494850] font-semibold"
+                  className="text-xs text-[#494850] font-semibold font-sora"
                 >
                   Password
                 </label>
-                <PasswordInput
+                <PasswordInput placeholder='Password'
                   {...register('password')}
                   id="current_password"
-                  // value={currentPassword}
-                  // value={}
-                  // onChange={(e) => setCurrentPassword(e.target.value)}
                   autoComplete="current-password"
                 />
                 {errors.password && (
@@ -165,19 +162,16 @@ const page = () => {
               </div>
               <div className=" flex items-center justify-between my-4">
                 <div className="gap-2 flex items-center">
-                  <span className="text-[#494850] text-sm">Remember me</span>
+                  <span className="text-[#494850] text-sm font-sora">Remember me</span>
                 </div>
                 <a
                   href="/reset-password"
-                  className="text-sm text-[#4534B8] font-semibold"
+                  className="text-sm text-[#4534B8] font-semibold font-sora"
                 >
                   Forgot password?
                 </a>
               </div>
-              <Button
-                type="submit"
-                className="bg-[#4534B8] border-none rounded-lg h-11 "
-              >
+              <Button variant="primary" type="submit" className='text-base font-sora'>
                 {isLoading ? <FaSpinner className="animate-spin" /> : 'Log in'}
               </Button>
             </form>

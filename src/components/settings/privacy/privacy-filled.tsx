@@ -22,12 +22,12 @@ export const PrivacyFilled = () => {
   return (
     <div className="flex flex-col p-8 gap-10 overflow-auto h-full">
       <div className="flex justify-between items-center">
-        <span className="text-2xl font-bold">Privacy Policy</span>
+        <span className="text-2xl font-bold font-inter">Privacy Policy</span>
 
         <AddEditPrivacy />
       </div>
       <div
-        className="flex flex-col overflow-auto h-full text-xl"
+        className="flex flex-col overflow-auto h-full text-xl font-inter"
         dangerouslySetInnerHTML={{
           __html: sanitizedText,
         }}

@@ -34,7 +34,7 @@ export const AboutFilled = () => {
         </div>
       ) : (
         <div
-          className="flex flex-col overflow-auto h-full text-xl"
+          className="flex flex-col overflow-auto h-full text-xl font-inter"
           dangerouslySetInnerHTML={{
             __html: sanitizedText,
           }}

@@ -39,16 +39,8 @@ const formSchema = z.object({
 
 export const EditContact = () => {
   const [open, setOpen] = useState(false);
-  const { data, error, isFetching } = useFetchContactQuery();
-  const [
-    postContact,
-    {
-      isSuccess: uploadSuccess,
-      isLoading: uploadingPost,
-      isError,
-      error: uploadError,
-    },
-  ] = usePostContactMutation();
+  const { data } = useFetchContactQuery();
+  const [postContact, { isLoading: uploadingPost }] = usePostContactMutation();
 
   const { handleSubmit, register, formState, setValue } = useForm<
     z.infer<typeof formSchema>
@@ -89,7 +81,7 @@ export const EditContact = () => {
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
-            <span className="text-2xl font-bold">Contact Info</span>
+            <span className="text-2xl font-bold font-inter">Contact Info</span>
             <DialogClose aria-label="Close">
               <Image
                 src="/close.svg"
@@ -114,7 +106,7 @@ export const EditContact = () => {
                 <Input
                   {...register('email')}
                   placeholder="Enter email address"
-                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#BDBDBD] font-normal text-[15px]"
+                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#BDBDBD] placeholder:font-inter font-normal text-[15px]"
                 />
                 {errors.email && (
                   <div className="text-red-500 text-sm font-normal pt-1">
@@ -132,7 +124,7 @@ export const EditContact = () => {
                 <Input
                   {...register('phone')}
                   placeholder="Enter phone number"
-                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#BDBDBD] font-normal text-[15px]"
+                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#BDBDBD] placeholder:font-inter  font-normal text-[15px]"
                 />
                 {errors.phone && (
                   <div className="text-red-500 text-sm font-normal pt-1">
@@ -151,7 +143,7 @@ export const EditContact = () => {
               <Textarea
                 {...register('address')}
                 placeholder="Start typing..."
-                className="resize-none h-[clamp(100px,5vh,110px)] placeholder:text-[#BDBDBD] text-[15px]"
+                className="resize-none h-[clamp(100px,5vh,110px)] placeholder:text-[#BDBDBD] text-[15px] placeholder:font-inter*"
               />
               {errors.address && (
                 <div className="text-red-500 text-sm font-normal pt-1">

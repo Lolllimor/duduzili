@@ -19,9 +19,9 @@ const PasswordInput = React.forwardRef<
     <div className="relative">
       <Input
         placeholder={placeholder}
-        type={showPassword ? "text" : "password"}
+        type={showPassword ? 'text' : 'password'}
         className={cn(
-          "hide-password-toggle pr-10 h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] font-normal",
+          'hide-password-toggle pr-10 h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] font-normal placeholder:font-sora placeholder:text-xs',
           className
         )}
         ref={ref}
@@ -41,7 +41,7 @@ const PasswordInput = React.forwardRef<
           <EyeOffIcon className="h-4 w-4" aria-hidden="true" />
         )}
         <span className="sr-only">
-          {showPassword ? "Hide password" : "Show password"}
+          {showPassword ? 'Hide password' : 'Show password'}
         </span>
       </Button>
 

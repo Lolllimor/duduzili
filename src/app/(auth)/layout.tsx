@@ -10,16 +10,10 @@ function AuthLayout({ children }: { children: ReactNode }) {
 
 
   return (
-    <div className="flex flex-1 h-[100dvh] overflow-auto">
-      <div className="flex flex-1">{children}</div>
-      <div className=" w-[43%] h-[100vh] bg-[#ECEBF8] relative justify-center flex max-[912px]:hidden">
-        <Image
-          src="/pattern.png"
-          width={100}
-          height={100}
-          alt="login-image"
-          className="h-fit w-full opacity-20 mt-10 absolute"
-        />
+    <div className="flex h-full">
+      <div className="flex flex-1 overflow-auto">{children}</div>
+      <div className=" w-[43%]  bg-[#ECEBF8] relative justify-center md:flex hidden overflow-clip">
+
         <SwiperComp imageSources={imageSources} height="100px"  />
  
         <div className="h-[44%] bg-[url('/curve.svg')] bg-cover absolute z-10 w-full bottom-0 flex items-center  pt-6">

@@ -5,7 +5,7 @@ import { IoCheckmark } from "react-icons/io5";
 import { CheckCheck } from "lucide-react";
 export const NewMessages = () => {
   return (
-    <div className="bg-white flex flex-col gap-7 rounded-[16px] p-6">
+    <div className="bg-white flex flex-col gap-7 rounded-[16px] p-6 overflow-auto h-full" >
       {messages.map((item, idx) => (
         <section key={idx} className="">
           <div>

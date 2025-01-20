@@ -10,7 +10,7 @@ import { getInitials } from '../community/profile-drawer';
 export const NewUser = () => {
   const { data, isLoading } = useFetchNewUserQuery();
   return (
-    <section className="bg-white flex flex-col gap-7 rounded-[16px] p-6">
+    <section className="bg-white flex flex-col gap-7 rounded-[16px] p-6 overflow-auto">
       {isLoading
         ? Array(6)
             .fill(0)

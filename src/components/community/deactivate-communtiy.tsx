@@ -11,35 +11,43 @@ import { IoClose } from 'react-icons/io5';
 import Image from 'next/image';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { Button } from '../../ui/button';
-import { useDeleteInterestMutation } from '@/redux/features/interestsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
-import TrashIcon from '@/components/icons/trash-icon';
-import { DeleteIcon } from 'lucide-react';
+import { Button } from '../ui/button';
+import { useToggleCommunityStatusMutation } from '@/redux/features/communityApi';
 
-export const DeleteInterest = ({ id }: { id: string }) => {
+interface DeactivateCommunityProps {
+  is_active: boolean;
+  id: string;
+}
+
+export const DeactivateCommunity = ({
+  is_active,
+  id,
+}: DeactivateCommunityProps) => {
   const [open, setOpen] = useState(false);
-  const [deleteInterest] = useDeleteInterestMutation();
+  const [toggle] = useToggleCommunityStatusMutation();
+
   const handleClick = async () => {
     try {
-      const red = await deleteInterest({ pf_id: id }).unwrap();
-      toast.success('Successfully deleted');
-      setOpen(false);
+      const res = await toggle({ community_id: id }).unwrap();
+      toast.success(`Successfully ${is_active ? 'Deactivated' : 'Activated'}`);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
   };
 
+    console.log(is_active)
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger
-        className="text-[#ED5556] focus:text-[#ED5556] flex gap-2 items-center text-xs"
+        className={` flex gap-2 items-center text-xs ${
+          is_active ? 'text-[#F87A6D] focus:text-[#F87A6D]' : 'text-[#2D874E]'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
-        <TrashIcon />
-        Delete interest
+        {is_active ? 'Deactivate' : 'Activate'} Community
       </DialogTrigger>
-      <DialogContent className=" py-5 gap-0  w-[450px] [&>button]:hidden rounded-[16px] max-h-[376px] h-full  !px-0 flex flex-col">
+      <DialogContent className=" py-5 gap-0  w-[450px] [&>button]:hidden rounded-[16px] max-h-[336px] h-full  !px-0 flex flex-col">
         <DialogTitle>
           <div className="flex justify-end w-full px-8 ">
             <DialogClose aria-label="Close" className="z-10 cursor-pointer">
@@ -48,27 +56,26 @@ export const DeleteInterest = ({ id }: { id: string }) => {
           </div>
         </DialogTitle>
         <div className="px-8 flex flex-col items-start gap-5 mt-[-20px] mb-9">
-          <DeleteIcon/>
+          <Image src="/delete.svg" alt="delete-icon" height={60} width={60} />
           <div className="flex flex-col gap-4">
             <span className=" text-[22px] font-semibold text-[#242428]">
-              Delete Interest
+              Deactivate Community
             </span>
             <p className="text-base text-[#5E606A] ">
-              You are about to permanently delete an Interest, including all
-              associated hashtags. This action cannot be undone.
+              You are about to permanently deactivate a Community
             </p>
           </div>
         </div>
-        <div className="w-full border-none h-[1px] bg-[#EAECF0]"></div>
+        <hr className="" />
         <div className="flex justify-between font-medium pt-7 px-8 w-full h-fit">
-          <Button className="bg-[#F4F4F4] border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center ">
+          <Button className="bg-[#F4F4F4] hover:bg-[#F4F4F4]/70 border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center ">
             Cancel
           </Button>
           <Button
             onClick={() => handleClick()}
-            className="bg-[#D40000] border-none rounded-[32px] h-[51px]  w-[177px] text-white flex justify-center items-center"
+            className="bg-[#D40000] hover:bg-[#D40000]/70 border-none rounded-[32px] h-[51px]  w-[177px] text-white flex justify-center items-center"
           >
-            Delete
+            Deactivate
           </Button>
         </div>
       </DialogContent>

@@ -16,6 +16,7 @@ import { Skeleton } from '../ui/skeleton';
 import LightGreenArrow from '../icons/light-green-arrow';
 import GreenArrow from '../icons/green-arrow';
 import { useRouter } from 'next/navigation';
+import { DashboardCardLoadingState } from '../loading-state/dashboard-card-loading-state';
 
 export const Dashboard = () => {
   const { data, isLoading } = useFetchDashboardOverviewQuery();
@@ -24,19 +25,14 @@ export const Dashboard = () => {
   const { data: userCountry, isLoading: userCountryLoading } =
     useFetchUserCountryQuery();
   return (
-    <section className="flex flex-col gap-8 px-8  h-full">
+    <section className="flex flex-col gap-8 p-8">
       {/* Overview */}
       <div className="border-[2px] p-8 border-[#F5F5F5] bg-[#FCFCFD] rounded-[20px]">
-        <div className="flex flex-col gap-5">
-          <h3>Overview</h3>
+        <div className="flex flex-col gap-5 font-sora">
+          <h3 className="text-base font-semibold">Overview</h3>
           <div className="flex items-center gap-8  flex-wrap">
             {isLoading ? (
-              <div className="flex items-center gap-8  flex-wrap">
-                <Skeleton className="flex flex-col shrink-0 w-[clamp(300px,20vw,325px)] h-[161px] p-6  gap-7 shadow-custom rounded-[16px] " />
-                <Skeleton className="flex flex-col shrink-0 w-[clamp(300px,20vw,325px)] h-[161px] p-6  gap-7 shadow-custom rounded-[16px] " />
-                <Skeleton className="flex flex-col shrink-0 w-[clamp(300px,20vw,325px)] h-[161px] p-6  gap-7 shadow-custom rounded-[16px] " />
-                <Skeleton className="flex flex-col shrink-0 w-[clamp(300px,20vw,325px)] h-[161px] p-6  gap-7 shadow-custom rounded-[16px] " />
-              </div>
+              <DashboardCardLoadingState />
             ) : (
               Object.entries(data?.data || {}).map(([key, value], idx) => (
                 <div
@@ -55,8 +51,7 @@ export const Dashboard = () => {
                       idx === 0 ? 'text-white' : 'text-[#494850]'
                     } font-semibold text-base font-sora`}
                   >
-                    {key.charAt(0).toUpperCase() + key.slice(1)}{' '}
-                    {/* Capitalize key */}
+                    {key.charAt(0).toUpperCase() + key.slice(1)}
                   </p>
 
                   <div className="flex flex-col gap-2">
@@ -206,7 +201,7 @@ export const Dashboard = () => {
       </div>
 
       {/* chat */}
-      <div className="w-full gap-8 flex items-start justify-between h-full mb-5 max-h-[570px]">
+      <div className="w-full gap-8 flex  justify-between h-[570px] ">
         <div className="border-[2px] w-1/2 flex flex-col gap-5 p-8  border-[#F5F5F5] bg-[#FCFCFD] h-full rounded-[20px]">
           <div className="flex items-center justify-between">
             <p className="font-sora font-semibold text-base text-[#23222C]">
@@ -222,7 +217,7 @@ export const Dashboard = () => {
           <NewUser />
         </div>
         {/* New message */}
-        <div className="border-[2px] w-1/2 flex flex-col gap-5 p-8  border-[#F5F5F5] bg-[#FCFCFD] rounded-[20px]">
+        <div className="border-[2px] w-1/2 flex flex-col gap-5 p-8  border-[#F5F5F5] bg-[#FCFCFD] rounded-[20px] h-full">
           <div className="flex items-center justify-between">
             <p className="font-sora font-semibold text-base text-[#23222C]">
               New messages

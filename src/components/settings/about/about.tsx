@@ -17,7 +17,7 @@ export const About = () => {
       {isLoading ? (
         <div className="flex flex-col p-8 gap-10 h-full">
           <div className="flex justify-between items-center">
-            <span className="text-2xl font-bold">About Duduzili</span>
+            <span className="text-2xl font-bold font-inter">About Duduzili</span>
 
             <Button
               disabled

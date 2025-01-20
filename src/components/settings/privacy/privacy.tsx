@@ -29,7 +29,7 @@ export const Privacy = () => {
       {isLoading ? (
         <div className="flex flex-col p-8 gap-10 h-full">
           <div className="flex justify-between items-center">
-            <span className="text-2xl font-bold">Privacy Policy</span>
+            <span className="text-2xl font-bold font-inter">Privacy Policy</span>
 
             <Button
               disabled

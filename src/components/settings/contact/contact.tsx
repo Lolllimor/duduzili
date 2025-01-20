@@ -16,7 +16,7 @@ export const Contact = () => {
       {isLoading ? (
         <div className="flex flex-col p-8 gap-8 ">
           <div className="flex justify-between items-center ">
-            <span className="text-2xl font-bold">Contact Info</span>
+            <span className="text-2xl font-bold font-inter">Contact Info</span>
             <Button disabled className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2 bg-[#4534B8] text-white justify-center font-inter">
               <IoMdAdd className="size-5" />
              Add Info

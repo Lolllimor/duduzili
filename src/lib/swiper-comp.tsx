@@ -17,12 +17,13 @@ const SwiperComp: FC<SwiperCompProps> = ({ imageSources, height }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="flex flex-col gap-0 w-full h-full pt-10">
-      <div className={`relative h-full `}>
+    <div className="flex flex-col gap-0 w-full h-full mt-20 ">
+      <div>
         <Swiper
           effect="fade"
+          loop
           onSlideChange={({ activeIndex }) => setActiveIndex(activeIndex)}
-          className=" h-full"
+          className={` h-full `}
           modules={[Autoplay, EffectFade, Pagination, A11y]}
           autoplay={{
             delay: 8000,
@@ -38,12 +39,21 @@ const SwiperComp: FC<SwiperCompProps> = ({ imageSources, height }) => {
           }}
         >
           {imageSources.map((src, index) => (
-            <SwiperSlide key={index}>
-              <div
-                className={`w-full flex justify-center items-center ${
-                  src === '/bg-img3.svg' ? 'bg-[url("/pattern.png")]' : ''
-                }`}
-              >
+            <SwiperSlide
+              key={index}
+              className={`${
+                activeIndex === 2 && 'bg-[#ECEBF8]'
+              } overflow-clip h-full `}
+            >
+              <Image
+                src="/pattern.png"
+                width={100}
+                height={100}
+                alt="login-image"
+                className="h-full w-full opacity-10 -z-20  absolute bg-cover"
+              />
+
+              <div className={`w-full flex justify-center items-center  `}>
                 <Image
                   src={src}
                   alt="image-slide"

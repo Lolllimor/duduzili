@@ -138,7 +138,7 @@ export const AddAdminAccess = () => {
               <div className=" flex flex-col w-full  gap-2">
                 <label
                   htmlFor="email"
-                  className="text-sm text-[#2A2A2A] font-medium font-inter"
+                  className="text-sm text-[#2A2A2A] font-medium font-poppins"
                 >
                   Email Address
                 </label>
@@ -156,7 +156,7 @@ export const AddAdminAccess = () => {
               <div className=" flex flex-col w-full  gap-2">
                 <label
                   htmlFor="firstName"
-                  className="text-sm text-[#2A2A2A] font-medium font-inter"
+                  className="text-sm text-[#2A2A2A] font-medium font-poppins"
                 >
                   First Name
                 </label>
@@ -174,7 +174,7 @@ export const AddAdminAccess = () => {
               <div className=" flex flex-col w-full  gap-2">
                 <label
                   htmlFor="last_name"
-                  className="text-sm text-[#2A2A2A] font-medium font-inter"
+                  className="text-sm text-[#2A2A2A] font-medium font-poppins"
                 >
                   Last Name
                 </label>
@@ -191,7 +191,7 @@ export const AddAdminAccess = () => {
               </div>
               <div className="flex flex-col gap-4">
                 <div className=" flex flex-col w-full  gap-2">
-                  <label className="text-sm text-[#2A2A2A] font-medium font-inter">
+                  <label className="text-sm text-[#2A2A2A] font-medium font-poppins ">
                     Permission Group
                   </label>
                   <MultipleSelector

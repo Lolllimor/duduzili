@@ -31,8 +31,12 @@ function Page() {
   };
 
   return (
-    <GenaralLayout pageTitle="Access Management" moreOptions={<HeaderBtn />}>
-      <div className="px-6 flex flex-col gap-6 h-full mb-5  w-full">
+    <GenaralLayout
+      pageTitle="Access Management"
+      moreOptions={<HeaderBtn />}
+      className="h-[calc(100vh-120px)]"
+    >
+      <div className="px-6 flex flex-col gap-6 pb-6  w-full">
         <SearchForm placeholder="Search Group" onSearch={handleSearch} />
 
         {isLoading ? (
@@ -40,16 +44,12 @@ function Page() {
             <TableSkeleton />
           </div>
         ) : data?.data.count ? (
-          <div className="flex flex-col gap-6 w-full h-full ">
-          
-
-            <div className="border rounded-lg h-fit">
-              <DataTable
-                table={table}
-                totalCount={data.data.count}
-                queryAtom={managementAtom}
-              />
-            </div>
+          <div className="border rounded-lg w-full overflow-x-auto ">
+            <DataTable
+              table={table}
+              totalCount={data.data.count}
+              queryAtom={managementAtom}
+            />
           </div>
         ) : (
           <EmptyState

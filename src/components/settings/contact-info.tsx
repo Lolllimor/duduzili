@@ -24,8 +24,10 @@ export const ContactInfo = () => {
           <div className="flex gap-4 items-center">
             <ContactEnvelope />
             <div className="flex flex-col justify-between">
-              <span className="text-sm text-[#757575]">Email Address</span>
-              <span className="text-[#2A2A2A] text-base font-medium">
+              <span className="text-sm text-[#757575] font-inter">
+                Email Address
+              </span>
+              <span className="text-[#2A2A2A] text-base font-medium font-inter">
                 {item.email}
               </span>
             </div>
@@ -33,8 +35,10 @@ export const ContactInfo = () => {
           <div className="flex gap-4 items-center">
             <ContactPhone />
             <div className="flex flex-col justify-between">
-              <span className="text-sm text-[#757575]">Phone Number</span>
-              <span className="text-[#2A2A2A] text-base font-medium">
+              <span className="text-sm text-[#757575] font-inter">
+                Phone Number
+              </span>
+              <span className="text-[#2A2A2A] text-base font-medium font-inter">
                 +{item.phone}
               </span>
             </div>
@@ -42,8 +46,8 @@ export const ContactInfo = () => {
           <div className="flex gap-4 items-center">
             <ContactLocation />
             <div className="flex flex-col justify-between">
-              <span className="text-sm text-[#757575]">Address</span>
-              <span className="text-[#2A2A2A] text-base font-medium">
+              <span className="text-sm text-[#757575] font-inter">Address</span>
+              <span className="text-[#2A2A2A] text-base font-medium font-inter">
                 {item.address}
               </span>
             </div>

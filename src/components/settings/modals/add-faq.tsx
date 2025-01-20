@@ -59,7 +59,7 @@ export const AddFaq = () => {
         className="text-[#2A2A2A] flex gap-2 items-center text-xs "
         asChild
       >
-        <Button className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2 font-inter bg-[#4534B8] text-white justify-center">
+        <Button className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2 font-inter bg-[#4534B8] text-white justify-center font-inter">
           <IoMdAdd className="size-5" />
           Add Question
         </Button>
@@ -67,7 +67,7 @@ export const AddFaq = () => {
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto text-inter">
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
-            <span className="text-2xl font-bold"> Add New FAQ</span>
+            <span className="text-2xl font-bold font-inter"> Add New FAQ</span>
             <DialogClose
               aria-label="Close"
               onClick={() => {
@@ -89,14 +89,14 @@ export const AddFaq = () => {
             <div className=" flex flex-col w-full  gap-2 font-poppins">
               <label
                 htmlFor="phone number"
-                className="text-sm text-[#2A2A2A] font-medium "
+                className="text-sm text-[#2A2A2A] font-medium font-inter"
               >
                 Question
               </label>
               <Input
                 {...register('question')}
                 placeholder="e.g. How do I register on Duduzili"
-                className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#ABAEB5] font-normal text-[14px]"
+                className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#ABAEB5] font-normal text-[14px] placeholder:font-inter"
               />
               {errors.question && (
                 <div className="text-red-500 text-sm font-normal pt-1">
@@ -105,24 +105,24 @@ export const AddFaq = () => {
               )}
             </div>
 
-            <div className=" flex flex-col w-full  gap-1.5 font-poppins">
+            <div className=" flex flex-col w-full  gap-1.5 font-inter">
               <label
                 htmlFor="answer"
-                className="text-sm text-[#2A2A2A] font-medium "
+                className="text-sm text-[#2A2A2A] font-medium font-inter"
               >
                 Answer
               </label>
               <Textarea
                 {...register('answer')}
                 placeholder="Enter text here..."
-                className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-[14px]"
+                className="resize-none h-[clamp(80px,15vh,114px)] placeholder:text-[#BDBDBD] text-[14px] placeholder:font-inter"
               />
               {errors.answer ? (
                 <div className="text-red-500 text-sm font-normal pt-1">
                   {errors.answer.message}
                 </div>
               ) : (
-                <p className="text-[#81848F] text-sm">
+                <p className="text-[#81848F] text-sm font-inter">
                   Not more than 200 characters
                 </p>
               )}

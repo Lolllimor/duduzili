@@ -115,7 +115,7 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
       }}
     >
       <DialogTrigger asChild>
-        <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#367EE8]">
+        <Button className="h-9 gap-2 flex items-center text-base rounded-[32px] bg-[#367EE8] font-poppins">
           <IoMdAdd className="size-5" />
           Edit Permission Group
         </Button>
@@ -123,7 +123,7 @@ export const EditPermissionGroup = ({ id }: { id: string }) => {
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] shrink [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto">
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
-            <span className="text-2xl font-bold">
+            <span className="text-2xl font-bold font-inter">
               {id ? 'Edit' : 'Create New'} Permission Group
             </span>
             <DialogClose

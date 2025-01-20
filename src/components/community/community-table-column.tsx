@@ -8,28 +8,28 @@ import { TableDropdown } from './table-dropdown';
 import { getInitials } from './profile-drawer';
 
 export const CommunityColumn: ColumnDef<any>[] = [
-  {
-    id: 'select',
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && 'indeterminate')
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   id: 'select',
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && 'indeterminate')
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: 'name',
     header: 'Community',
@@ -37,7 +37,7 @@ export const CommunityColumn: ColumnDef<any>[] = [
       return (
         <div className="flex items-center gap-3">
           <Avatar>
-            <AvatarImage src={row.original.cover_photo} />
+            <AvatarImage src={row.original.cover_photo ?? '/avatar.svg'} />
             <AvatarFallback>{getInitials(row.original.name)}</AvatarFallback>
           </Avatar>
           <p className="font-medium font-inter text-sm text-[#101928]">
@@ -46,21 +46,31 @@ export const CommunityColumn: ColumnDef<any>[] = [
         </div>
       );
     },
+
+    enableSorting: false,
   },
 
   {
     accessorKey: 'members_count',
     header: 'Members',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter">
+        {info.getValue() as string}
+      </p>
     ),
+
+    enableSorting: false,
   },
   {
     accessorKey: 'posts_count',
     header: 'Posts',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter">
+        {info.getValue() as string}
+      </p>
     ),
+
+    enableSorting: false,
   },
   {
     accessorKey: 'is_active',
@@ -75,11 +85,13 @@ export const CommunityColumn: ColumnDef<any>[] = [
               : 'bg-[#FEEEEF] text-[#94353A]'
           } px-3 h-[26px] rounded-2xl flex items-center justify-center w-fit`}
         >
-          <span className="text-sm">{isActive ? 'Active' : 'Inactive'}</span>
+          <span className="text-sm font-inter">
+            {isActive ? 'Active' : 'Inactive'}
+          </span>
         </div>
       );
     },
-    enableSorting: true,
+    enableSorting: false,
   },
   {
     accessorKey: 'created',
@@ -87,10 +99,10 @@ export const CommunityColumn: ColumnDef<any>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex flex-col">
-          <p className="text-sm text-[#344054]">
+          <p className="text-sm text-[#344054] font-inter font-medium">
             {dayjs(row.original.created).format('DD MMM, YYYY')}
           </p>
-          <p className="text-sm text-[#667185]">
+          <p className="text-sm text-[#667185] font-inter">
             {dayjs(row.original.created).format('H:mm A')}
           </p>
         </div>

@@ -30,15 +30,15 @@ function page() {
     setDebounced(searchTerm);
   };
   return (
-    <GeneralLayout pageTitle="Communities">
-      <div className="px-6 flex flex-col gap-6  h-full pb-6  w-full">
-        <SearchForm placeholder="Search Group" onSearch={handleSearch} />
+    <GeneralLayout pageTitle="Communities" className="h-[calc(100vh-120px)]">
+      <div className="px-6 flex flex-col gap-6  pb-6  w-full">
+        <SearchForm placeholder="Search Community" onSearch={handleSearch} />
         {isLoading ? (
           <div className="flex flex-col bg-[#F9FAFB] rounded-2xl">
             <TableSkeleton />
           </div>
         ) : data?.data.count ? (
-          <div className="border rounded-lg h-full flex overflow-auto">
+          <div className="border rounded-lg w-full overflow-x-auto  ">
             <DataTable
               queryAtom={communityAtom}
               table={table}
