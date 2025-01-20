@@ -1,8 +1,5 @@
 import { GoDotFill } from 'react-icons/go';
-import { MdMoreVert } from 'react-icons/md';
-
 import { PostContainerProps } from './post-container';
-// import { Avatar } from "@mantine/core";
 import Link from 'next/link';
 import dayjs from 'dayjs';
 import RelativeTime from 'dayjs/plugin/relativeTime';

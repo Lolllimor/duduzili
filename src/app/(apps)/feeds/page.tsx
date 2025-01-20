@@ -8,12 +8,12 @@ import GeneralLayout from '@/components/layout/generalLayout';
 import { TreandingTopics } from '@/components/feeds/trending-topics';
 import { useFetchTrendingPostQuery } from '@/redux/features/feedApi';
 
-
-
 const page = () => {
   const { data, isLoading } = useFetchTrendingPostQuery();
+  console.log(data);
   return (
-    <GeneralLayout pageTitle="Feeds"
+    <GeneralLayout
+      pageTitle="Feeds"
       // moreOptions={<CreatePost />}
     >
       <div className="flex flex-col px-8 gap-8 pb-5 h-full overflow-auto">
@@ -46,7 +46,7 @@ const page = () => {
                     </div>
                   </div>
                 </div>
-              ) : (
+              ) : data.data.count ? (
                 data?.data.results.map((item: PostItem, idx: number) => (
                   <PostContainer
                     key={idx}
@@ -90,6 +90,10 @@ const page = () => {
                     likesCount={item?.the_likes_count}
                   />
                 ))
+              ) : (
+                <div className="p-6 max-sm:px-1 bg-white flex flex-col gap-5 rounded-xl border border-[#F0F0F1] w-full min-w-[505px]">
+                  No data avaialable
+                </div>
               )}
             </div>
             <TreandingTopics />
