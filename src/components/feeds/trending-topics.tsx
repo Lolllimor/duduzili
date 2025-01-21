@@ -24,7 +24,7 @@ export const TreandingTopics = () => {
                 </div>
               ))}
           </div>
-        ) : data.data.count ? (
+        ) : data?.data.count ? (
           <div className="flex flex-col gap-1">
             {data.data.results.map(
               (item: { name: string; the_count: string }, idx: number) => (

@@ -44,7 +44,7 @@ const SwiperComp: FC<SwiperCompProps> = ({ imageSources, height }) => {
           className={` h-full `}
           modules={[Autoplay, EffectFade, Pagination, A11y]}
           autoplay={{
-            delay: 8000,
+            delay: 4000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}
