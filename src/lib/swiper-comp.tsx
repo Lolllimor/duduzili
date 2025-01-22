@@ -33,7 +33,6 @@ const SwiperComp: FC<SwiperCompProps> = ({ imageSources, height }) => {
         'Find new people to follow, explore trending topics, and discover exciting content from users around the globe.',
     },
   ];
-
   return (
     <div className="flex flex-col gap-0 w-full h-full  ">
       <div className="h-full mt-20">
