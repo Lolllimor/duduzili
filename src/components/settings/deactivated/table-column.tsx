@@ -6,6 +6,7 @@ import { DeactivatedResult } from '@/lib/settingTypes';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { ActivateBtn } from './activatebtn';
 import { getInitials } from '@/components/community/profile-drawer';
+import { Reactivate } from './reactivate-modal';
 
 export const DeactivatedColumn: ColumnDef<DeactivatedResult>[] = [
   // {
@@ -111,7 +112,7 @@ export const DeactivatedColumn: ColumnDef<DeactivatedResult>[] = [
     accessorKey: 'action',
     header: 'Action',
     cell: ({ row }) => {
-      return <ActivateBtn username={row.original.username} />;
+      return <Reactivate username={row.original.username} />;
     },
     enableSorting: false,
   },

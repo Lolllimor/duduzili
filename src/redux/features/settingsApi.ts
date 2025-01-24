@@ -53,6 +53,14 @@ export const settingsApi = baseApi.injectEndpoints({
       query: () => ({ url: endpoints.setting.faq.fetch, method: 'GET' }),
       providesTags: ['FAQ'],
     }),
+    editFaq: builder.mutation({
+      query: (data) => ({
+        url: endpoints.setting.faq.edit,
+        method: 'PATCH',
+        body: data,
+      }),
+      invalidatesTags: ['FAQ'],
+    }),
     postFaq: builder.mutation({
       query: (data) => ({
         url: endpoints.setting.faq.create,
@@ -131,6 +139,7 @@ export const {
   useFetchPrivacyQuery,
   useFetchContactQuery,
   useFetchDeletedQuery,
+  useEditFaqMutation,
   usePostContactMutation,
   usePostPrivacyMutation,
   useFetchDeactivatedQuery,

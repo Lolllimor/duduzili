@@ -25,6 +25,7 @@ export const endpoints = {
       create: 'api/administration/create-faq/',
       fetch: 'api/administration/fetch-faq/',
       delete: 'api/administration/delete-faq/',
+      edit: 'api/administration/edit-faq/',
     },
     smi: {
       fetch: 'api/administration/fetch-smi/',

@@ -8,14 +8,16 @@ export const EmptyState = ({
   title,
   paragraph,
   btn,
+  icon,
 }: {
   title: string;
   paragraph: string;
   btn?: ReactNode;
+  icon?: ReactNode;
 }) => {
   return (
     <div className="flex flex-col items-center justify-center gap-2 w-full h-full  font-inter">
-      <EmptyStateIcon />
+      {icon ? icon : <EmptyStateIcon />}
       <div className="flex flex-col gap-7 items-center ">
         <div className="flex flex-col gap-1 items-center">
           <span className="text-[18px] text-[#000000] font-semibold">
