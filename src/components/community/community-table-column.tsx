@@ -37,7 +37,12 @@ export const CommunityColumn: ColumnDef<any>[] = [
       return (
         <div className="flex items-center gap-3">
           <Avatar>
-            <AvatarImage src={row.original.cover_photo ?? '/avatar.svg'} />
+            <AvatarImage
+              src={
+                row.original.cover_photo ??
+                '/community/community_default_image.svg'
+              }
+            />
             <AvatarFallback>{getInitials(row.original.name)}</AvatarFallback>
           </Avatar>
           <p className="font-medium font-inter text-sm text-[#101928]">

@@ -41,11 +41,10 @@ export const AddFaq = ({ faq_id }: { faq_id?: string }) => {
   const [open, setOpen] = useState(false);
   const [editFaq, { isLoading }] = useEditFaqMutation();
 
-  const data = useFetchFaqQuery();
+  const { data } = useFetchFaqQuery();
   const editData = data?.data.results.find(
     (item: FaqItem) => item.faq_id === faq_id
   );
-  console.log(editData);
 
   const { handleSubmit, register, formState, reset } = useForm<
     z.infer<typeof formSchema>

@@ -102,7 +102,9 @@ const MenuBar = ({ editor }: { editor: Editor | null }) => {
         }}
         disabled={!editor.can().chain().focus().setTextAlign(alignState).run()}
         className={`p-2 rounded hover:bg-gray-100 ${
-          editor.isActive({ textAlign: alignState }) ? 'bg-gray-200' : ''
+          editor.isActive({ textAlign: alignState !== 'left' })
+            ? 'bg-gray-200'
+            : ''
         }`}
         aria-label={`Align ${alignState}`}
       >
