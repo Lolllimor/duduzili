@@ -26,7 +26,12 @@ export const Terms = () => {
   const sanitizedText = DOMPurify.sanitize(formattedText);
   return (
     <div className="h-full">
-      {isLoading ? (
+      <EmptyState
+        // btn={<AddEditPrivacy />}
+        title="Terms and Conditions "
+        paragraph=" Write a descriptive content about the terms and conditions of the platform for users to abide with"
+      />
+      {/* {isLoading ? (
         <div className="flex flex-col p-8 gap-10 h-full">
           <div className="flex justify-between items-center">
             <span className="text-2xl font-bold font-inter">
@@ -57,7 +62,7 @@ export const Terms = () => {
           title="Terms and Conditions "
           paragraph=" Write a descriptive content about the terms and conditions of the platform for users to abide with"
         />
-      )}
+      )} */}
     </div>
   );
 };
