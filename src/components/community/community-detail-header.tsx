@@ -47,7 +47,7 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
           backgroundImage: `url(${
             data?.data.cover_photo
               ? data?.data.cover_photo
-              : '/default-community.svg'
+              : '/community/community_default_image.svg'
           })`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',

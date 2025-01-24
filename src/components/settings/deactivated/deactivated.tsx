@@ -9,6 +9,7 @@ import { SearchForm } from '@/components/search-comp';
 import { useState } from 'react';
 import { usePortal } from '@ibnlanre/portal';
 import { TableSkeleton } from '@/components/table-skeleton';
+import EmptyStateIcon2 from '@/components/icons/empty-state-2';
 
 export const Deactivated = () => {
   const [debounced, setDebounced] = useState<string>();
@@ -48,6 +49,7 @@ export const Deactivated = () => {
         </div>
       ) : (
         <EmptyState
+          icon={<EmptyStateIcon2 />}
           title="Deactivated Accounts "
           paragraph=" No deactivated account"
         />
