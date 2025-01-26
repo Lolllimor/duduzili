@@ -24,7 +24,6 @@ function InterestPage() {
   const [debounced, setDebounced] = useState<string>();
   const { data, isLoading } = useFetchInterestQuery({
     page: queries.page_index,
-
     search: debounced,
   });
 
@@ -39,7 +38,7 @@ function InterestPage() {
       <hr className="w-full" />
 
       <div className="flex flex-col overflow-auto h-full p-8 gap-8">
-        <SearchForm placeholder="Search Group" onSearch={handleSearch} />
+        <SearchForm placeholder="Search Interest" onSearch={handleSearch} />
         <div className="flex  gap-8 flex-wrap  h-full overflow-auto">
           <AddInterestModal />
 

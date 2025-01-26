@@ -7,7 +7,7 @@ import { EmptyState } from '../settings/empty-state';
 export const CommunityPost = ({ id }: { id: string }) => {
   const { data, isLoading } = useFetchCommunityPostQuery({ id });
   return (
-    <div className="flex gap-2 flex-wrap overflow-auto h-full min-w-[505px]">
+    <div className="flex gap-2 flex-wrap overflow-auto  min-w-[505px]">
       {isLoading ? (
         <div className="flex flex-col gap-5 rounded-xl border border-[#F0F0F1] w-full  p-6 ">
           <div className=" flex gap-3">
@@ -29,7 +29,7 @@ export const CommunityPost = ({ id }: { id: string }) => {
         </div>
       ) : data.data.count ? (
         data?.data.results.map((item: PostItem, idx: number) => (
-          <div className="w-full" key={idx}>
+          <div className="w-full gap-4 flex flex-col" key={idx}>
             <PostContainer
               id={idx === 0 ? 'top' : undefined}
               mentions={item?.mentions}

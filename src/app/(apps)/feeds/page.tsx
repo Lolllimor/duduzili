@@ -46,7 +46,7 @@ const page = () => {
                     </div>
                   </div>
                 </div>
-              ) : data.data.count ? (
+              ) : data?.data.count ? (
                 data?.data.results.map((item: PostItem, idx: number) => (
                   <PostContainer
                     key={idx}

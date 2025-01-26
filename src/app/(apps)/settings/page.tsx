@@ -7,6 +7,7 @@ import { Privacy } from '@/components/settings/privacy/privacy';
 import { Deactivated } from '@/components/settings/deactivated/deactivated';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { SocialMediaIntegration } from '@/components/settings/social-integration/social-integeration';
+import { Terms } from '@/components/settings/terms/terms';
 
 function ConfigPage() {
   return (
@@ -36,6 +37,12 @@ function ConfigPage() {
               Privacy Policy
             </TabsTrigger>
             <TabsTrigger
+              value="terms"
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter"
+            >
+              Terms and Conditions
+            </TabsTrigger>
+            <TabsTrigger
               value="faq"
               className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter"
             >
@@ -61,25 +68,31 @@ function ConfigPage() {
             </TabsTrigger>
           </TabsList>
           {/* <div className="border border-[#E5E6E8] rounded-[10px] flex h-full  overflow-auto"> */}
-          <TabsContent 
+          <TabsContent
             value="about"
             className="w-full border border-[#E5E6E8] rounded-[10px] bg-white h-full overflow-auto "
           >
             <About />
           </TabsContent>
-          <TabsContent 
+          <TabsContent
             value="contact"
             className="w-full border border-[#E5E6E8] rounded-[10px] bg-white  h-full overflow-auto "
           >
             <Contact />
           </TabsContent>
-          <TabsContent 
+          <TabsContent
             value="privacy"
             className="w-full border border-[#E5E6E8] rounded-[10px] bg-white  h-full overflow-auto "
           >
             <Privacy />
           </TabsContent>
-          <TabsContent 
+          <TabsContent
+            value="terms"
+            className="w-full border border-[#E5E6E8] rounded-[10px] bg-white  h-full overflow-auto "
+          >
+            <Terms />
+          </TabsContent>
+          <TabsContent
             value="faq"
             className="w-full border border-[#E5E6E8] rounded-[10px] flex bg-white  h-full overflow-auto "
           >

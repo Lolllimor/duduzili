@@ -18,17 +18,33 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { usePostFaqMutation } from '@/redux/features/settingsApi';
+import {
+  useEditFaqMutation,
+  useFetchFaqQuery,
+  usePostFaqMutation,
+} from '@/redux/features/settingsApi';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+import EditBlackIcon from '@/components/icons/edit-black-icon';
+
+interface FaqItem {
+  faq_id: string;
+  question: string;
+  answer: string;
+}
 
 const formSchema = z.object({
   question: z.string().nonempty('A question is required'),
   answer: z.string().nonempty('An answer is required'),
 });
 
-export const AddFaq = () => {
+export const AddFaq = ({ faq_id }: { faq_id?: string }) => {
   const [open, setOpen] = useState(false);
-  const [postFaq, { isLoading }] = usePostFaqMutation();
+  const [editFaq, { isLoading }] = useEditFaqMutation();
+
+  const { data } = useFetchFaqQuery();
+  const editData = data?.data.results.find(
+    (item: FaqItem) => item.faq_id === faq_id
+  );
 
   const { handleSubmit, register, formState, reset } = useForm<
     z.infer<typeof formSchema>
@@ -36,15 +52,15 @@ export const AddFaq = () => {
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      question: '',
-      answer: '',
+      question: editData?.question || '',
+      answer: editData?.answer || '',
     },
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await postFaq(data).unwrap();
-      toast.success('Successfully created');
+      const response = await editFaq({ ...data, faq_id: faq_id }).unwrap();
+      toast.success(`Successfully ${faq_id ? 'updated' : 'added'} FAQ`);
       setOpen(false);
       reset();
     } catch (error) {
@@ -59,15 +75,21 @@ export const AddFaq = () => {
         className="text-[#2A2A2A] flex gap-2 items-center text-xs "
         asChild
       >
-        <Button className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2 font-inter bg-[#4534B8] text-white justify-center font-inter">
-          <IoMdAdd className="size-5" />
-          Add Question
-        </Button>
+        {faq_id ? (
+          <EditBlackIcon className="cursor-pointer" />
+        ) : (
+          <Button className="h-10 px-4 rounded-[48px] text-sm font-semibold flex items-center gap-2 font-inter bg-[#4534B8] text-white justify-center ">
+            <IoMdAdd className="size-5" />
+            Add FAQ
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent className="px-6 py-8 gap-5 w-[clamp(200px,50vw,645px)] [&>button]:hidden !rounded-[20px] max-h-[clamp(345px,75vh,823px)] overflow-auto text-inter">
         <DialogTitle className="h-fit">
           <div className="flex justify-between w-full pb-5 border-b border-[#F3F3F3]">
-            <span className="text-2xl font-bold font-inter"> Add New FAQ</span>
+            <span className="text-2xl font-bold font-inter">
+              {faq_id ? 'Edit' : 'Add New'} FAQ
+            </span>
             <DialogClose
               aria-label="Close"
               onClick={() => {
@@ -133,7 +155,13 @@ export const AddFaq = () => {
             type="submit"
             className="bg-[#4534B8] border-none rounded-[32px] h-[51px] w-full text-white flex justify-center items-center mt-5 font-inter"
           >
-            {isLoading ? <FaSpinner className="animate-spin" /> : 'Add FAQ'}
+            {isLoading ? (
+              <FaSpinner className="animate-spin" />
+            ) : faq_id ? (
+              'Update FAQ'
+            ) : (
+              'Add FAQ'
+            )}
           </Button>
         </form>
       </DialogContent>

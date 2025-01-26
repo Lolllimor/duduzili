@@ -33,7 +33,9 @@ export const FaqFilled = () => {
   return (
     <div className="flex flex-col p-8 gap-10 overflow-auto h-full font-inter">
       <div className="flex justify-between items-center">
-        <span className="text-2xl font-bold font-inter">Frequently Asked Questions</span>
+        <span className="text-2xl font-bold font-inter">
+          Frequently Asked Questions
+        </span>
 
         <AddFaq />
       </div>
@@ -49,7 +51,10 @@ export const FaqFilled = () => {
                   {item.answer}
                 </span>
               </div>
-              <DeleteFaq id={ item.faq_id} />
+              <div className="flex items-center gap-4">
+                <AddFaq faq_id={item.faq_id} />
+                <DeleteFaq id={item.faq_id} />
+              </div>
             </div>
             {index !== data.count - 1 && (
               <div className="h-[1px] w-full bg-[#EAECF0] my-8"></div>

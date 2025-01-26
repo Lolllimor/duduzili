@@ -48,7 +48,7 @@ function Page({ params }: { params: Promise<{ name: string; id: string }> }) {
     >
       <div className="flex flex-1 bg-[#F5F6FA] p-6 h-full">
         <div className="gap-5 grid grid-cols-[2fr_1fr] w-full h-full">
-          <div className="flex flex-col gap-5 overflow-auto min-w-[600px]">
+          <div className="flex flex-col gap-5 overflow-auto min-w-[600px] h-full">
             <CommunityDetailHeader id={id} />
             <CommunityPost id={id} />
           </div>

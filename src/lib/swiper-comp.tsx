@@ -33,7 +33,6 @@ const SwiperComp: FC<SwiperCompProps> = ({ imageSources, height }) => {
         'Find new people to follow, explore trending topics, and discover exciting content from users around the globe.',
     },
   ];
-
   return (
     <div className="flex flex-col gap-0 w-full h-full  ">
       <div className="h-full mt-20">
@@ -44,7 +43,7 @@ const SwiperComp: FC<SwiperCompProps> = ({ imageSources, height }) => {
           className={` h-full `}
           modules={[Autoplay, EffectFade, Pagination, A11y]}
           autoplay={{
-            delay: 8000,
+            delay: 4000,
             disableOnInteraction: false,
             pauseOnMouseEnter: true,
           }}

@@ -13,9 +13,8 @@ import {
 import { IoMdAdd } from 'react-icons/io';
 import { FaSpinner } from 'react-icons/fa';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import toast from 'react-hot-toast';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
