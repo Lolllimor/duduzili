@@ -1,10 +1,8 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import { Providers } from "@/lib/provider";
-import { QueryProvider } from "@/lib/query-provider";
-
-
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import './globals.css';
+import { Providers } from '@/lib/provider';
+import { QueryProvider } from '@/lib/query-provider';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -18,8 +16,30 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-      >
+      <head>
+        <link
+          href="https://fonts.cdnfonts.com/css/sora-3"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.cdnfonts.com/css/inter"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.cdnfonts.com/css/poppins"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.cdnfonts.com/css/switzer"
+          rel="stylesheet"
+        ></link>
+        <link
+          href="https://fonts.cdnfonts.com/css/outfit"
+          rel="stylesheet"
+        ></link>
+      </head>
+
+      <body>
         <Providers>
           <QueryProvider>{children}</QueryProvider>
         </Providers>

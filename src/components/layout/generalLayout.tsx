@@ -14,11 +14,9 @@ function GeneralLayout({
   className?: string;
 }) {
   return (
-    <div className="flex-1 h-[100dvh] flex flex-col overflow-auto">
+    <div className="h-full overflow-auto flex-1">
       <AppHeader pageTitle={pageTitle} moreOptions={moreOptions} />
-      <main className={`${className} overflow-auto h-full flex `}>
-        {children}
-      </main>
+      <main className={`${className} overflow-auto  `}>{children}</main>
     </div>
   );
 }

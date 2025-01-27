@@ -25,6 +25,7 @@ export const DeleteFaq = ({ id }: { id: string }) => {
     try {
       const res = await deleteFaq({ faq_id: id }).unwrap();
       toast.success('Successfully deleted');
+      setOpen(false);
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
@@ -60,12 +61,15 @@ export const DeleteFaq = ({ id }: { id: string }) => {
         </div>
         <div className="w-full border-none h-[1px] bg-[#EAECF0]"></div>
         <div className="flex justify-between font-medium pt-7 px-8 w-full h-fit">
-          <Button className="bg-[#F4F4F4] border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center ">
+          <Button
+            onClick={() => setOpen(false)}
+            className="bg-[#F4F4F4] hover:bg-[#F4F4F4]  border-none rounded-[32px] h-[51px] w-[177px] text-[#2A2A2A] flex justify-center items-center "
+          >
             Cancel
           </Button>
           <Button
             onClick={() => handleClick()}
-            className="bg-[#D40000] border-none rounded-[32px] h-[51px]  w-[177px] text-white flex justify-center items-center"
+            className="bg-[#D40000] hover:bg-[#D40000] border-none rounded-[32px] h-[51px]  w-[177px] text-white flex justify-center items-center"
           >
             Delete
           </Button>

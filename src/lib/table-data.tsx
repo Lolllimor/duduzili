@@ -10,7 +10,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Suspense, useState } from 'react';
 import { RxCaretSort } from 'react-icons/rx';
 import Paginator from './paginatkon';
 import { Atom } from '@ibnlanre/portal';
@@ -28,10 +27,10 @@ export function DataTable<TData, TValue>({
   totalCount, queryAtom
 }: DataTableProps<TData, TValue>) {
   return (
-    <section className="w-full h-fit ">
-      <div className="border-b border-[#E4E7EC] flex flex-col overflow-auto w-full h-full">
+    <div className="w-full h-full ">
+      <div className="border-b border-[#E4E7EC] w-full h-full overflow-auto">
         <Table className="text-[#565D62]  text-sm w-full h-full ">
-          <TableHeader className="bg-[#F9FAFB] font-medium text-xs">
+          <TableHeader className="bg-[#F9FAFB] font-medium text-xs sticky top-0 ">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
@@ -60,11 +59,17 @@ export function DataTable<TData, TValue>({
                           )}
 
                           {{
-                            asc: header.column.getCanSort() && <RxCaretSort />,
+                            asc: header.column.getCanSort() && (
+                              <RxCaretSort className="h-4 w-3" />
+                            ),
 
-                            desc: header.column.getCanSort() && <RxCaretSort />,
+                            desc: header.column.getCanSort() && (
+                              <RxCaretSort className="h-4 w-3" />
+                            ),
                           }[header.column.getIsSorted() as string] ??
-                            (header.column.getCanSort() && <RxCaretSort />)}
+                            (header.column.getCanSort() && (
+                              <RxCaretSort className="h-4 w-3" />
+                            ))}
                         </div>
                       )}
                     </TableHead>
@@ -73,7 +78,7 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="font-normal overflow-auto">
+          <TableBody className="font-normal ">
             {isLoading ? (
               <TableRow className=" ">
                 <TableCell
@@ -115,6 +120,6 @@ export function DataTable<TData, TValue>({
       </div>
         <Paginator totalCount={totalCount}  queryAtom={queryAtom}/>
      
-    </section>
+    </div>
   );
 }

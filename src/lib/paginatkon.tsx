@@ -14,14 +14,11 @@ type PaginatorProps = {
   queryAtom: Atom<any, undefined>;
 };
 
-export default function Paginator({
-  totalCount,
-  queryAtom,
-}: PaginatorProps) {
-const [filter, setFilter] = usePortal.atom(
-  queryAtom as Atom<{ page_index: number; page_size: number }, undefined>
-);
-  
+export default function Paginator({ totalCount, queryAtom }: PaginatorProps) {
+  const [filter, setFilter] = usePortal.atom(
+    queryAtom as Atom<{ page_index: number; page_size: number }, undefined>
+  );
+
   const currentPage = filter.page_index ? +filter.page_index : 1;
   const totalPage = Math.ceil(totalCount / filter.page_size);
   return (

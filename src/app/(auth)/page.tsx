@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client";
 import { z } from "zod";
 import Image from "next/image";
@@ -13,6 +14,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { errorMessageHandler, ErrorType } from "@/lib/error-handler";
 import { useLoginMutation } from "@/redux/features/settingsApi";
 import { PasswordInput } from "@/components/post/password-input";
+=======
+'use client';
+import { z } from 'zod';
+import Image from 'next/image';
+import { Login } from '@/lib/type';
+import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { FaSpinner } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { cookieStorage } from '@ibnlanre/portal';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
+import { useLoginMutation } from '@/redux/features/settingsApi';
+import { PasswordInput } from '@/components/post/password-input';
+import { Checkbox } from '@/components/ui/checkbox';
+>>>>>>> 148381295abc859ca96b32c723d500f648e3911f
 
 const page = () => {
   const [login, { isLoading }] = useLoginMutation();
@@ -60,7 +79,7 @@ const page = () => {
   };
 
   return (
-    <div className="flex w-full bg-[#fafafa] pl-[20px] pr-[32px] relative h-full justify-center overflow-y-auto ">
+    <div className="flex w-full bg-[#fafafa] pl-5 pr-8 relative h-full justify-center overflow-y-auto font-sora pb-60">
       <Image
         src="/form-bg.svg"
         alt="bg"
@@ -72,12 +91,6 @@ const page = () => {
       <div className="py-[47px] flex flex-col pl-[32px] pr-[20px] w-full">
         <div className="flex justify-between items-center">
           <Image src="/logo-auth.svg" alt="logo" width={180} height={40} />
-          <div className="flex items-center gap-1 ">
-            <span className="text-sm">Don’t have an account?</span>
-            <a href="/" className="text-sm text-[#4534B8] ">
-              Sign up
-            </a>
-          </div>
         </div>
         <div className=" flex flex-col mx-auto flex-1  mt-[30%] z-10 gap-10 pb-[30px]">
           <div className="flex flex-col items-center gap-2">
@@ -90,36 +103,6 @@ const page = () => {
             </p>
           </div>
           <div className="flex flex-col gap-8 w-[400px]">
-            <div className="flex items-center justify-between">
-              <Button className="w-[194px] h-12 bg-white border border-[#D9D9DB] rounded-lg flex gap-[13px]">
-                <Image
-                  src="/google.png"
-                  alt="google"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
-                />
-                <p className="text-base text-[#313131]">Google</p>
-              </Button>
-              <Button className="w-[194px] h-12 bg-white border border-[#D9D9DB] rounded-lg flex gap-[13px]">
-                <Image
-                  src="/apple.png"
-                  alt="apple"
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
-                />
-                <p className="text-base text-[#313131]">Apple</p>
-              </Button>
-            </div>
-            <div className="flex items-center w-full gap-[17px]">
-              <hr className="w-full" />
-              <p className="text-[#494850] text-xs text-nowrap">
-                Or continue with
-              </p>
-              <hr className="w-full" />
-            </div>
-
             <form
               onSubmit={handleSubmit(onSubmit)}
               className="flex flex-col gap-4 w-full"
@@ -127,14 +110,14 @@ const page = () => {
               <div className=" flex flex-col w-full  gap-1.5">
                 <label
                   htmlFor="username"
-                  className="text-xs text-[#494850] font-semibold"
+                  className="text-xs text-[#494850] font-semibold font-sora"
                 >
                   Username/Email Address
                 </label>
                 <Input
                   {...register("username_email")}
                   placeholder="Username/Email Address"
-                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] font-normal"
+                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] placeholder:font-sora placeholder:text-xs font-normal"
                 />
                 {errors.username_email && (
                   <div className="text-red-500 text-sm font-normal pt-1">
@@ -145,16 +128,18 @@ const page = () => {
               <div className="flex flex-col w-full  gap-1.5">
                 <label
                   htmlFor="password"
-                  className="text-xs text-[#494850] font-semibold"
+                  className="text-xs text-[#494850] font-semibold font-sora"
                 >
                   Password
                 </label>
                 <PasswordInput
+<<<<<<< HEAD
                   {...register("password")}
+=======
+                  placeholder="Password"
+                  {...register('password')}
+>>>>>>> 148381295abc859ca96b32c723d500f648e3911f
                   id="current_password"
-                  // value={currentPassword}
-                  // value={}
-                  // onChange={(e) => setCurrentPassword(e.target.value)}
                   autoComplete="current-password"
                 />
                 {errors.password && (
@@ -165,18 +150,22 @@ const page = () => {
               </div>
               <div className=" flex items-center justify-between my-4">
                 <div className="gap-2 flex items-center">
-                  <span className="text-[#494850] text-sm">Remember me</span>
+                  <Checkbox id="terms" />
+                  <span className="text-[#494850] text-sm font-sora">
+                    Remember me
+                  </span>
                 </div>
                 <a
                   href="/reset-password"
-                  className="text-sm text-[#4534B8] font-semibold"
+                  className="text-sm text-[#4534B8] font-semibold font-sora"
                 >
                   Forgot password?
                 </a>
               </div>
               <Button
+                variant="primary"
                 type="submit"
-                className="bg-[#4534B8] border-none rounded-lg h-11 "
+                className="text-base font-sora"
               >
                 {isLoading ? <FaSpinner className="animate-spin" /> : "Log in"}
               </Button>

@@ -21,11 +21,14 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
   const handleClick = async () => {
     try {
       const res = await toggle({ community_id: id }).unwrap();
-      toast.success('Successfully toggled');
+      toast.success(
+        `Successfully ${data?.data.is_active ? 'Deactivated' : 'Activated'}`
+      );
     } catch (error) {
       errorMessageHandler(error as ErrorType);
     }
   };
+
   return isLoading ? (
     <div className="min-h-[270px] rounded-lg py-5 px-[22px]  flex flex-col  w-[789px] gap-4">
       <Skeleton className="h-[163px] w-full" />
@@ -41,7 +44,11 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
       <div
         className="h-[163px] w-full rounded-t-xl px-[20px] pt-5 "
         style={{
-          backgroundImage: `url(${data.data.cover_photo ? data.data.cover_photo : "/default-community.svg"})`,
+          backgroundImage: `url(${
+            data?.data.cover_photo
+              ? data?.data.cover_photo
+              : '/community/community_default_image.svg'
+          })`,
           backgroundPosition: 'center',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
@@ -75,38 +82,45 @@ export const CommunityDetailHeader = ({ id }: { id: string }) => {
           </p>
         </div>
         <div className="flex gap-8 items-center">
-          <div className="gap-[7px] flex flex-col items-start">
-            <span className="font-sora text-xs text-[#D9D9DB]">
-              {data?.data.members_count}{' '}
-              {data?.data.members_count > 1 ? 'Members' : 'Member'}
-            </span>
-            <ViewMember id={id}
-              trigger={
-                <div className="flex items-center cursor-pointer ml-[15px]">
-                  {data.data.photo_preview.map(
-                    (item: string, idx: number) =>
-                      item !== null && (
-                        <Image
-                          key={idx}
-                          alt="Image preview"
-                          height={40}
-                          width={40}
-                          src={item}
-                          className="ml-[-15px] rounded-full border-2 border-white max-h-10 max-w-10"
-                        />
-                      )
-                  )}
-                </div>
-              }
-            />
+          <div className="flex gap-8 items-center">
+            <div className="gap-[7px] flex flex-col items-start">
+              <span className="font-sora text-xs text-[#D9D9DB]">
+                {data?.data.members_count}{' '}
+                {data?.data.members_count > 1 ? 'Members' : 'Member'}
+              </span>
+              <ViewMember
+                id={id}
+                trigger={
+                  <div className="flex items-center cursor-pointer ml-[15px]">
+                    {data.data.photo_preview.map(
+                      (item: string, idx: number) =>
+                        item !== null && (
+                          <Image
+                            key={idx}
+                            alt="Image preview"
+                            height={40}
+                            width={40}
+                            src={item}
+                            className="ml-[-15px] rounded-full border-2 border-white max-h-10 max-w-10"
+                          />
+                        )
+                    )}
+                  </div>
+                }
+              />
+            </div>
           </div>
+          <Button
+            className={`bg-white rounded-[4px] text-sm font-sora h-10 px-[22px] ${
+              data?.data.is_active
+                ? 'text-[#ED5556] hover:bg-[#ED5556] hover:text-white '
+                : 'text-[#2D874E] hover:bg-[#2D874E] hover:text-white'
+            } `}
+            onClick={handleClick}
+          >
+            {data?.data.is_active ? ' Deactivate' : 'Activate'}
+          </Button>
         </div>
-        <Button
-          className="bg-white rounded-[4px] text-sm font-sora text-[#ED5556] h-10 px-[22px] "
-          onClick={handleClick}
-        >
-          Deactivate
-        </Button>
       </div>
     </div>
   );

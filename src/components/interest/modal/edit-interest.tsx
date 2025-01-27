@@ -20,7 +20,6 @@ import {
   useCreateInterestMutation,
   useEditInterestMutation,
   useFetchInterestCategoryQuery,
-  useFetchUnasssociatedTagsQuery,
 } from '@/redux/features/interestsApi';
 import { z } from 'zod';
 import Image from 'next/image';
@@ -32,7 +31,6 @@ import { useForm } from 'react-hook-form';
 import { IoClose } from 'react-icons/io5';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
-import { MultipleSelector } from '@/components/settings/privacy/multi-select';
 
 const formSchema = z.object({
   name: z.string().nonempty('Name is required'),
@@ -42,7 +40,6 @@ const formSchema = z.object({
 export const EditInterestModal = ({ item }: { item?: any }) => {
   const [open, setOpen] = useState(false);
   const { data: categoryData } = useFetchInterestCategoryQuery();
-  const [createInterest] = useCreateInterestMutation();
   const [editInterest] = useEditInterestMutation();
   const [inputValue, setInputValue] = useState('');
   const [hashtags, setHashtags] = useState<string[]>([]);

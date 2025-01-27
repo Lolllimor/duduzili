@@ -16,16 +16,16 @@ export const CSColumn: ColumnDef<any>[] = [
       return (
         <div className="flex items-center gap-3">
           <Avatar>
-            <AvatarImage src="/dashboard/profile.svg" />
+            <AvatarImage src={row.original.cover_photo ?? '/avatar.svg'} />
             <AvatarFallback>
               {getInitials(row.original.username)}
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
-            <p className="font-medium font-sora text-sm text-[#101928]">
+            <p className="font-medium font-inter text-sm text-[#101928]">
               {row.original.username}
             </p>
-            <p className="font-normal text-sm font-sora text-[#475367]">
+            <p className="font-normal text-sm font-inter text-[#475367]">
               {row.original.email}
             </p>
           </div>
@@ -38,7 +38,9 @@ export const CSColumn: ColumnDef<any>[] = [
     accessorKey: 'admin_count',
     header: 'Admin ID',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter">
+        {info.getValue() as string}
+      </p>
     ),
   },
   {
@@ -54,7 +56,9 @@ export const CSColumn: ColumnDef<any>[] = [
               : 'bg-[#FEEEEF] text-[#94353A]'
           } px-3 h-[26px] rounded-2xl flex items-center justify-center w-fit`}
         >
-          <span className="text-sm">{isActive ? 'Active' : 'Inactive'}</span>
+          <span className="text-sm font-inter">
+            {isActive ? 'Active' : 'Inactive'}
+          </span>
         </div>
       );
     },
@@ -65,10 +69,10 @@ export const CSColumn: ColumnDef<any>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex flex-col">
-          <p className="text-sm text-[#344054]">
+          <p className="text-sm text-[#344054] font-inter font-semibold">
             {dayjs(row.original.created).format('DD MMM, YYYY')}
           </p>
-          <p className="text-sm text-[#667185]">
+          <p className="text-sm text-[#667185] font-inter ">
             {dayjs(row.original.created).format('H:mm A')}
           </p>
         </div>

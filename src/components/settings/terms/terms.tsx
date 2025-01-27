@@ -2,15 +2,15 @@
 
 import DOMPurify from 'dompurify';
 import { EmptyState } from '../empty-state';
-import { PrivacyFilled } from './privacy-filled';
 
 import { AddEditPrivacy } from '../modals/add-edit-privacy';
 import { useFetchPrivacyQuery } from '@/redux/features/settingsApi';
 import { Skeleton } from '@/components/ui/skeleton';
 import { IoMdAdd } from 'react-icons/io';
 import { Button } from '@/components/ui/button';
+import { TermsFilled } from './terms-filled';
 
-export const Privacy = () => {
+export const Terms = () => {
   const { data, isLoading } = useFetchPrivacyQuery();
 
   const formattedText =
@@ -26,10 +26,17 @@ export const Privacy = () => {
   const sanitizedText = DOMPurify.sanitize(formattedText);
   return (
     <div className="h-full">
-      {isLoading ? (
+      <EmptyState
+        // btn={<AddEditPrivacy />}
+        title="Terms and Conditions "
+        paragraph=" Write a descriptive content about the terms and conditions of the platform for users to abide with"
+      />
+      {/* {isLoading ? (
         <div className="flex flex-col p-8 gap-10 h-full">
           <div className="flex justify-between items-center">
-            <span className="text-2xl font-bold font-inter">Privacy Policy</span>
+            <span className="text-2xl font-bold font-inter">
+              Privacy Policy
+            </span>
 
             <Button
               disabled
@@ -48,14 +55,14 @@ export const Privacy = () => {
           </div>
         </div>
       ) : data && data.data.about !== '' ? (
-        <PrivacyFilled />
+        <TermsFilled />
       ) : (
         <EmptyState
-          btn={<AddEditPrivacy />}
-          title="Privacy Policy "
-          paragraph=" Write a descriptive content about the privacy policy of the platform for users to abide with"
+          // btn={<AddEditPrivacy />}
+          title="Terms and Conditions "
+          paragraph=" Write a descriptive content about the terms and conditions of the platform for users to abide with"
         />
-      )}
+      )} */}
     </div>
   );
 };

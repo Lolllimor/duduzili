@@ -5,9 +5,9 @@ export const interestsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     fetchInterest: builder.query({
       query: (arg) => {
-        const { ...params } = arg || {};
+        const { ...params } = arg || {}; 
         return {
-          url: endpoints.interests.fetchInterestList,
+          url: `${endpoints.interests.fetchInterestList}`,
           method: 'GET',
           params: { ...params },
         };

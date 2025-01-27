@@ -8,6 +8,7 @@ import { DeletedColumn } from './table-column';
 import { useCustomTable } from '@/lib/custom-data';
 import { deletedAtom } from '@/lib/query-store';
 import { usePortal } from '@ibnlanre/portal';
+import EmptyStateIcon2 from '@/components/icons/empty-state-2';
 
 export const Deleted = () => {
   const [queries, setQueries] = usePortal.atom(deletedAtom);
@@ -35,7 +36,11 @@ export const Deleted = () => {
           />
         </div>
       ) : (
-        <EmptyState title="Deleted Accounts " paragraph=" No deleted account" />
+        <EmptyState
+          icon={<EmptyStateIcon2 />}
+          title="Deleted Accounts "
+          paragraph=" No deleted account"
+        />
       )}
     </div>
   );

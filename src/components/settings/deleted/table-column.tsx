@@ -36,14 +36,16 @@ export const DeletedColumn: ColumnDef<any>[] = [
       return (
         <div className="flex items-center gap-3">
           <Avatar>
-            <AvatarImage src={row.original.profile_picture || ''} />
-            <AvatarFallback>{ getInitials(row.original.full_name)}</AvatarFallback>
+            <AvatarImage src={row.original.cover_photo ?? '/avatar.svg'} />
+            <AvatarFallback>
+              {getInitials(row.original.full_name)}
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
-            <p className="font-medium font-sora text-sm text-[#101928]">
+            <p className="font-medium font-inter text-sm text-[#101928]">
               {row.original.full_name}
             </p>
-            <p className="font-normal text-sm font-sora text-[#475367]">
+            <p className="font-normal text-sm font-inter text-[#475367]">
               {row.original.username}
             </p>
           </div>
@@ -57,7 +59,9 @@ export const DeletedColumn: ColumnDef<any>[] = [
     accessorKey: 'followers_count',
     header: 'Followers',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter">
+        {info.getValue() as string}
+      </p>
     ),
     enableSorting: false,
   },
@@ -65,7 +69,9 @@ export const DeletedColumn: ColumnDef<any>[] = [
     accessorKey: 'followings_count',
     header: 'Following',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter">
+        {info.getValue() as string}
+      </p>
     ),
     enableSorting: false,
   },
@@ -73,7 +79,9 @@ export const DeletedColumn: ColumnDef<any>[] = [
     accessorKey: 'post_count',
     header: 'Posts',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter">
+        {info.getValue() as string}
+      </p>
     ),
     enableSorting: false,
   },
@@ -81,7 +89,9 @@ export const DeletedColumn: ColumnDef<any>[] = [
     accessorKey: 'community_count',
     header: 'Communities',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter">
+        {info.getValue() as string}
+      </p>
     ),
 
     enableSorting: false,
@@ -92,10 +102,10 @@ export const DeletedColumn: ColumnDef<any>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex flex-col">
-          <p className="text-sm text-[#344054]">
+          <p className="text-sm text-[#344054] font-inter font-medium">
             {dayjs(row.original.date_of_deactivation).format('DD MMM, YYYY')}
           </p>
-          <p className="text-sm text-[#667185]">
+          <p className="text-sm text-[#667185] font-inter">
             {dayjs(row.original.date_of_deactivation).format('H:mm A')}
           </p>
         </div>
@@ -103,6 +113,4 @@ export const DeletedColumn: ColumnDef<any>[] = [
     },
     enableSorting: true,
   },
-
-
 ];

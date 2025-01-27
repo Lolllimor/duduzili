@@ -11,7 +11,9 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     accessorKey: 'name',
     header: 'Permission Group',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter font-medium">
+        {info.getValue() as string}
+      </p>
     ),
   },
 
@@ -19,7 +21,9 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     accessorKey: 'admin_count',
     header: 'Number of Admins',
     cell: (info) => (
-      <p className="text-sm text-[#344054]">{info.getValue() as string}</p>
+      <p className="text-sm text-[#344054] font-inter">
+        {info.getValue() as string}
+      </p>
     ),
   },
   {
@@ -35,7 +39,9 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
               : 'bg-[#FEEEEF] text-[#94353A]'
           } px-3 h-[26px] rounded-2xl flex items-center justify-center w-fit`}
         >
-          <span className="text-sm">{isActive ? 'Active' : 'Inactive'}</span>
+          <span className="text-sm font-inter">
+            {isActive ? 'Active' : 'Inactive'}
+          </span>
         </div>
       );
     },
@@ -46,10 +52,10 @@ export const ManagementColumn: ColumnDef<FetchPermissionGroupResult>[] = [
     cell: ({ row }) => {
       return (
         <div className="flex flex-col">
-          <p className="text-sm text-[#344054]">
+          <p className="text-sm text-[#344054] font-inter">
             {dayjs(row.original.created).format('DD MMM, YYYY')}
           </p>
-          <p className="text-sm text-[#667185]">
+          <p className="text-sm text-[#667185] font-inter font-medium">
             {dayjs(row.original.created).format('H:mm A')}
           </p>
         </div>

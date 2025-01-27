@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 
 @import url('https://fonts.cdnfonts.com/css/sora-3');
 @import url('https://fonts.cdnfonts.com/css/inter');
 @import url('https://fonts.cdnfonts.com/css/poppins');
 @import url('https://fonts.cdnfonts.com/css/switzer');
-@import url('https://fonts.cdnfonts.com/css/outfit');
+@import url('https://fonts.cdnfonts.com/css/outfit'); */
 
 body {
   height: 100vh;
@@ -71,13 +72,34 @@ body {
 
 .ProseMirror {
   width: 100%;
-  border-radius: 6px;border: none;
+  border-radius: 6px;
+  border: none;
 }
 .ProseMirror:focus {
   border-color: transparent; /* Removes the focus border */
   outline: none; /* Ensures no outline appears on focus */
 }
 
-.bn-inline-content{
+.bn-inline-content {
   font-size: 16px;
+}
+
+.swiper-pagination {
+  z-index: 40 !important;
+  bottom: 120px !important;
+}
+.swiper-pagination-bullet {
+  background-color: #dad6f1 !important;
+  width: 20px !important;
+  height: 8px !important;
+  border-radius: 8px !important;
+  border: 1px solid #fafafa;
+  opacity: 100 !important;
+}
+
+.swiper-pagination-bullet-active {
+  width: 62px !important;
+  height: 8px !important;
+  border-radius: 40px !important;
+  background-color: #6b50da !important;
 }
