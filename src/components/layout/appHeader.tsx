@@ -1,7 +1,7 @@
-'use client';
-import React, { ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+"use client";
+import React, { ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface HeaderProps {
   //   icon: ReactNode;
@@ -14,7 +14,7 @@ export const AppHeader = ({ pageTitle, moreOptions }: HeaderProps) => {
   return (
     <div className="  w-full bg-[#FFFFFF] font-sora  gap-2 p-8 flex items-center sticky top-0 z-50 justify-between">
       <div className="flex gap-2 items-center cursor-pointer">
-        {typeof pageTitle === 'string' || pageTitle.length === 1 ? (
+        {typeof pageTitle === "string" || pageTitle.length === 1 ? (
           <p className="text-[#101828] text-3xl font-bold">{pageTitle}</p>
         ) : (
           <div className="flex items-center gap-2 font-poppins">

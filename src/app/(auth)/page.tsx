@@ -1,18 +1,18 @@
-'use client';
-import { z } from 'zod';
-import Image from 'next/image';
-import { Login } from '@/lib/type';
-import toast from 'react-hot-toast';
-import { useForm } from 'react-hook-form';
-import { FaSpinner } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { cookieStorage } from '@ibnlanre/portal';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
-import { useLoginMutation } from '@/redux/features/settingsApi';
-import { PasswordInput } from '@/components/post/password-input';
+"use client";
+import { z } from "zod";
+import Image from "next/image";
+import { Login } from "@/lib/type";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { FaSpinner } from "react-icons/fa";
+import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { cookieStorage } from "@ibnlanre/portal";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { errorMessageHandler, ErrorType } from "@/lib/error-handler";
+import { useLoginMutation } from "@/redux/features/settingsApi";
+import { PasswordInput } from "@/components/post/password-input";
 
 const page = () => {
   const [login, { isLoading }] = useLoginMutation();
@@ -21,19 +21,19 @@ const page = () => {
 
   const formSchema = z.object({
     username_email: z.string().min(5, {
-      message: 'Enter your username or email',
+      message: "Enter your username or email",
     }),
-    password: z.string().min(2, 'Enter your password'),
+    password: z.string().min(2, "Enter your password"),
   });
 
   const { handleSubmit, register, formState, control } = useForm<
     z.infer<typeof formSchema>
   >({
     resolver: zodResolver(formSchema),
-    mode: 'onChange',
+    mode: "onChange",
     defaultValues: {
-      username_email: '',
-      password: '',
+      username_email: "",
+      password: "",
     },
   });
 
@@ -42,14 +42,14 @@ const page = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const response = await login(values).unwrap();
-      toast.success('Successfully logged in');
+      toast.success("Successfully logged in");
       cookieStorage.setItem(
-        'user-detail',
+        "user-detail",
         JSON.stringify({ userDetail: response.data })
       );
-      push('dashboard');
+      push("dashboard");
       cookieStorage.setItem(
-        'duduzili-auth',
+        "duduzili-auth",
         JSON.stringify({
           access_token: response?.data.access_token,
         })
@@ -132,7 +132,7 @@ const page = () => {
                   Username/Email Address
                 </label>
                 <Input
-                  {...register('username_email')}
+                  {...register("username_email")}
                   placeholder="Username/Email Address"
                   className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] font-normal"
                 />
@@ -150,7 +150,7 @@ const page = () => {
                   Password
                 </label>
                 <PasswordInput
-                  {...register('password')}
+                  {...register("password")}
                   id="current_password"
                   // value={currentPassword}
                   // value={}
@@ -178,7 +178,7 @@ const page = () => {
                 type="submit"
                 className="bg-[#4534B8] border-none rounded-lg h-11 "
               >
-                {isLoading ? <FaSpinner className="animate-spin" /> : 'Log in'}
+                {isLoading ? <FaSpinner className="animate-spin" /> : "Log in"}
               </Button>
             </form>
           </div>
