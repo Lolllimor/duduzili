@@ -14,13 +14,10 @@ export const AppHeader = ({ pageTitle, moreOptions }: HeaderProps) => {
   return (
     <div className="  w-full bg-[#FFFFFF] font-sora  gap-2 p-8 flex items-center sticky top-0 justify-between z-20">
       <div className="flex gap-2 items-center cursor-pointer">
-<<<<<<< HEAD
         {typeof pageTitle === "string" || pageTitle.length === 1 ? (
-          <p className="text-[#101828] text-3xl font-bold">{pageTitle}</p>
-=======
-        {typeof pageTitle === 'string' || pageTitle.length === 1 ? (
-          <p className="text-[#101828] text-3xl font-medium font-inter">{pageTitle}</p>
->>>>>>> 148381295abc859ca96b32c723d500f648e3911f
+          <p className="text-[#101828] text-3xl font-medium font-inter">
+            {pageTitle}
+          </p>
         ) : (
           <div className="flex items-center gap-2 font-poppins">
             <div

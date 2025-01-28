@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use client";
 import { z } from "zod";
 import Image from "next/image";
@@ -14,24 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { errorMessageHandler, ErrorType } from "@/lib/error-handler";
 import { useLoginMutation } from "@/redux/features/settingsApi";
 import { PasswordInput } from "@/components/post/password-input";
-=======
-'use client';
-import { z } from 'zod';
-import Image from 'next/image';
-import { Login } from '@/lib/type';
-import toast from 'react-hot-toast';
-import { useForm } from 'react-hook-form';
-import { FaSpinner } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { cookieStorage } from '@ibnlanre/portal';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { errorMessageHandler, ErrorType } from '@/lib/error-handler';
-import { useLoginMutation } from '@/redux/features/settingsApi';
-import { PasswordInput } from '@/components/post/password-input';
-import { Checkbox } from '@/components/ui/checkbox';
->>>>>>> 148381295abc859ca96b32c723d500f648e3911f
+import { Checkbox } from "@/components/ui/checkbox";
 
 const page = () => {
   const [login, { isLoading }] = useLoginMutation();
@@ -133,12 +115,8 @@ const page = () => {
                   Password
                 </label>
                 <PasswordInput
-<<<<<<< HEAD
-                  {...register("password")}
-=======
                   placeholder="Password"
-                  {...register('password')}
->>>>>>> 148381295abc859ca96b32c723d500f648e3911f
+                  {...register("password")}
                   id="current_password"
                   autoComplete="current-password"
                 />
