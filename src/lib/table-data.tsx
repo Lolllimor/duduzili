@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { flexRender, Table as ReactTable } from '@tanstack/react-table';
+import { flexRender, Table as ReactTable } from "@tanstack/react-table";
 
 import {
   Table,
@@ -9,10 +9,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { RxCaretSort } from 'react-icons/rx';
-import Paginator from './paginatkon';
-import { Atom } from '@ibnlanre/portal';
+} from "@/components/ui/table";
+import { RxCaretSort } from "react-icons/rx";
+import Paginator from "./paginatkon";
+import { Atom } from "@ibnlanre/portal";
 
 interface DataTableProps<TData, TValue> {
   isLoading?: boolean;
@@ -24,7 +24,8 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   isLoading,
   table,
-  totalCount, queryAtom
+  totalCount,
+  queryAtom,
 }: DataTableProps<TData, TValue>) {
   return (
     <div className="w-full h-full ">
@@ -46,8 +47,8 @@ export function DataTable<TData, TValue>({
                         <div
                           {...{
                             className: header.column.getCanSort()
-                              ? 'cursor-pointer flex gap-1 items-center'
-                              : 'flex justify-start ',
+                              ? "cursor-pointer flex gap-1 items-center"
+                              : "flex justify-start ",
 
                             onClick: header.column.getToggleSortingHandler(),
                           }}
@@ -92,7 +93,7 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                   className="border-b border-[#E5E6E8] py-[100px] text-nowrap overflow-auto "
                 >
                   {row.getVisibleCells().map((cell) => (
@@ -118,8 +119,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-        <Paginator totalCount={totalCount}  queryAtom={queryAtom}/>
-     
+      <Paginator totalCount={totalCount} queryAtom={queryAtom} />
     </div>
   );
 }

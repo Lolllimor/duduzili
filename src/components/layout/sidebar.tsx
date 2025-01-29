@@ -1,5 +1,5 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import {
   Bell,
   Hash,
@@ -12,89 +12,89 @@ import {
   Settings,
   LayoutGrid,
   PanelRightOpen,
-} from 'lucide-react';
-import clsx from 'clsx';
-import Link from 'next/link';
-import Image from 'next/image';
-import { BiUserCheck } from 'react-icons/bi';
+} from "lucide-react";
+import clsx from "clsx";
+import Link from "next/link";
+import Image from "next/image";
+import { BiUserCheck } from "react-icons/bi";
 
-import { Input } from '../ui/input';
-import { CgSupport } from 'react-icons/cg';
-import { usePathname, useRouter } from 'next/navigation';
-import { HiOutlinePresentationChartLine } from 'react-icons/hi';
-import { cookieStorage } from '@ibnlanre/portal';
+import { Input } from "../ui/input";
+import { CgSupport } from "react-icons/cg";
+import { usePathname, useRouter } from "next/navigation";
+import { HiOutlinePresentationChartLine } from "react-icons/hi";
+import { cookieStorage } from "@ibnlanre/portal";
 
 export const Sidebar = () => {
   const [toggle, setToggle] = useState<boolean>(true);
 
   const { push } = useRouter();
-  const [show, setShow] = useState({ action: '', icon: '' });
+  const [show, setShow] = useState({ action: "", icon: "" });
   const handleToggle = () => {
     setToggle(!toggle);
   };
   const sideBar = [
-    { name: 'Dashboard', link: '/dashboard', icon: <House size={24} /> },
+    { name: "Dashboard", link: "/dashboard", icon: <House size={24} /> },
 
     {
-      name: 'User',
-      link: '/user',
+      name: "User",
+      link: "/user",
       icon: <Users size={24} />,
     },
 
     {
-      name: 'Community',
-      link: '/community',
+      name: "Community",
+      link: "/community",
       icon: <Globe size={24} />,
     },
     {
-      name: 'Interests',
-      link: '/interests',
+      name: "Interests",
+      link: "/interests",
       icon: <Hash size={24} />,
     },
     {
-      name: 'Feeds',
-      link: '/feeds',
+      name: "Feeds",
+      link: "/feeds",
       icon: <LayoutGrid size={24} />,
     },
 
     {
-      name: 'Reporting list',
-      link: '/reporting-list',
+      name: "Reporting list",
+      link: "/reporting-list",
       icon: <Flag size={24} />,
     },
 
     {
-      name: 'Notification',
-      link: '/notification',
+      name: "Notification",
+      link: "/notification",
       icon: <Bell size={24} />,
     },
   ];
 
   const location = [
     {
-      name: 'Access Management',
-      link: '/management',
+      name: "Access Management",
+      link: "/management",
       icon: <BiUserCheck size={24} />,
     },
     {
-      name: 'Admin log',
-      link: '/admin',
+      name: "Admin log",
+      link: "/admin",
       icon: <HiOutlinePresentationChartLine size={24} />,
     },
-    { name: 'Support', link: '/support', icon: <CgSupport size={24} /> },
-    { name: 'Settings', link: '/settings', icon: <Settings size={24} /> },
+    { name: "Support", link: "/support", icon: <CgSupport size={24} /> },
+    { name: "Settings", link: "/settings", icon: <Settings size={24} /> },
   ];
 
   const pathName = usePathname();
 
-  const unparsedUser = cookieStorage.getItem('user-detail');
+  const unparsedUser = cookieStorage.getItem("user-detail");
   const user = unparsedUser && JSON.parse(unparsedUser);
   return (
     <div
       className={clsx(
         toggle
-          ? 'w-[272px] h-screen relative bg-[#4534B8] flex-shrink-0'
-          : 'w-[88px] h-screen relative bg-[#4534B8] flex-shrink-0'
+          ? "w-[272px] h-screen relative bg-[#4534B8] flex-shrink-0"
+          : "w-[88px] h-screen relative bg-[#4534B8] flex-shrink-0"
       )}
     >
       <div className="h-[72px] pr-4 w-full flex items-center justify-between">
@@ -124,7 +124,7 @@ export const Sidebar = () => {
 
       <div
         className="flex flex-col overflow-y-auto transact-scroll"
-        style={{ height: 'calc(100vh - 72px)' }}
+        style={{ height: "calc(100vh - 72px)" }}
       >
         {/* Menu */}
         <div className="flex flex-col gap-2 mx-3">
@@ -146,8 +146,8 @@ export const Sidebar = () => {
               key={name}
               className={clsx(
                 pathName.startsWith(link)
-                  ? 'text-[#ECEBF8] text-nowrap  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]'
-                  : 'text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in'
+                  ? "text-[#ECEBF8] text-nowrap  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]"
+                  : "text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in"
               )}
             >
               <div className="flex items-center">
@@ -170,8 +170,8 @@ export const Sidebar = () => {
                 key={name}
                 className={clsx(
                   pathName.startsWith(link)
-                    ? 'text-[#ECEBF8] text-nowrap  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]'
-                    : 'text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in'
+                    ? "text-[#ECEBF8] text-nowrap  bg-[#6A5DC6] text-sm font-sora font-normal px-3 rounded-[6px]"
+                    : "text-sm font-sora font-normal text-[#ECEBF8] hover:text-[#ECEBF8] bg-none px-3   hover:bg-[#6A5DC6] hover:rounded-[6px] transition-all duration-150 ease-in"
                 )}
               >
                 <div className="flex items-center">
@@ -192,7 +192,7 @@ export const Sidebar = () => {
                     src={
                       user && user.userDetail.image
                         ? user.userDetail.image
-                        : '/user.png'
+                        : "/user.png"
                     }
                     width={30}
                     height={30}
@@ -213,8 +213,8 @@ export const Sidebar = () => {
                   className="cursor-pointer"
                   onClick={() => {
                     cookieStorage.clear();
-                    localStorage.removeItem('dudzili-auth');
-                    push('/');
+                    localStorage.removeItem("dudzili-auth");
+                    push("/");
                   }}
                 />
               </div>

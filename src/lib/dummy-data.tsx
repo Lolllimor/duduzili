@@ -97,3 +97,29 @@ export const messages = [
     date: "Lorem ipsum dolor sit amet consectetur. Pulvinar nunc sapien at velit metus nibh eros...",
   },
 ];
+
+export const users = [
+  {
+    active: "Total users",
+    cap: "40%",
+    number: "2,420",
+    month: "vs last month",
+  },
+  {
+    active: "Male",
+    cap: "10%",
+    number: "2,420",
+    month: "vs last month",
+  },
+  {
+    active: "Female",
+    cap: "20%",
+    number: "2,420",
+    month: "vs last month",
+  },
+  {
+    active: "Active now",
+    number: "2,420",
+    month: "Active user",
+  },
+];
