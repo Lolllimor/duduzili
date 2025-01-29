@@ -179,7 +179,7 @@ const TiptapEditor = ({
       <div className="p-4 h-full flex">
         <EditorContent
           editor={editor}
-          className="prose max-w-none overflow-auto  "
+          className="prose max-w-none overflow-auto  w-full h-full"
         />
       </div>
     </div>

@@ -15,6 +15,7 @@ import Paginator from "./paginatkon";
 import { Atom } from "@ibnlanre/portal";
 import { Dispatch, SetStateAction } from "react";
 
+
 interface DataTableProps<TData, TValue> {
   isLoading?: boolean;
   table: ReactTable<any>;
@@ -36,6 +37,7 @@ export function DataTable<TData, TValue>({
   currentPage,
   filter,
   setFilter,
+
 }: DataTableProps<TData, TValue>) {
   return (
     <div className='w-full h-full '>
@@ -132,6 +134,7 @@ export function DataTable<TData, TValue>({
         queryAtom={queryAtom}
         table={table}
       />
+
     </div>
   );
 }

@@ -77,6 +77,18 @@ export const settingsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['FAQ'],
     }),
+    fetchTerms: builder.query<any, void>({
+      query: () => ({ url: endpoints.setting.terms.fetch, method: 'GET' }),
+      providesTags: ['Terms'],
+    }),
+    postTerms: builder.mutation({
+      query: (data) => ({
+        url: endpoints.setting.terms.create,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Terms'],
+    }),
     fetchSmi: builder.query<any, void>({
       query: () => ({ url: endpoints.setting.smi.fetch, method: 'GET' }),
       providesTags: ['SMI'],
@@ -136,6 +148,8 @@ export const {
   useToggleSmiMutation,
   usePostAboutMutation,
   useDeleteFaqMutation,
+  useFetchTermsQuery,
+  usePostTermsMutation,
   useFetchPrivacyQuery,
   useFetchContactQuery,
   useFetchDeletedQuery,

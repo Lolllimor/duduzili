@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { endpoints } from '../endpoint';
-import { API, LOGIN_API } from '@/axios-config';
-import { createApi } from '@reduxjs/toolkit/query/react';
+import { endpoints } from "../endpoint";
+import { API, LOGIN_API } from "@/axios-config";
+import { createApi } from "@reduxjs/toolkit/query/react";
 
 const axiosBaseQuery =
-  ({ baseUrl } = { baseUrl: '' }) =>
+  ({ baseUrl } = { baseUrl: "" }) =>
   async ({
     url,
     method,
@@ -50,9 +50,9 @@ const axiosBaseQuery =
   };
 
 export const baseApi = createApi({
-  reducerPath: 'baseApi',
+  reducerPath: "baseApi",
   baseQuery: axiosBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_ADMIN_BASE_URL || '',
+    baseUrl: process.env.NEXT_PUBLIC_ADMIN_BASE_URL || "",
   }),
 
   tagTypes: [
@@ -69,6 +69,7 @@ export const baseApi = createApi({
     'Interest',
     'Report',
     'User',
+    'Terms'
   ],
   endpoints: () => ({}),
 });
