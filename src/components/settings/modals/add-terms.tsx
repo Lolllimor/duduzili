@@ -54,7 +54,6 @@ export const AddEditTerms = () => {
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await postTerms(values).unwrap();
       toast.success('Successfully updated');
       setOpen(false);
     } catch (error) {
