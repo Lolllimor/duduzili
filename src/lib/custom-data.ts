@@ -37,9 +37,9 @@ function useCustomTable({
     },
     onColumnVisibilityChange: setColumnVisibility,
     enableRowSelection: true, //enable row selection for all rows
-
+    onRowSelectionChange: setRowSelection,
     onColumnFiltersChange: setColumnFilters,
-    manualPagination: true,
+    // manualPagination: true, Not needed since server is auto paginated
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
     getCoreRowModel: getCoreRowModel(),

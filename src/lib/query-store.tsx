@@ -27,3 +27,7 @@ export const managementDetailAtom = new Atom('management-detail', {
   page_size: 10,
   page_index: 1,
 });
+export const userAtom = new Atom('user', {
+  page_size: 10,
+  page_index: 1,
+});
