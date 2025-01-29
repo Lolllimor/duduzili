@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { flexRender, Table as ReactTable } from '@tanstack/react-table';
+import { flexRender, Table as ReactTable } from "@tanstack/react-table";
 
 import {
   Table,
@@ -9,49 +9,57 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { RxCaretSort } from 'react-icons/rx';
-import Paginator from './paginatkon';
-import { Atom } from '@ibnlanre/portal';
+} from "@/components/ui/table";
+import { RxCaretSort } from "react-icons/rx";
+import Paginator from "./paginatkon";
+import { Atom } from "@ibnlanre/portal";
+import { Dispatch, SetStateAction } from "react";
 
 interface DataTableProps<TData, TValue> {
   isLoading?: boolean;
   table: ReactTable<any>;
   totalCount: number;
   queryAtom: Atom<any, undefined>;
+  totalPage: number;
+  currentPage: number;
+  filter: { page_index: number; page_size: number };
+  setFilter: Dispatch<
+    SetStateAction<{ page_index: number; page_size: number }>
+  >;
 }
 
 export function DataTable<TData, TValue>({
   isLoading,
   table,
-  totalCount, queryAtom
+  queryAtom,
+  totalPage,
+  currentPage,
+  filter,
+  setFilter,
 }: DataTableProps<TData, TValue>) {
   return (
-    <div className="w-full h-full ">
-      <div className="border-b border-[#E4E7EC] w-full h-full overflow-auto">
-        <Table className="text-[#565D62]  text-sm w-full h-full ">
-          <TableHeader className="bg-[#F9FAFB] font-medium text-xs sticky top-0 ">
+    <div className='w-full h-full '>
+      <div className='border-b border-[#E4E7EC] w-full h-full overflow-auto'>
+        <Table className='text-[#565D62]  text-sm w-full h-full '>
+          <TableHeader className='bg-[#F9FAFB] font-medium text-xs sticky top-0 '>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="border-b border-transparent "
-              >
+                className='border-b border-transparent '>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
                       key={header.id}
-                      className="px-6 text-nowrap !bg-[#F9FAFB] border-b  py-3 border-[#E5E6E8] text-[#344054] font-medium"
-                    >
+                      className='px-6 text-nowrap !bg-[#F9FAFB] border-b  py-3 border-[#E5E6E8] text-[#344054] font-medium'>
                       {header.isPlaceholder ? null : (
                         <div
                           {...{
                             className: header.column.getCanSort()
-                              ? 'cursor-pointer flex gap-1 items-center'
-                              : 'flex justify-start ',
+                              ? "cursor-pointer flex gap-1 items-center"
+                              : "flex justify-start ",
 
                             onClick: header.column.getToggleSortingHandler(),
-                          }}
-                        >
+                          }}>
                           {flexRender(
                             header.column.columnDef.header,
 
@@ -60,15 +68,15 @@ export function DataTable<TData, TValue>({
 
                           {{
                             asc: header.column.getCanSort() && (
-                              <RxCaretSort className="h-4 w-3" />
+                              <RxCaretSort className='h-4 w-3' />
                             ),
 
                             desc: header.column.getCanSort() && (
-                              <RxCaretSort className="h-4 w-3" />
+                              <RxCaretSort className='h-4 w-3' />
                             ),
                           }[header.column.getIsSorted() as string] ??
                             (header.column.getCanSort() && (
-                              <RxCaretSort className="h-4 w-3" />
+                              <RxCaretSort className='h-4 w-3' />
                             ))}
                         </div>
                       )}
@@ -78,13 +86,12 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="font-normal ">
+          <TableBody className='font-normal '>
             {isLoading ? (
-              <TableRow className=" ">
+              <TableRow className=' '>
                 <TableCell
                   colSpan={table.getColumn.length}
-                  className="h-24 text-center"
-                >
+                  className='h-24 text-center'>
                   <p>Loading</p>
                 </TableCell>
               </TableRow>
@@ -92,11 +99,10 @@ export function DataTable<TData, TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
-                  className="border-b border-[#E5E6E8] py-[100px] text-nowrap overflow-auto "
-                >
+                  data-state={row.getIsSelected() && "selected"}
+                  className='border-b border-[#E5E6E8] py-[100px] text-nowrap overflow-auto '>
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-6 py-4">
+                    <TableCell key={cell.id} className='px-6 py-4'>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
@@ -106,11 +112,10 @@ export function DataTable<TData, TValue>({
                 </TableRow>
               ))
             ) : (
-              <TableRow className="bg-white">
+              <TableRow className='bg-white'>
                 <TableCell
                   colSpan={table.getAllColumns.length}
-                  className="h-24 text-center"
-                >
+                  className='h-24 text-center'>
                   No results
                 </TableCell>
               </TableRow>
@@ -118,8 +123,15 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-        <Paginator totalCount={totalCount}  queryAtom={queryAtom}/>
-     
+
+      <Paginator
+        totalPage={totalPage}
+        currentPage={currentPage}
+        filter={filter}
+        setFilter={setFilter}
+        queryAtom={queryAtom}
+        table={table}
+      />
     </div>
   );
 }
