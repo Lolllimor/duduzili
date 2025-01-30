@@ -12,7 +12,7 @@ interface HeaderProps {
 export const AppHeader = ({ pageTitle, moreOptions }: HeaderProps) => {
   const { back } = useRouter();
   return (
-    <div className="  w-full bg-[#FFFFFF] font-sora  gap-2 p-8 flex items-center sticky top-0 justify-between z-20">
+    <div className="  w-full bg-[#FFFFFF] font-sora  gap-2 p-6 flex items-center sticky top-0 justify-between z-20">
       <div className="flex gap-2 items-center cursor-pointer">
         {typeof pageTitle === "string" || pageTitle.length === 1 ? (
           <p className="text-[#101828] text-3xl font-medium font-inter">

@@ -11,6 +11,15 @@ import { SearchForm } from "@/components/search-comp";
 import { useState } from "react";
 import { useFetchUserListQuery } from "@/redux/features/userApi";
 import { UserColumn } from "@/components/community/user-table-column";
+import { UserCard } from "@/components/user/users-cards";
+import {
+  DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 function page() {
   // const [queries, setQueries] = usePortal.atom(userAtom);
@@ -26,24 +35,54 @@ function page() {
   });
 
   const currentPage = filter.page_index ? +filter.page_index : 1;
-  const totalPage = Math.ceil(data?.data.count / filter.page_size)
-  
+  const totalPage = Math.ceil(data?.data.count / filter.page_size);
 
   const { table } = useCustomTable({
     tableData: data?.data.results,
     columns: UserColumn,
     pageIndex: filter.page_index,
-    pageSize: filter.page_size
-  }); 
+    pageSize: filter.page_size,
+  });
 
   const handleSearch = (searchTerm: any) => {
     setDebounced(searchTerm);
   };
 
+  console.log(table);
+
   return (
     <GeneralLayout pageTitle='Users' className='h-[calc(100vh-120px)]'>
+      <UserCard />
       <div className='px-6 flex flex-col gap-6  pb-6  w-full'>
-        <SearchForm placeholder='Search User' onSearch={handleSearch} />
+        <div className='flex items-center'>
+          <SearchForm placeholder='Search User' onSearch={handleSearch} />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='outline' className='ml-auto'>
+                All Genders <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              {table
+                .getAllColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => {
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className='capitalize'
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }>
+                      {column.id}
+                    </DropdownMenuCheckboxItem>
+                  );
+                })}
+              {/* Doing this because the endpoint can't search either male or female */}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         {isLoading || isFetching ? (
           <div className='flex flex-col bg-[#F9FAFB] rounded-2xl'>
             <TableSkeleton />

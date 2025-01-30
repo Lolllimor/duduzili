@@ -22,13 +22,15 @@ export const userApi = baseApi.injectEndpoints({
     //   }),
     //   providesTags: ['Community'],
     // }),
-    // fetchCommunityPost: builder.query({
-    //   query: ({ id }) => ({
-    //     url: `${endpoints.community.fetchCommunityPost}?community_id=${id}`,
-    //     method: 'GET',
-    //   }),
-    //   providesTags: ['Community'],
-    // }),
+
+    fetchUserProfile: builder.query({
+      query: ({ id }) => ({
+        url: `${endpoints.user.fetchUserPost}?username=${id}`,
+        method: 'GET',
+      }),
+      providesTags: ['User'],
+    }),
+
     // fetchCommunityAdmin: builder.query({
     //   query: (id: string) => ({
     //     url: `${endpoints.community.fetchCommunityAdmin}?community_id=${id}`,
@@ -68,7 +70,7 @@ export const userApi = baseApi.injectEndpoints({
 
 export const {
   useFetchUserListQuery,
-//   useFetchCommunityPostQuery,
+  useFetchUserProfileQuery,
 //   useFetchCommunityAdminQuery,
 //   useFetchCommunityProfileQuery,
 //   useFetchCommunityMembersQuery,

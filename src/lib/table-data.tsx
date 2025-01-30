@@ -14,7 +14,7 @@ import { RxCaretSort } from "react-icons/rx";
 import Paginator from "./paginatkon";
 import { Atom } from "@ibnlanre/portal";
 import { Dispatch, SetStateAction } from "react";
-
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   isLoading?: boolean;
@@ -37,8 +37,13 @@ export function DataTable<TData, TValue>({
   currentPage,
   filter,
   setFilter,
-
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter();
+
+  const redirect = (username: string) => {
+    router.push(`/user/${username}`);
+  };
+
   return (
     <div className='w-full h-full '>
       <div className='border-b border-[#E4E7EC] w-full h-full overflow-auto'>
@@ -98,21 +103,30 @@ export function DataTable<TData, TValue>({
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className='border-b border-[#E5E6E8] py-[100px] text-nowrap overflow-auto '>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className='px-6 py-4'>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map(
+                (row) => (
+                  console.log(row),
+                  (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                      className='border-b border-[#E5E6E8] py-[100px] text-nowrap overflow-auto cursor-pointer'
+                      onClick={() =>
+                        row.original.link_to_profile &&
+                        redirect(row.original.username)
+                      }>
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id} className='px-6 py-4'>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  )
+                )
+              )
             ) : (
               <TableRow className='bg-white'>
                 <TableCell
@@ -134,7 +148,6 @@ export function DataTable<TData, TValue>({
         queryAtom={queryAtom}
         table={table}
       />
-
     </div>
   );
 }

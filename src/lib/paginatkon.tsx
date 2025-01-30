@@ -30,7 +30,6 @@ export default function Paginator({
   setFilter,
   table,
 }: PaginatorProps) {
-  console.log(currentPage);
   return (
     <div className='flex items-center justify-between px-6 py-6  '>
       <Pagination>
@@ -51,7 +50,7 @@ export default function Paginator({
                 }
                 onClick={() => {
                   setFilter({ ...filter, page_index: currentPage - 1 });
-                  table.setPageIndex(currentPage - 2);
+                  table.previousPage();
                 }}
                 // disabled={currentPage - 1 < 1}
               />
@@ -61,7 +60,7 @@ export default function Paginator({
               <PaginationNext
                 onClick={() => {
                   setFilter({ ...filter, page_index: currentPage + 1 });
-                  table.setPageIndex(currentPage);
+                  table.nextPage();
                 }}
                 className={
                   currentPage >= totalPage

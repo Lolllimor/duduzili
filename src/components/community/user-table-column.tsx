@@ -145,20 +145,4 @@ export const UserColumn: ColumnDef<any>[] = [
     },
     enableSorting: false,
   },
-  {
-    accessorKey: "action",
-    header: "",
-    cell: ({ row }) => {
-      return (
-        <MoreOptions>
-          <TableDropdown
-            is_active={row.original.is_active}
-            name={row.original.name}
-            id={row.original.community_id}
-          />
-        </MoreOptions>
-      );
-    },
-    enableSorting: false,
-  },
 ];
