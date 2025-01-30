@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { RxCaretSort } from "react-icons/rx";
-import Paginator from "./paginatkon";
+import Paginator from "./pagination";
 import { Atom } from "@ibnlanre/portal";
 import { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";

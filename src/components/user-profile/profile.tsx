@@ -9,6 +9,9 @@ import { useParams, useRouter } from "next/navigation";
 import GeneralLayout from "../layout/generalLayout";
 import { normalizeUrlParams } from "@/lib/normalize-url";
 import { useFetchUserProfileQuery } from "@/redux/features/userApi";
+import { Avatar, AvatarGroup, Divider } from "@mui/material";
+import ProfileAvatar from "./profile-avatar";
+import ProfileSidebar from "./profile-sidebar";
 
 export const UserProfile = () => {
   const { id } = useParams<{ id: string }>();
@@ -31,12 +34,14 @@ export const UserProfile = () => {
         `${normalizeUrlParams(id.charAt(0).toUpperCase() + id.slice(1))}`,
       ]}
       className='h-[calc(100vh-102px)]'>
-      <section className='px-6'>
+      <section className='flex px-6 gap-3'>
         <div className='w-[70%]'>
           <div className='bg-white border border-[#F0F0F1] rounded-t-[12px]'>
             <div className='flex items-center justify-between p-5 border-b'>
               <div className='flex items-center gap-2 '>
-                <ArrowLeft />
+                <div onClick={() => router.back()} className='cursor-pointer'>
+                  <ArrowLeft />
+                </div>
                 <h3 className='font-sora font-bold text-xl text-[#2A2A2A]'>
                   Babatunde Adekunle
                 </h3>
@@ -44,15 +49,7 @@ export const UserProfile = () => {
               <EllipsisVertical />
             </div>
             <section className='flex items-center gap-5 p-5'>
-              <div className='relative w-fit'>
-                <Image
-                  src='/newuser.png'
-                  width={100}
-                  height={100}
-                  alt='profile'
-                />
-                <div className='h-4 w-4 rounded-full bg-[#04802E] border border-white absolute bottom-2 right-2' />
-              </div>
+              <ProfileAvatar />
               <div>
                 <h3 className='font-sora font-semibold text-2xl text-[#23222C]'>
                   Babatunde Adekunle
@@ -69,7 +66,7 @@ export const UserProfile = () => {
               </div>
             </section>
             {/* followes */}
-            <section className='flex items-center p-5 gap-[40px]'>
+            <section className='flex items-center px-5 gap-[40px]'>
               <div className='flex flex-col gap-2'>
                 <p className='font-sora font-normal text-sm text-[#8F8E93]'>
                   Posts
@@ -100,33 +97,11 @@ export const UserProfile = () => {
                     1.1k
                   </p>
                   <div className='flex'>
-                    <Image
-                      src='/newuser.png'
-                      width={30}
-                      height={30}
-                      alt='profile'
-                    />
-                    <Image
-                      src='/newuser.png'
-                      width={30}
-                      height={30}
-                      alt='profile'
-                      className='-ml-2'
-                    />
-                    <Image
-                      src='/newuser.png'
-                      width={30}
-                      height={30}
-                      alt='profile'
-                      className='-ml-2'
-                    />
-                    <Image
-                      src='/newuser.png'
-                      width={30}
-                      height={30}
-                      alt='profile'
-                      className='-ml-2'
-                    />
+                    <AvatarGroup spacing='small'>
+                      <Avatar alt='Babatunde' src='/newuser.png' />
+                      <Avatar alt='Babatunde' src='/newuser.png' />
+                      <Avatar alt='Babatunde' src='/newuser.png' />
+                    </AvatarGroup>
                   </div>
                 </div>
               </div>
@@ -134,6 +109,9 @@ export const UserProfile = () => {
             <UserTab />
           </div>
         </div>
+
+        {/* Sidebar */}
+        <ProfileSidebar />
       </section>
     </GeneralLayout>
   );

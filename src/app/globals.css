@@ -9,6 +9,10 @@
 @import url('https://fonts.cdnfonts.com/css/switzer');
 @import url('https://fonts.cdnfonts.com/css/outfit'); */
 
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   height: 100vh;
 }

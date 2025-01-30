@@ -48,8 +48,6 @@ function page() {
     setDebounced(searchTerm);
   };
 
-  console.log(table);
-
   return (
     <GeneralLayout pageTitle='Users' className='h-[calc(100vh-120px)]'>
       <UserCard />

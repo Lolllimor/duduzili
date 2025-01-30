@@ -3,21 +3,28 @@ import Image from "next/image";
 import { Heart, MoreHorizontal, Send } from "lucide-react";
 import { LuMessageSquareMore } from "react-icons/lu";
 import { IoBookmarksOutline } from "react-icons/io5";
+import { Avatar, AvatarGroup } from "@mui/material";
+import { useParams } from "next/navigation";
+import ImagesCollage from "./images-collage";
 
 export default function Post() {
+  const { id } = useParams<{ id: string }>();
+
   return (
     <section className='bg-white flex flex-col gap-2 mt-5'>
       <div className=''>
         <div className='flex items-center justify-between'>
-          <section className='flex items-center gap-5 py-3'>
-            <div className='relative w-fit'>
-              <Image src='/newuser.png' width={48} height={48} alt='profile' />
-            </div>
+          <section className='flex items-center gap-3 py-3'>
+            <Avatar
+              src='/newuser.png'
+              alt='Babatunde'
+              sx={{ width: 60, height: 60 }}
+            />
             <div>
               <h3 className='font-sora font-semibold text-base text-[#2A2A2A]'>
                 Babatunde Adekunle{" "}
                 <span className='font-light font-sora text-sm text-[#494850]'>
-                  @adetunes
+                  @{id}
                 </span>
               </h3>
               <div className='flex items-center gap-2'>
@@ -39,13 +46,8 @@ export default function Post() {
             Looking for an experienced people to help me find people in US to
             test my app
           </h3>
-          <Image
-            src='/ai.svg'
-            width={48}
-            height={48}
-            alt='profile'
-            className='w-full'
-          />
+
+          <ImagesCollage />
 
           <div className='flex flex-col gap-4'>
             <h3 className='font-sora font-normal text-base text-[#2A2A2A]'>
@@ -87,16 +89,23 @@ export default function Post() {
         </section>
 
         <section className='flex items-center gap-2 mt-4'>
-          <div className='flex'>
-            <Image src='/newuser.png' width={30} height={30} alt='profile' />
-            <Image
+          <AvatarGroup spacing='medium'>
+            <Avatar
+              alt='Babatunde'
               src='/newuser.png'
-              width={30}
-              height={30}
-              alt='profile'
-              className='-ml-2'
+              sx={{ width: 25, height: 25 }}
             />
-          </div>
+            <Avatar
+              alt='Babatunde'
+              src='/newuser.png'
+              sx={{ width: 25, height: 25 }}
+            />
+            <Avatar
+              alt='Babatunde'
+              src='/newuser.png'
+              sx={{ width: 25, height: 25 }}
+            />
+          </AvatarGroup>
           <h3 className='font-normal font-sora text-sm text-[#8F8E93]'>
             Liked by Maria Mgosewa and 10 others
           </h3>
