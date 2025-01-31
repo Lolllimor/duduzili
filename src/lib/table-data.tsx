@@ -13,6 +13,7 @@ import {
 import { RxCaretSort } from "react-icons/rx";
 import Paginator from "./paginatkon";
 import { Atom } from "@ibnlanre/portal";
+import { useRouter } from "next/navigation";
 
 interface DataTableProps<TData, TValue> {
   isLoading?: boolean;
@@ -27,6 +28,12 @@ export function DataTable<TData, TValue>({
   totalCount,
   queryAtom,
 }: DataTableProps<TData, TValue>) {
+  const router = useRouter();
+
+  const redirect = (username: string) => {
+    router.push(`/user/${username}`);
+  };
+
   return (
     <div className="w-full h-full ">
       <div className="border-b border-[#E4E7EC] w-full h-full overflow-auto">
@@ -61,15 +68,15 @@ export function DataTable<TData, TValue>({
 
                           {{
                             asc: header.column.getCanSort() && (
-                              <RxCaretSort className="h-4 w-3" />
+                              <RxCaretSort className='h-4 w-3' />
                             ),
 
                             desc: header.column.getCanSort() && (
-                              <RxCaretSort className="h-4 w-3" />
+                              <RxCaretSort className='h-4 w-3' />
                             ),
                           }[header.column.getIsSorted() as string] ??
                             (header.column.getCanSort() && (
-                              <RxCaretSort className="h-4 w-3" />
+                              <RxCaretSort className='h-4 w-3' />
                             ))}
                         </div>
                       )}
@@ -79,39 +86,45 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody className="font-normal ">
+          <TableBody className='font-normal '>
             {isLoading ? (
-              <TableRow className=" ">
+              <TableRow className=' '>
                 <TableCell
                   colSpan={table.getColumn.length}
-                  className="h-24 text-center"
-                >
+                  className='h-24 text-center'>
                   <p>Loading</p>
                 </TableCell>
               </TableRow>
             ) : table.getRowModel().rows.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                  className="border-b border-[#E5E6E8] py-[100px] text-nowrap overflow-auto "
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="px-6 py-4">
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
+              table.getRowModel().rows.map(
+                (row) => (
+                  console.log(row),
+                  (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                      className='border-b border-[#E5E6E8] py-[100px] text-nowrap overflow-auto cursor-pointer'
+                      onClick={() =>
+                        row.original.link_to_profile &&
+                        redirect(row.original.username)
+                      }>
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id} className='px-6 py-4'>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  )
+                )
+              )
             ) : (
-              <TableRow className="bg-white">
+              <TableRow className='bg-white'>
                 <TableCell
                   colSpan={table.getAllColumns.length}
-                  className="h-24 text-center"
-                >
+                  className='h-24 text-center'>
                   No results
                 </TableCell>
               </TableRow>
