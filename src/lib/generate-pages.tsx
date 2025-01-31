@@ -19,7 +19,7 @@ export const generatePaginationLinks = (
       pages.push(
         <PaginationItem key={i}>
           <PaginationLink
-            className={`${i === 1 && 'pointer-events-none opacity-50'}`}
+            // className={`${i === 1 && 'pointer-events-none opacity-50'}`}
             onClick={() => setFilter({ ...filter, page_index: i })}
             isActive={i === filter.page_index}
           >

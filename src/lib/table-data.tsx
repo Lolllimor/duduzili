@@ -11,7 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { RxCaretSort } from "react-icons/rx";
-import Paginator from "./paginatkon";
+import Paginator from "./pagination";
 import { Atom } from "@ibnlanre/portal";
 import { useRouter } from "next/navigation";
 
@@ -35,21 +35,19 @@ export function DataTable<TData, TValue>({
   };
 
   return (
-    <div className="w-full h-full ">
-      <div className="border-b border-[#E4E7EC] w-full h-full overflow-auto">
-        <Table className="text-[#565D62]  text-sm w-full h-full ">
-          <TableHeader className="bg-[#F9FAFB] font-medium text-xs sticky top-0 ">
+    <div className='w-full h-full '>
+      <div className='border-b border-[#E4E7EC] w-full h-full overflow-auto'>
+        <Table className='text-[#565D62]  text-sm w-full h-full '>
+          <TableHeader className='bg-[#F9FAFB] font-medium text-xs sticky top-0 '>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
                 key={headerGroup.id}
-                className="border-b border-transparent "
-              >
+                className='border-b border-transparent '>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead
                       key={header.id}
-                      className="px-6 text-nowrap !bg-[#F9FAFB] border-b  py-3 border-[#E5E6E8] text-[#344054] font-medium"
-                    >
+                      className='px-6 text-nowrap !bg-[#F9FAFB] border-b  py-3 border-[#E5E6E8] text-[#344054] font-medium'>
                       {header.isPlaceholder ? null : (
                         <div
                           {...{
@@ -58,8 +56,7 @@ export function DataTable<TData, TValue>({
                               : "flex justify-start ",
 
                             onClick: header.column.getToggleSortingHandler(),
-                          }}
-                        >
+                          }}>
                           {flexRender(
                             header.column.columnDef.header,
 
