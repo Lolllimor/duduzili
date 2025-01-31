@@ -92,4 +92,13 @@ export const endpoints = {
     deleteReportType: 'api/administration/report-type/',
     fetchReportingList: 'api/administration/reporting-list/',
   },
+  user: {
+    fetchUserList: 'api/administration/user-list/',
+    fetchUserPost: 'api/administration/user-details-dashboard/',
+    // toggleCommunityStatus: 'api/administration/toggle-community-status/',
+    // fetchCommunityDashboard: 'api/administration/community-details-dashboard/',
+    // fetchCommunityAdmin: 'api/administration/community-admin/',
+    // fetchCommunityMembers: 'api/administration/community-members/',
+    // fetchCommunityProfile: 'api/administration/community-profile',
+  },
 };
