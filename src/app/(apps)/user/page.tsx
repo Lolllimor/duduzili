@@ -31,7 +31,7 @@ function page() {
   });
   const { table } = useCustomTable({
     tableData: data?.data.results,
-    columns: CommunityColumn,
+    columns: UserColumn,
   });
 
   const handleSearch = (searchTerm: any) => {
