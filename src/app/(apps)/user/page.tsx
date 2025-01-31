@@ -22,7 +22,7 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 function page() {
-  const [queries, setQueries] = usePortal.atom(communityAtom);
+  const [queries, setQueries] = usePortal.atom(userAtom);
 
   const [debounced, setDebounced] = useState<string>();
   const { data, isLoading, isFetching } = useFetchUserListQuery({
