@@ -38,7 +38,7 @@ function InterestPage() {
 
       <div className='flex flex-col overflow-auto h-full p-8 gap-8'>
         <SearchForm placeholder='Search Interest' onSearch={handleSearch} />
-        <div className='flex  gap-8 flex-wrap  h-full overflow-auto'>
+        <div className='flex  gap-8 flex-wrap  h-full overflow-auto hide-scroll'>
           <AddInterestModal />
 
           {isLoading
@@ -62,7 +62,7 @@ function InterestPage() {
                 ) => (
                   <div
                     key={idx}
-                    className='border border-[#F5F5F5] rounded-xl w-[346px] h-[300px] flex justify-center items-center bg-white hover:bg-white  flex-col gap-1 shadow-interest-drop'>
+                    className='border border-[#F5F5F5] rounded-xl w-[346px] h-[300px] flex justify-center items-center bg-white hover:bg-white  flex-col gap-1 shadow-interest-drop '>
                     <div className='py-[18px] flex justify-between w-full items-center px-6'>
                       <span className='text-sm text-[#2A2A2A] font-semibold'>
                         {item.name}
