@@ -33,8 +33,6 @@ function page() {
   const { table } = useCustomTable({
     tableData: data?.data.results,
     columns: CommunityColumn,
-    pageIndex: filter.page_index,
-    pageSize: filter.page_size
   });
   const handleSearch = (searchTerm: any) => {
     setDebounced(searchTerm);
@@ -53,10 +51,6 @@ function page() {
               queryAtom={communityAtom}
               table={table}
               totalCount={data?.data.count}
-              totalPage={totalPage}
-              currentPage={currentPage}
-              filter={filter}
-              setFilter={setFilter}
             />
           </div>
         ) : (
