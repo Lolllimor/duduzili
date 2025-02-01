@@ -2,15 +2,13 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-} from "@/components/ui/pagination";
-import { Atom, usePortal } from "@ibnlanre/portal";
-import { JSX } from "react";
-import { Table as ReactTable } from "@tanstack/react-table";
+} from '@/components/ui/pagination';
+import { Atom, usePortal } from '@ibnlanre/portal';
+import { JSX } from 'react';
 
 export const generatePaginationLinks = (
   queryAtom: Atom<any, undefined>,
-  totalPages: number,
-  table: ReactTable<any>
+  totalPages: number
 ) => {
   const pages: JSX.Element[] = [];
   const [filter, setFilter] = usePortal.atom(
@@ -21,7 +19,7 @@ export const generatePaginationLinks = (
       pages.push(
         <PaginationItem key={i}>
           <PaginationLink
-            // className={`${i === 1 && 'pointer-events-none opacity-50'}`}
+            className={`${i === 1 && 'pointer-events-none opacity-50'}`}
             onClick={() => setFilter({ ...filter, page_index: i })}
             isActive={i === filter.page_index}
           >
@@ -35,11 +33,9 @@ export const generatePaginationLinks = (
       pages.push(
         <PaginationItem key={i}>
           <PaginationLink
-            onClick={() => {
-              setFilter({ ...filter, page_index: i });
-              table.setPageIndex(i - 1);
-            }}
-            isActive={i === filter.page_index}>
+            onClick={() => setFilter({ ...filter, page_index: i })}
+            isActive={i === filter.page_index}
+          >
             {i}
           </PaginationLink>
         </PaginationItem>
@@ -50,11 +46,11 @@ export const generatePaginationLinks = (
       pages.push(
         <PaginationItem key={filter.page_index}>
           <PaginationLink
-            onClick={() => {
-              setFilter({ ...filter, page_index: filter.page_index });
-              table.setPageIndex(filter.page_index - 1);
-            }}
-            isActive={true}>
+            onClick={() =>
+              setFilter({ ...filter, page_index: filter.page_index })
+            }
+            isActive={true}
+          >
             {filter.page_index}
           </PaginationLink>
         </PaginationItem>
@@ -65,11 +61,9 @@ export const generatePaginationLinks = (
       pages.push(
         <PaginationItem key={i}>
           <PaginationLink
-            onClick={() => {
-              setFilter({ ...filter, page_index: i });
-              table.setPageIndex(i - 1);
-            }}
-            isActive={i === filter.page_index}>
+            onClick={() => setFilter({ ...filter, page_index: i })}
+            isActive={i === filter.page_index}
+          >
             {i}
           </PaginationLink>
         </PaginationItem>
