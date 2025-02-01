@@ -22,11 +22,9 @@ export const generatePaginationLinks = (
         <PaginationItem key={i}>
           <PaginationLink
             // className={`${i === 1 && 'pointer-events-none opacity-50'}`}
-            onClick={() => {
-              setFilter({ ...filter, page_index: i });
-              table.setPageIndex(i - 1);
-            }}
-            isActive={i === filter.page_index}>
+            onClick={() => setFilter({ ...filter, page_index: i })}
+            isActive={i === filter.page_index}
+          >
             {i}
           </PaginationLink>
         </PaginationItem>

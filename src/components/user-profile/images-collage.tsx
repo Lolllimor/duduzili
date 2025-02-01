@@ -1,64 +1,53 @@
 import Image from "next/image";
 
 export default function ImagesCollage() {
-  const images = [1, 2];
+  const images = Array(5).fill("");
+
+  const gridClassNames = (index: number) => {
+    if (images.length === 1) {
+      return `col-span-2`;
+    }
+
+    if (images.length === 2) {
+      return `row-span-2`;
+    }
+
+    if (images.length === 3) {
+      return `${
+        index === 0 ? "row-span-2 col-span-1" : "row-span-1 col-span-1"
+      }`;
+    }
+
+    if (images.length === 4) {
+      return `row-span-1`;
+    }
+  };
 
   return (
-    <>
-      <div
-        className={`grid grid-cols-2 ${
-          images.length !== 1 && "grid-rows-2"
-        } gap-1`}>
-        {images.map((image, index) => {
-          return (
+    <div
+      className={`grid grid-cols-2 gap-1 w-full h-96 relative ${
+        images.length === 1 ? "grid-rows-1" : "grid-rows-2"
+      }`}>
+      {images.map((image, index) => {
+        return (
+          <div key={index} className={`${gridClassNames(index)}`}>
             <Image
-              key={index}
               src='/deebaba.jpg'
-              width='1000'
-              height='1000'
+              width={1000}
+              height={1000}
               alt='profile'
-              className={`w-full max-h-96 object-cover ${
-                images.length === 2 && index < 3 && "row-span-2"
-              } 
-            `}
-            />
-          );
-        })}
-      </div>
-      {/* <div id='webcrumbs'>
-        <div className='grid grid-cols-3 gap-6'>
-          <div className='col-span-1 group'>
-            <img
-              src='https://images.unsplash.com/photo-1682686581498-5e85c7228119'
-              className='w-full h-full object-cover rounded-lg shadow-lg transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl'
-              alt='Full height'
+              className={`object-cover w-full h-full ${
+                index > 3 && "hidden w-0 h-0 absolute -z-10"
+              }`}
             />
           </div>
-          <div className='col-span-1 space-y-6'>
-            <div className='group'>
-              <img
-                src='https://webcrumbs.cloud/placeholder'
-                className='w-full h-[285px] object-cover rounded-lg shadow-lg transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl'
-                alt='Half height 1'
-              />
-            </div>
-            <div className='group'>
-              <img
-                src='https://images.unsplash.com/photo-1682686578289-cf9c8c472c9b'
-                className='w-full h-[285px] object-cover rounded-lg shadow-lg transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl'
-                alt='Half height 2'
-              />
-            </div>
-          </div>
-          <div className='col-span-1 group'>
-            <img
-              src='https://webcrumbs.cloud/placeholder'
-              className='w-full h-[600px] object-cover rounded-lg shadow-lg transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-xl'
-              alt='Full height'
-            />
-          </div>
+        );
+      })}
+      {images.length > 4 && (
+        <div className='w-1/2 h-1/2 bg-slate-50 absolute bg-opacity-70 right-0 bottom-0 text-4xl flex items-center justify-center text-blue-700'>
+          +{images.length - 4}
         </div>
-      </div> */}
-    </>
+      )}
+    </div>
   );
 }

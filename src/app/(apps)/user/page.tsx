@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { DataTable } from "@/lib/table-data";
 import { useCustomTable } from "@/lib/custom-data";
@@ -22,26 +22,16 @@ import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 function page() {
-  // const [queries, setQueries] = usePortal.atom(userAtom);
-
-  const [filter, setFilter] = usePortal.atom(
-    userAtom as Atom<{ page_index: number; page_size: number }, undefined>
-  );
+  const [queries, setQueries] = usePortal.atom(userAtom);
 
   const [debounced, setDebounced] = useState<string>();
   const { data, isLoading, isFetching } = useFetchUserListQuery({
-    // page: queries.page_index,
+    page: queries.page_index,
     search: debounced,
   });
-
-  const currentPage = filter.page_index ? +filter.page_index : 1;
-  const totalPage = Math.ceil(data?.data.count / filter.page_size);
-
   const { table } = useCustomTable({
     tableData: data?.data.results,
     columns: UserColumn,
-    pageIndex: filter.page_index,
-    pageSize: filter.page_size,
   });
 
   const handleSearch = (searchTerm: any) => {
@@ -91,10 +81,6 @@ function page() {
               queryAtom={userAtom}
               table={table}
               totalCount={data?.data.count}
-              totalPage={totalPage}
-              currentPage={currentPage}
-              filter={filter}
-              setFilter={setFilter}
             />
           </div>
         ) : (

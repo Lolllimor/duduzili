@@ -1,9 +1,9 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Post from "./post";
-import { images } from "./image";
-import Image from "next/image";
 import Images from "./images";
+import ReactPlayer from "react-player";
+import VideoPlayer from "./video-collage";
 
 export default function UserTab() {
   return (
@@ -31,24 +31,22 @@ export default function UserTab() {
             Audios
           </TabsTrigger>
         </TabsList>
+
         <TabsContent value='post' className=''>
           {/* <UserDetails /> */}
           <Post />
         </TabsContent>
+
         <TabsContent value='photos' className='mt-5'>
-          {images.map((image, index) => {
-            return <Images key={index} index={index} image={image} />;
-          })}
+          <Images image='/user-img.svg' />;
         </TabsContent>
+
         <TabsContent value='videos' className='mt-5'>
-          {images.map((image, index) => {
-            return <Images key={index} index={index} image={image} />;
-          })}
+          <VideoPlayer />
         </TabsContent>
+
         <TabsContent value='audios' className='mt-5'>
-          {images.map((image, index) => {
-            return <Images key={index} index={index} image={image} />;
-          })}
+          <Images image='/user-img.svg' />;
         </TabsContent>
       </Tabs>
     </div>

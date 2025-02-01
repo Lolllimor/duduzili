@@ -1,15 +1,15 @@
-"use client";
-import GeneralLayout from "@/components/layout/generalLayout";
-import { AddInterestModal } from "@/components/interest/modal/add-interest";
-import { useFetchInterestQuery } from "@/redux/features/interestsApi";
+'use client';
+import GeneralLayout from '@/components/layout/generalLayout';
+import { AddInterestModal } from '@/components/interest/modal/add-interest';
+import { useFetchInterestQuery } from '@/redux/features/interestsApi';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { DeleteInterest } from "@/components/interest/modal/delete-interest";
+} from '@/components/ui/dropdown-menu';
+import { HiOutlineDotsVertical } from 'react-icons/hi';
+import { DeleteInterest } from '@/components/interest/modal/delete-interest';
 
 import { Skeleton } from "@/components/ui/skeleton";
 import Paginator from "@/lib/pagination";
@@ -47,7 +47,7 @@ function InterestPage() {
                 .map((item, idx) => (
                   <Skeleton
                     key={idx}
-                    className='border border-[#F5F5F5] rounded-xl w-[346px] h-[300px] flex flex-col gap-1 shadow-interest-drop'
+                    className="border border-[#F5F5F5] rounded-xl w-[346px] h-[300px] flex flex-col gap-1 shadow-interest-drop"
                   />
                 ))
             : data?.data.results.map(
@@ -81,15 +81,15 @@ function InterestPage() {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
-                    <div className='flex gap-0.5 flex-wrap w-full h-full px-6'>
+                    <div className="flex gap-0.5 flex-wrap w-full h-full px-6">
                       {item.tags_name.map((tag, idx) => (
-                        <p key={idx} className='text-[#494850] text-xs'>
+                        <p key={idx} className="text-[#494850] text-xs">
                           #{tag}
                         </p>
                       ))}
                     </div>
-                    <div className='py-[18px] flex justify-end w-full  px-6'>
-                      <span className='text-sm text-[#4534B8] font-semibold'>
+                    <div className="py-[18px] flex justify-end w-full  px-6">
+                      <span className="text-sm text-[#4534B8] font-semibold">
                         #{item.tags_count}
                       </span>
                     </div>

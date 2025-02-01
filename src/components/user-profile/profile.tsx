@@ -96,11 +96,11 @@ export const UserProfile = () => {
                   <p className='font-sora font-semibold text-base text-[#2A2A2A]'>
                     1.1k
                   </p>
-                  <div className='flex'>
-                    <AvatarGroup spacing='small'>
-                      <Avatar alt='Babatunde' src='/newuser.png' />
-                      <Avatar alt='Babatunde' src='/newuser.png' />
-                      <Avatar alt='Babatunde' src='/newuser.png' />
+                  <div className='flex' >
+                    <AvatarGroup spacing='medium'>
+                      <Avatar alt='Babatunde' src='/newuser.png' sx={{width: 25, height: 25}} />
+                      <Avatar alt='Babatunde' src='/newuser.png' sx={{width: 25, height: 25}} />
+                      <Avatar alt='Babatunde' src='/newuser.png' sx={{width: 25, height: 25}} />
                     </AvatarGroup>
                   </div>
                 </div>
