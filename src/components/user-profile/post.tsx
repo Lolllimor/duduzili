@@ -6,9 +6,12 @@ import { IoBookmarksOutline } from "react-icons/io5";
 import { Avatar, AvatarGroup } from "@mui/material";
 import { useParams } from "next/navigation";
 import ImagesCollage from "./images-collage";
+import { UserData } from "./types/user-profile";
 
-export default function Post() {
+export default function Post({ data }: { data: UserData }) {
   const { id } = useParams<{ id: string }>();
+
+  const { full_name } = data;
 
   return (
     <section className='bg-white flex flex-col gap-2 mt-5'>
@@ -22,7 +25,7 @@ export default function Post() {
             />
             <div>
               <h3 className='font-sora font-semibold text-base text-[#2A2A2A]'>
-                Babatunde Adekunle{" "}
+                {full_name}
                 <span className='font-light font-sora text-sm text-[#494850]'>
                   @{id}
                 </span>

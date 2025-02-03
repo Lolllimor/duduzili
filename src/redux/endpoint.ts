@@ -94,7 +94,7 @@ export const endpoints = {
   },
   user: {
     fetchUserList: 'api/administration/user-list/',
-    fetchUserPost: 'api/administration/user-details-dashboard/',
+    fetchUserProfile: 'api/administration/user-details-dashboard/',
     // toggleCommunityStatus: 'api/administration/toggle-community-status/',
     // fetchCommunityDashboard: 'api/administration/community-details-dashboard/',
     // fetchCommunityAdmin: 'api/administration/community-admin/',

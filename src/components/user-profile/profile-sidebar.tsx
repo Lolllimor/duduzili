@@ -13,28 +13,31 @@ import {
 import { useParams } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
+import { UserData } from "./types/user-profile";
 
-export default function ProfileSidebar() {
+export default function ProfileSidebar({ data }: { data: UserData }) {
   const { id } = useParams<{ id: string }>();
+
+  const { full_name } = data;
 
   return (
     <div className='p-5 sticky w-[30%] h-screen border rounded-[12px] border-[#F0F0F1] font-sora text-xs overflow-auto top-0 hide-scroll'>
       <h1 className='font-semibold text-base w-full mb-2'>About</h1>
       <Divider />
       <h1 className='text-sm font-semibold mt-3'>Full Name</h1>
-      <p>Babatunde Adekunle</p>
+      <p>{full_name}</p>
       <h1 className='text-sm font-semibold mt-3'>Username</h1>
       <p>@{id}</p>
       <h1 className='text-sm font-semibold mt-3'>Bio</h1>
-      <p>
+      <p className='mb-3'>
         Looking for an experienced people to help me find people in US to test
         my app. Looking for an experienced people to help me find people in US
         to test my app
       </p>
 
-      <Divider className='my-3' />
+      <Divider />
 
-      <h1 className='font-semibold text-base w-full mb-2'>Basic Info</h1>
+      <h1 className='font-semibold text-base w-full my-2'>Basic Info</h1>
       <div className='flex flex-col gap-2'>
         <div className='flex items-center gap-1'>
           <House size={20} color='#808080' strokeWidth={1.5} />
@@ -60,15 +63,15 @@ export default function ProfileSidebar() {
           <Eye size={20} color='#808080' strokeWidth={1.5} />
           <p>Visible to followers only</p>
         </div>
-        <div className='flex items-center gap-1'>
+        <div className='flex items-center gap-1 mb-3'>
           <Calendar size={20} color='#808080' strokeWidth={1.5} />
           <p>Joined on January 8, 2023</p>
         </div>
       </div>
 
-      <Divider className='my-3' />
+      <Divider />
 
-      <h1 className='font-semibold text-base w-full mb-2'>Contact Info</h1>
+      <h1 className='font-semibold text-base w-full my-2'>Contact Info</h1>
       <div className='flex flex-col gap-2'>
         <div className='flex items-center gap-1'>
           <Mail size={20} color='#808080' strokeWidth={1.5} />
@@ -83,7 +86,7 @@ export default function ProfileSidebar() {
             }}
           />
         </div>
-        <div className='flex items-center gap-1'>
+        <div className='flex items-center gap-1 mb-2'>
           <PhoneCall size={20} color='#808080' strokeWidth={1.5} />
           <p>+234 806 061 8329</p>
           <Copy
@@ -97,9 +100,9 @@ export default function ProfileSidebar() {
           />
         </div>
 
-        <Divider className='my-3' />
+        <Divider />
 
-        <h1 className='font-semibold text-base w-full mb-2'>
+        <h1 className='font-semibold text-base w-full my-2'>
           Following{" "}
           <span className='px-3 py-1 bg-blue-500 text-white rounded-3xl text-xs'>
             6k
@@ -115,7 +118,7 @@ export default function ProfileSidebar() {
                 sx={{ width: 30, height: 30 }}
               />
               <div>
-                <h3 className='text-sm text-[#2A2A2A]'>Babatunde Adekunle</h3>
+                <h3 className='text-sm text-[#2A2A2A]'>{full_name}</h3>
                 <p>@{id}</p>
               </div>
             </section>

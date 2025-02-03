@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, EllipsisVertical } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import UserTab from "./tab";
@@ -12,20 +12,34 @@ import { useFetchUserProfileQuery } from "@/redux/features/userApi";
 import { Avatar, AvatarGroup, Divider } from "@mui/material";
 import ProfileAvatar from "./profile-avatar";
 import ProfileSidebar from "./profile-sidebar";
+import PostContainer from "../post/post-container";
+import { Skeleton } from "../ui/skeleton";
 
 export const UserProfile = () => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
-  const { data, isLoading } = useFetchUserProfileQuery(id);
-
-  console.log(data);
+  const { data: userData, isLoading } = useFetchUserProfileQuery({ id });
 
   useEffect(() => {
     if (!id) {
       router.replace("/user");
     }
   }, [id, router]);
+
+  if (isLoading) {
+    return (
+      <div className='p-10 w-full flex flex-col gap-5'>
+        <Skeleton className='h-20 w-20 rounded-full' />
+        <Skeleton className='w-3/4 h-5' />
+        <Skeleton className='w-3/4 h-5' />
+        <Skeleton className='w-3/4 h-5' />
+        <Skeleton className='w-3/4 h-5' />
+      </div>
+    );
+  }
+
+  const data = userData?.data;
 
   return (
     <GeneralLayout
@@ -43,20 +57,20 @@ export const UserProfile = () => {
                   <ArrowLeft />
                 </div>
                 <h3 className='font-sora font-bold text-xl text-[#2A2A2A]'>
-                  Babatunde Adekunle
+                  {data?.full_name}
                 </h3>
               </div>
               <EllipsisVertical />
             </div>
             <section className='flex items-center gap-5 p-5'>
-              <ProfileAvatar />
+              <ProfileAvatar photo={data?.profile_photo} />
               <div>
                 <h3 className='font-sora font-semibold text-2xl text-[#23222C]'>
-                  Babatunde Adekunle
+                  {data?.full_name}
                 </h3>
                 <div className='flex items-center gap-2'>
                   <p className='font-sora font-normal text-base text-[#494850]'>
-                    @adetunes
+                    @{id}
                   </p>
                   <div className='h-[6px] w-[6px] rounded-full bg-[#8E9391]'></div>
                   <p className='font-normal font-sora text-sm text-[#04802E]'>
@@ -72,7 +86,7 @@ export const UserProfile = () => {
                   Posts
                 </p>
                 <p className='font-sora font-semibold text-base text-[#2A2A2A]'>
-                  1k
+                  {data?.posts}
                 </p>
               </div>
 
@@ -83,7 +97,7 @@ export const UserProfile = () => {
                   Followers
                 </p>
                 <p className='font-sora font-semibold text-base text-[#2A2A2A]'>
-                  21k
+                  {data?.follower}
                 </p>
               </div>
               <div className='bg-[#D9D9DB] w-[1px] h-[38px]'></div>
@@ -94,24 +108,37 @@ export const UserProfile = () => {
                 </p>
                 <div className='flex items-center gap-2 w-full'>
                   <p className='font-sora font-semibold text-base text-[#2A2A2A]'>
-                    1.1k
+                    {data?.following}
                   </p>
-                  <div className='flex' >
+                  <div className='flex'>
                     <AvatarGroup spacing='medium'>
-                      <Avatar alt='Babatunde' src='/newuser.png' sx={{width: 25, height: 25}} />
-                      <Avatar alt='Babatunde' src='/newuser.png' sx={{width: 25, height: 25}} />
-                      <Avatar alt='Babatunde' src='/newuser.png' sx={{width: 25, height: 25}} />
+                      <Avatar
+                        alt='Babatunde'
+                        src='/newuser.png'
+                        sx={{ width: 25, height: 25 }}
+                      />
+                      <Avatar
+                        alt='Babatunde'
+                        src='/newuser.png'
+                        sx={{ width: 25, height: 25 }}
+                      />
+                      <Avatar
+                        alt='Babatunde'
+                        src='/newuser.png'
+                        sx={{ width: 25, height: 25 }}
+                      />
                     </AvatarGroup>
                   </div>
                 </div>
               </div>
             </section>
-            <UserTab />
+            {/* <PostContainer /> */}
+            <UserTab data={data} />
           </div>
         </div>
 
         {/* Sidebar */}
-        <ProfileSidebar />
+        <ProfileSidebar data={data} />
       </section>
     </GeneralLayout>
   );

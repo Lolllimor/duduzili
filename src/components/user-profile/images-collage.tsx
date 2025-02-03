@@ -1,4 +1,11 @@
 import Image from "next/image";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "../ui/dialog";
 
 export default function ImagesCollage() {
   const images = Array(5).fill("");
@@ -30,17 +37,33 @@ export default function ImagesCollage() {
       }`}>
       {images.map((image, index) => {
         return (
-          <div key={index} className={`${gridClassNames(index)}`}>
-            <Image
-              src='/deebaba.jpg'
-              width={1000}
-              height={1000}
-              alt='profile'
-              className={`object-cover w-full h-full ${
-                index > 3 && "hidden w-0 h-0 absolute -z-10"
-              }`}
-            />
-          </div>
+          <Dialog key={index}>
+            <DialogContent className='max-w-md p-0 bg-inherit border-none'>
+              <DialogHeader>
+                <DialogTitle className='hidden'>Image Item</DialogTitle>
+              </DialogHeader>
+              <Image
+                src='/deebaba.jpg'
+                alt='user'
+                height='1000'
+                width='1000'
+                className="max-h-[80vh] rounded-md"
+              />
+            </DialogContent>
+            <div className={`${gridClassNames(index)}`}>
+              <DialogTrigger asChild>
+                <Image
+                  src='/deebaba.jpg'
+                  width={1000}
+                  height={1000}
+                  alt='profile'
+                  className={`object-cover w-full h-full ${
+                    index > 3 && "hidden w-0 h-0 absolute -z-10"
+                  }`}
+                />
+              </DialogTrigger>
+            </div>
+          </Dialog>
         );
       })}
       {images.length > 4 && (

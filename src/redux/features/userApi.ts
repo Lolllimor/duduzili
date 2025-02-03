@@ -26,7 +26,7 @@ export const userApi = baseApi.injectEndpoints({
 
     fetchUserProfile: builder.query({
       query: ({ id }) => ({
-        url: `${endpoints.user.fetchUserPost}?username=${id}`,
+        url: `${endpoints.user.fetchUserProfile}?username=${id}`,
         method: 'GET',
       }),
       providesTags: ['User'],

@@ -4,8 +4,9 @@ import Post from "./post";
 import Images from "./images";
 import ReactPlayer from "react-player";
 import VideoPlayer from "./video-collage";
+import { UserData } from "./types/user-profile";
 
-export default function UserTab() {
+export default function UserTab({ data }: { data: UserData }) {
   return (
     <div className='p-5 w-full'>
       <Tabs defaultValue='post' className=''>
@@ -34,7 +35,7 @@ export default function UserTab() {
 
         <TabsContent value='post' className=''>
           {/* <UserDetails /> */}
-          <Post />
+          <Post data={data} />
         </TabsContent>
 
         <TabsContent value='photos' className='mt-5'>

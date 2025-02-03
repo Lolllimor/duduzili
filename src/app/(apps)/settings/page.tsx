@@ -12,57 +12,57 @@ import { Terms } from '@/components/settings/terms/terms';
 function ConfigPage() {
   return (
     <GeneralLayout pageTitle="Settings" className="h-[calc(100vh-120px)]">
-      <div className=" w-full h-full items-start px-6 ">
+      <div className=" w-full h-full items-start px-6">
         <Tabs
           defaultValue="about"
           className="w-full  gap-6 flex flex-col h-full "
         >
-          <TabsList className="w-full text-sm gap-2 flex justify-start rounded-[10px] h-fit border border-[#F2F4F7]  bg-[#F9FAFB] overflow-x-auto overflow-y-hidden ">
+          <TabsList className="w-full text-xl gap-2 flex justify-start rounded-[10px] h-fit border border-[#F2F4F7]  bg-[#F9FAFB] overflow-x-auto overflow-y-hidden hide-scroll py-2">
             <TabsTrigger
               value="about"
-              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter "
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-xl font-semibold rounded-[6px] font-inter "
             >
               About Duduzili
             </TabsTrigger>
             <TabsTrigger
               value="contact"
-              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter"
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-xl font-semibold rounded-[6px] font-inter"
             >
               Contact Info
             </TabsTrigger>
             <TabsTrigger
               value="privacy"
-              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter"
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-xl font-semibold rounded-[6px] font-inter"
             >
               Privacy Policy
             </TabsTrigger>
             <TabsTrigger
               value="terms"
-              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter"
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-xl font-semibold rounded-[6px] font-inter"
             >
               Terms and Conditions
             </TabsTrigger>
             <TabsTrigger
               value="faq"
-              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter"
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-xl font-semibold rounded-[6px] font-inter"
             >
               FAQ
             </TabsTrigger>
             <TabsTrigger
               value="integration"
-              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter"
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-xl font-semibold rounded-[6px] font-inter"
             >
               Social Media Integration
             </TabsTrigger>
             <TabsTrigger
               value="deactivated"
-              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter tracking-wide"
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-xl font-semibold rounded-[6px] font-inter tracking-wide"
             >
               Deactivated Accounts
             </TabsTrigger>
             <TabsTrigger
               value="deleted"
-              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-sm font-semibold rounded-[6px] font-inter tracking-wide"
+              className="data-[state=active]:text-[#4534B8] data-[state=active]:shadow-xl font-semibold rounded-[6px] font-inter tracking-wide"
             >
               Deleted Accounts
             </TabsTrigger>
