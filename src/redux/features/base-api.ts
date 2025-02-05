@@ -70,6 +70,7 @@ export const baseApi = createApi({
     'Report',
     'Terms',
     'User',
+    'Support'
   ],
   endpoints: () => ({}),
 });

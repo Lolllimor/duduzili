@@ -4,10 +4,15 @@ import GeneralLayout from "@/components/layout/generalLayout";
 import Conversations from "@/components/support/conversations";
 import MessagePreview from "@/components/support/message-preview";
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
+import { userEmail } from "@/redux/features/auth/authSlice";
+import { useFetchMessageListQuery } from "@/redux/features/supportApi";
+import { cookieStorage } from "@ibnlanre/portal";
 import { Divider } from "@mui/material";
 import { TabsTrigger } from "@radix-ui/react-tabs";
+import { RootState } from "@reduxjs/toolkit/query";
 import { Plus, Search } from "lucide-react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Support() {
   const chats = [
@@ -35,13 +40,28 @@ export default function Support() {
       message: "I'm good, thank you",
       time: "1m",
     },
+    {
+      senderID: "abrahama",
+      full_name: "Abraham Oyebode",
+      message: "I'm good, thank you",
+      time: "1m",
+    },
   ];
+
+  let token = cookieStorage.getItem("duduzili-auth");
+  if (token) {
+    token = JSON.parse(token)?.access_token;
+  }
+
+  const { data, isLoading } = useFetchMessageListQuery({ token });
+
+  console.log(data);
 
   return (
     <GeneralLayout
       pageTitle='Customer Support'
       className='h-[calc(100vh-70px)]'>
-      <div className='p-6 bg-[#F5F5F6] overflow-hidden'>
+      <div className='px-6 pt-6 bg-[#F5F5F6]'>
         <Tabs defaultValue='deebaba'>
           <div className='flex bg-white font-sora'>
             {/* Messages */}
@@ -59,7 +79,7 @@ export default function Support() {
               <Divider />
 
               {/* Messages Preview */}
-              <TabsList className='block h-fit bg-white p-0 rounded-none'>
+              <TabsList className='block h-[calc(100vh-155px)] overflow-auto bg-white p-0 rounded-none hide-scroll'>
                 <div className='flex flex-col'>
                   {chats.map((chat) => {
                     return (
@@ -83,6 +103,9 @@ export default function Support() {
                 return (
                   <TabsContent value={chat.senderID} key={chat.senderID}>
                     <Conversations user={chat} />
+                    <div className='w-full p-2 px-6 bg-red-200 text-black ext-center'>
+                      Text me
+                    </div>
                   </TabsContent>
                 );
               })}

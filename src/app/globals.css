@@ -14,8 +14,12 @@
     width: 5px;
   }
   ::-webkit-scrollbar-thumb {
-    background: #4b39c0; 
+    background: #4b39c0;
   }
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 body {

@@ -5,7 +5,7 @@ import Message from "./message";
 
 export default function Conversations({ user }: { user: MessageTypes }) {
   return (
-    <div className='p-5'>
+    <div className='px-5 pt-5'>
       {/* User Header */}
       <div className='flex items-center justify-between mb-5'>
         <div className='flex items-center gap-3'>
@@ -25,11 +25,20 @@ export default function Conversations({ user }: { user: MessageTypes }) {
       </div>
 
       {/* Conversation Body */}
-      <div className='bg-slate-200/30 rounded-md w-full h-[calc(100vh-200px)] text-xs text-slate-500 p-5'>
+      <div className='bg-slate-200/30 rounded-md w-full h-[calc(100vh-225px)] text-xs text-slate-500 p-5 overflow-auto hide-scroll'>
         <div className='text-center bg-white px-3 py-2 mx-auto w-fit'>
           Today
         </div>
         <Message>
+          {user.message} Lorem ipsum dolor sit amet consectetur.
+        </Message>
+        <Message alignRight>
+          {user.message} Lorem ipsum dolor sit amet consectetur.
+        </Message>
+        <Message alignRight>
+          {user.message} Lorem ipsum dolor sit amet consectetur.
+        </Message>
+        <Message alignRight>
           {user.message} Lorem ipsum dolor sit amet consectetur.
         </Message>
         <Message alignRight>

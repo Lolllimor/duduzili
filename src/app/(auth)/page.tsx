@@ -48,6 +48,7 @@ const page = () => {
         "user-detail",
         JSON.stringify({ userDetail: response.data })
       );
+      console.log('login', response);
       push("dashboard");
       cookieStorage.setItem(
         "duduzili-auth",
@@ -61,91 +62,86 @@ const page = () => {
   };
 
   return (
-    <div className="flex w-full bg-[#fafafa] pl-5 pr-8 relative h-full justify-center overflow-y-auto font-sora pb-60">
+    <div className='flex w-full bg-[#fafafa] pl-5 pr-8 relative h-full justify-center overflow-y-auto font-sora pb-60'>
       <Image
-        src="/form-bg.svg"
-        alt="bg"
+        src='/form-bg.svg'
+        alt='bg'
         width={768}
         height={768}
-        className="absolute top-[40px] w-full h-fit"
+        className='absolute top-[40px] w-full h-fit'
         priority
       />
-      <div className="py-[47px] flex flex-col pl-[32px] pr-[20px] w-full">
-        <div className="flex justify-between items-center">
-          <Image src="/logo-auth.svg" alt="logo" width={180} height={40} />
+      <div className='py-[47px] flex flex-col pl-[32px] pr-[20px] w-full'>
+        <div className='flex justify-between items-center'>
+          <Image src='/logo-auth.svg' alt='logo' width={180} height={40} />
         </div>
-        <div className=" flex flex-col mx-auto flex-1  mt-[30%] z-10 gap-10 pb-[30px]">
-          <div className="flex flex-col items-center gap-2">
-            <div className="text-[32px] text-[#2A2A2A] font-semibold">
+        <div className=' flex flex-col mx-auto flex-1  mt-[30%] z-10 gap-10 pb-[30px]'>
+          <div className='flex flex-col items-center gap-2'>
+            <div className='text-[32px] text-[#2A2A2A] font-semibold'>
               Sign in to
-              <span className="text-[#4534B8]"> Duduzili</span>
+              <span className='text-[#4534B8]'> Duduzili</span>
             </div>
-            <p className="text-[#494850] text-base">
+            <p className='text-[#494850] text-base'>
               Welcome back! Please enter your details.
             </p>
           </div>
-          <div className="flex flex-col gap-8 w-[400px]">
+          <div className='flex flex-col gap-8 w-[400px]'>
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="flex flex-col gap-4 w-full"
-            >
-              <div className=" flex flex-col w-full  gap-1.5">
+              className='flex flex-col gap-4 w-full'>
+              <div className=' flex flex-col w-full  gap-1.5'>
                 <label
-                  htmlFor="username"
-                  className="text-xs text-[#494850] font-semibold font-sora"
-                >
+                  htmlFor='username'
+                  className='text-xs text-[#494850] font-semibold font-sora'>
                   Username/Email Address
                 </label>
                 <Input
                   {...register("username_email")}
-                  placeholder="Username/Email Address"
-                  className="h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] placeholder:font-sora placeholder:text-xs font-normal"
+                  placeholder='Username/Email Address'
+                  className='h-12 border-[#D9D9DB] rounded-lg placeholder:text-[#8F8E93] placeholder:font-sora placeholder:text-xs font-normal'
                 />
                 {errors.username_email && (
-                  <div className="text-red-500 text-sm font-normal pt-1">
+                  <div className='text-red-500 text-sm font-normal pt-1'>
                     {errors.username_email?.message}
                   </div>
                 )}
               </div>
-              <div className="flex flex-col w-full  gap-1.5">
+              <div className='flex flex-col w-full  gap-1.5'>
                 <label
-                  htmlFor="password"
-                  className="text-xs text-[#494850] font-semibold font-sora"
-                >
+                  htmlFor='password'
+                  className='text-xs text-[#494850] font-semibold font-sora'>
                   Password
                 </label>
                 <PasswordInput
-                  placeholder="Password"
+                  placeholder='Password'
                   {...register("password")}
-                  id="current_password"
-                  autoComplete="current-password"
+                  id='current_password'
+                  autoComplete='current-password'
                 />
                 {errors.password && (
-                  <div className="text-red-500 text-sm font-normal pt-1">
+                  <div className='text-red-500 text-sm font-normal pt-1'>
                     {errors.password?.message}
                   </div>
                 )}
               </div>
-              <div className=" flex items-center justify-between my-4">
-                <div className="gap-2 flex items-center">
-                  <Checkbox id="terms" />
-                  <span className="text-[#494850] text-sm font-sora">
+              <div className=' flex items-center justify-between my-4'>
+                <div className='gap-2 flex items-center'>
+                  <Checkbox id='terms' />
+                  <span className='text-[#494850] text-sm font-sora'>
                     Remember me
                   </span>
                 </div>
                 <a
-                  href="/reset-password"
-                  className="text-sm text-[#4534B8] font-semibold font-sora"
-                >
+                  href='/reset-password'
+                  className='text-sm text-[#4534B8] font-semibold font-sora'>
                   Forgot password?
                 </a>
               </div>
               <Button
-                variant="primary"
-                type="submit"
-                className="text-base font-sora"
-              >
-                {isLoading ? <FaSpinner className="animate-spin" /> : "Log in"}
+                variant='primary'
+                type='submit'
+                className='text-base font-sora'>
+                {isLoading ? <FaSpinner className='animate-spin' /> : "Log in"}
               </Button>
             </form>
           </div>
