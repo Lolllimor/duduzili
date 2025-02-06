@@ -25,7 +25,7 @@ export default function Conversations({ user }: { user: MessageTypes }) {
       </div>
 
       {/* Conversation Body */}
-      <div className='bg-slate-200/30 rounded-md w-full h-[calc(100vh-225px)] text-xs text-slate-500 p-5 overflow-auto hide-scroll'>
+      <div className='bg-slate-200/30 rounded-md w-full h-[calc(100vh-240px)] text-xs text-slate-500 p-5 overflow-auto hide-scroll'>
         <div className='text-center bg-white px-3 py-2 mx-auto w-fit'>
           Today
         </div>

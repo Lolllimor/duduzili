@@ -3,6 +3,7 @@
 import GeneralLayout from "@/components/layout/generalLayout";
 import Conversations from "@/components/support/conversations";
 import MessagePreview from "@/components/support/message-preview";
+import TextMessage from "@/components/support/text-message";
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import { userEmail } from "@/redux/features/auth/authSlice";
 import { useFetchMessageListQuery } from "@/redux/features/supportApi";
@@ -11,8 +12,6 @@ import { Divider } from "@mui/material";
 import { TabsTrigger } from "@radix-ui/react-tabs";
 import { RootState } from "@reduxjs/toolkit/query";
 import { Plus, Search } from "lucide-react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
 
 export default function Support() {
   const chats = [
@@ -52,6 +51,8 @@ export default function Support() {
   if (token) {
     token = JSON.parse(token)?.access_token;
   }
+
+  console.log(token);
 
   const { data, isLoading } = useFetchMessageListQuery({ token });
 
@@ -103,9 +104,7 @@ export default function Support() {
                 return (
                   <TabsContent value={chat.senderID} key={chat.senderID}>
                     <Conversations user={chat} />
-                    <div className='w-full p-2 px-6 bg-red-200 text-black ext-center'>
-                      Text me
-                    </div>
+                    <TextMessage />
                   </TabsContent>
                 );
               })}
