@@ -68,7 +68,7 @@ export default function Support() {
     };
 
     handleSendMessage();
-  }, []);
+  }, [ready]);
 
   console.log(ready, messages);
 
