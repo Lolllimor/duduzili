@@ -74,34 +74,36 @@ export default function Support() {
 
   return (
     <GeneralLayout
-      pageTitle='Customer Support'
-      className='h-[calc(100vh-70px)]'>
-      <div className='px-6 pt-6 bg-[#F5F5F6]'>
-        <Tabs defaultValue='deebaba'>
-          <div className='flex bg-white font-sora'>
+      pageTitle="Customer Support"
+      className="h-[calc(100vh-70px)]"
+    >
+      <div className="px-6 pt-6 bg-[#F5F5F6]">
+        <Tabs defaultValue="deebaba">
+          <div className="flex bg-white font-sora">
             {/* Messages */}
-            <div className='w-1/3'>
-              <div className='flex items-center justify-between p-5 py-4'>
-                <div className='text-xl font-bold text-slate-700'>Messages</div>
-                <div className='flex gap-4'>
-                  <Search className='w-6 h-6' color='#8f8e93' />
+            <div className="w-1/3">
+              <div className="flex items-center justify-between p-5 py-4">
+                <div className="text-xl font-bold text-slate-700">Messages</div>
+                <div className="flex gap-4">
+                  <Search className="w-6 h-6" color="#8f8e93" />
                   <Plus
-                    className='w-6 h-6 bg-blue-700 rounded-full'
-                    color='#fff'
+                    className="w-6 h-6 bg-blue-700 rounded-full"
+                    color="#fff"
                   />
                 </div>
               </div>
               <Divider />
 
               {/* Messages Preview */}
-              <TabsList className='block h-[calc(100vh-155px)] overflow-auto bg-white p-0 rounded-none hide-scroll'>
-                <div className='flex flex-col'>
+              <TabsList className="block h-[calc(100vh-155px)] overflow-auto bg-white p-0 rounded-none hide-scroll">
+                <div className="flex flex-col">
                   {chats.map((chat) => {
                     return (
                       <TabsTrigger
                         key={chat.senderID}
                         value={chat.senderID}
-                        className='data-[state=active]:bg-[#4534B8]/10 data-[state=active]:border-r-2 data-[state=active]:border-[#4534B8]'>
+                        className="data-[state=active]:bg-[#4534B8]/10 data-[state=active]:border-r-2 data-[state=active]:border-[#4534B8]"
+                      >
                         <MessagePreview message={chat} />
                       </TabsTrigger>
                     );
@@ -110,15 +112,15 @@ export default function Support() {
               </TabsList>
             </div>
 
-            <Divider orientation='vertical' flexItem />
+            <Divider orientation="vertical" flexItem />
 
             {/* Conversation */}
-            <div className='w-2/3'>
+            <div className="w-2/3">
               {chats.map((chat) => {
                 return (
                   <TabsContent value={chat.senderID} key={chat.senderID}>
                     <Conversations user={chat} />
-                    <TextMessage send={sendMessage} />
+                    <TextMessage />
                   </TabsContent>
                 );
               })}

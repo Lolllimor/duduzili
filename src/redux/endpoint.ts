@@ -99,4 +99,7 @@ export const endpoints = {
   support: {
     fetchMessageLists: "ws/admin-conversation/",
   },
+  notification: {
+    all: "api/notifications/",
+  },
 };
