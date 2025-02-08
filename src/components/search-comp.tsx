@@ -29,9 +29,9 @@ export const SearchForm = ({
   };
 
   return (
-    <form>
+    <form className='w-fit'>
       <div
-        className={`h-[44px] border rounded-lg w-[277px] flex items-center pl-4 gap-2 ${classname}`}
+        className={`border rounded-lg w-[277px] flex items-center pl-4 gap-2 ${classname}`}
       >
         <SearchIcon className="text-[#667085]" />
         <Input

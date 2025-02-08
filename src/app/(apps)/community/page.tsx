@@ -4,7 +4,7 @@ import { DataTable } from '@/lib/table-data';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useCustomTable } from '@/lib/custom-data';
 import { communityAtom } from '@/lib/query-store';
-import { usePortal } from '@ibnlanre/portal';
+import { Atom, usePortal } from '@ibnlanre/portal';
 import GeneralLayout from '@/components/layout/generalLayout';
 import { EmptyState } from '@/components/settings/empty-state';
 import { useFetchCommunityListQuery } from '@/redux/features/communityApi';
@@ -17,11 +17,19 @@ import { useState } from 'react';
 function page() {
   const [queries, setQueries] = usePortal.atom(communityAtom);
 
+  const [filter, setFilter] = usePortal.atom(
+    communityAtom as Atom<{ page_index: number; page_size: number }, undefined>
+  );
+
   const [debounced, setDebounced] = useState<string>();
   const { data, isLoading } = useFetchCommunityListQuery({
-    page: queries.page_index,
+    // page: queries.page_index,
     search: debounced,
   });
+
+  const currentPage = filter.page_index ? +filter.page_index : 1;
+  const totalPage = Math.ceil(data?.data.count / filter.page_size)
+
   const { table } = useCustomTable({
     tableData: data?.data.results,
     columns: CommunityColumn,

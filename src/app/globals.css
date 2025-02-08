@@ -9,8 +9,25 @@
 @import url('https://fonts.cdnfonts.com/css/switzer');
 @import url('https://fonts.cdnfonts.com/css/outfit'); */
 
+* {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #4b39c0;
+  }
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   height: 100vh;
+}
+
+.hide-scroll::-webkit-scrollbar {
+  display: none;
 }
 
 @layer base {

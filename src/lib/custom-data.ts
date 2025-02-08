@@ -1,5 +1,5 @@
 import {
-    ColumnFiltersState,
+  ColumnFiltersState,
   SortingState,
   getCoreRowModel,
   getFilteredRowModel,
@@ -51,19 +51,3 @@ function useCustomTable({
 
 export { useCustomTable };
 
-//  function useCustomTable = useReactTable({
-//   data,
-//   columns,
-//   state: {
-//     sorting,
-//     columnFilters,
-//     columnVisibility,
-//   },
-//   onColumnVisibilityChange: setColumnVisibility,
-//   onSortingChange: setSorting,
-//   getSortedRowModel: getSortedRowModel(),
-//   getCoreRowModel: getCoreRowModel(),
-//   getPaginationRowModel: getPaginationRowModel(),
-//   onColumnFiltersChange: setColumnFilters,
-//   getFilteredRowModel: getFilteredRowModel(),
-// });
