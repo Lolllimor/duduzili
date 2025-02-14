@@ -11,6 +11,14 @@ export const supportApi = baseApi.injectEndpoints({
       providesTags: ["Support"],
     }),
 
+    fetchConversation: builder.query({
+      query: ({ conversation_id }) => ({
+        url: `${endpoints.support.fetchConversation}?conversation_id=${conversation_id}`,
+        method: "GET",
+      }),
+      providesTags: ["Support"],
+    }),
+
     // fetchCommunityDashboard: builder.query({
     //   query: (id: string) => ({
     //     url: `${endpoints.community.fetchCommunityDashboard}?community_id=${id}`,
@@ -66,6 +74,7 @@ export const supportApi = baseApi.injectEndpoints({
 
 export const {
   useFetchMessageListQuery,
+  useFetchConversationQuery,
   //   useFetchUserProfileQuery,
   //   useFetchCommunityAdminQuery,
   //   useFetchCommunityProfileQuery,

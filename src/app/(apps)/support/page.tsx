@@ -6,6 +6,7 @@ import MessagePreview from "@/components/support/message-preview";
 import TextMessage from "@/components/support/text-message";
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import useWs from "@/hooks/use-ws";
+import { decrypt } from "@/lib/decrypt";
 import { userEmail } from "@/redux/features/auth/authSlice";
 import { useFetchMessageListQuery } from "@/redux/features/supportApi";
 import { cookieStorage } from "@ibnlanre/portal";
@@ -70,57 +71,57 @@ export default function Support() {
     handleSendMessage();
   }, [ready]);
 
-  console.log(ready, messages);
+  const decryptedChats = decrypt(messages);
+
+  const messageDefault = decryptedChats[0]?.[0]?.conversation_id;
 
   return (
     <GeneralLayout
-      pageTitle="Customer Support"
-      className="h-[calc(100vh-70px)]"
-    >
-      <div className="px-6 pt-6 bg-[#F5F5F6]">
-        <Tabs defaultValue="deebaba">
-          <div className="flex bg-white font-sora">
+      pageTitle='Customer Support'
+      className='h-[calc(100vh-70px)]'>
+      <div className='px-6 pt-6 bg-[#F5F5F6]'>
+        <Tabs defaultValue='5bc98440-9c8f-42fb-a954-c3d9d3a79b99'>
+          <div className='flex bg-white font-sora'>
             {/* Messages */}
-            <div className="w-1/3">
-              <div className="flex items-center justify-between p-5 py-4">
-                <div className="text-xl font-bold text-slate-700">Messages</div>
-                <div className="flex gap-4">
-                  <Search className="w-6 h-6" color="#8f8e93" />
+            <div className='w-1/3'>
+              <div className='flex items-center justify-between p-5 py-4'>
+                <div className='text-xl font-bold text-slate-700'>Messages</div>
+                <div className='flex gap-4'>
+                  <Search className='w-6 h-6' color='#8f8e93' />
                   <Plus
-                    className="w-6 h-6 bg-blue-700 rounded-full"
-                    color="#fff"
+                    className='w-6 h-6 bg-blue-700 rounded-full'
+                    color='#fff'
                   />
                 </div>
               </div>
               <Divider />
 
               {/* Messages Preview */}
-              <TabsList className="block h-[calc(100vh-155px)] overflow-auto bg-white p-0 rounded-none hide-scroll">
-                <div className="flex flex-col">
-                  {chats.map((chat) => {
-                    return (
-                      <TabsTrigger
-                        key={chat.senderID}
-                        value={chat.senderID}
-                        className="data-[state=active]:bg-[#4534B8]/10 data-[state=active]:border-r-2 data-[state=active]:border-[#4534B8]"
-                      >
-                        <MessagePreview message={chat} />
-                      </TabsTrigger>
-                    );
-                  })}
+              <TabsList className='block h-[calc(100vh-155px)] overflow-auto bg-white p-0 rounded-none hide-scroll'>
+                <div className='flex flex-col'>
+                  {decryptedChats[0]?.map((chat: any) => (
+                    <TabsTrigger
+                      key={chat.conversation_id}
+                      value={chat.conversation_id}
+                      className='data-[state=active]:bg-[#4534B8]/10 data-[state=active]:border-r-2 data-[state=active]:border-[#4534B8]'>
+                      <MessagePreview message={chat} />
+                    </TabsTrigger>
+                  ))}
                 </div>
               </TabsList>
             </div>
 
-            <Divider orientation="vertical" flexItem />
+            <Divider orientation='vertical' flexItem />
 
             {/* Conversation */}
-            <div className="w-2/3">
-              {chats.map((chat) => {
+            <div className='w-2/3'>
+              {decryptedChats[0]?.map((chat: any) => {
                 return (
-                  <TabsContent value={chat.senderID} key={chat.senderID}>
+                  <TabsContent
+                    value={chat.conversation_id}
+                    key={chat.conversation_id}>
                     <Conversations user={chat} />
-                    <TextMessage />
+                    <TextMessage user={chat} />
                   </TabsContent>
                 );
               })}

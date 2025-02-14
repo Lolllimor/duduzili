@@ -1,6 +1,8 @@
 "use client";
 
+import { decrypt } from "@/lib/decrypt";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function useWs(
   url: string
@@ -18,7 +20,17 @@ export default function useWs(
 
     socket.onmessage = (event) => {
       try {
-        const parsedMessage = JSON.parse(event.data);
+        let message = event.data;
+
+        let dataStr = typeof message === "string" ? message : "";
+
+        dataStr = dataStr
+          .replace(/'/g, '"') // Replace single quotes with double quotes
+          .replace(/True/g, "true") // Replace Python True with JSON true
+          .replace(/False/g, "false") // Replace Python False with JSON false
+          .replace(/None/g, "null"); // Replace Python None with JSON null
+
+        const parsedMessage = JSON.parse(dataStr);
         setMessages((prev) => [...prev, parsedMessage]);
       } catch (error) {
         console.error("Failed to parse message:", error);

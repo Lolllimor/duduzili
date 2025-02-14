@@ -6,9 +6,11 @@ import { useParams } from "next/navigation";
 export default function ProfileAvatar({
   width = 50,
   height = 50,
+  src,
 }: {
   width?: number;
   height?: number;
+  src?: string;
 }) {
   const { id } = useParams<{ id: string }>();
   return (
@@ -18,11 +20,7 @@ export default function ProfileAvatar({
       badgeContent={
         <div className='h-3 w-3 rounded-full bg-[#04802E] border border-white' />
       }>
-      <Avatar
-        alt={id}
-        src='/deebaba.jpg'
-        sx={{ width: width, height: height }}
-      />
+      <Avatar alt={id} src={src} sx={{ width: width, height: height }} />
     </Badge>
   );
 }
